@@ -19,3 +19,18 @@ export interface Accommodation {
   isFeatured?: boolean;
   universityNear?: string;
 }
+
+export interface AccommodationDetail extends Accommodation {
+  title: string;
+  images: string[];
+  address: string;
+  nearbyUniversities: string[];
+  mobilityOptions: string[];
+}
+
+export interface ContactForm {
+  occupants: number | null;
+  months: number | null;
+  offer: number | null;
+  message: string;
+}

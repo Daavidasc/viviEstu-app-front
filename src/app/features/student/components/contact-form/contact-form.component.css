@@ -1,0 +1,27 @@
+:host {
+  --primary: #B88E2F;
+  --primary-hover: #a07a26;
+  --white: #ffffff;
+  --border-color: #ddd;
+}
+.card {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+.contact-card { padding: 2rem; position: sticky; top: 90px; }
+.contact-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 1.5rem; }
+.form-row { display: flex; gap: 1rem; }
+.form-group { margin-bottom: 1rem; }
+.form-group.half { width: 50%; }
+.label-text { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: #333; }
+.form-input {
+  width: 100%; padding: 0.8rem; border: 1px solid var(--border-color);
+  border-radius: 6px; font-family: inherit; font-size: 0.9rem; outline: none;
+}
+.form-input:focus { border-color: var(--primary); }
+.btn { border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+.btn-primary { background-color: var(--primary); color: var(--white); }
+.btn-primary:hover { background-color: var(--primary-hover); }
+.btn-full { width: 100%; padding: 0.8rem; font-size: 1rem; margin-top: 0.5rem; }
