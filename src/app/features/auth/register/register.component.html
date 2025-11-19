@@ -1,0 +1,140 @@
+<!-- Fuentes e Iconos -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+<app-navbar-landing />
+
+<!-- REGISTER CONTENT -->
+<main class="main-content">
+
+  <!-- Background Decoration -->
+  <div class="bg-decoration">
+      <img
+        src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+        alt="Fondo biblioteca estudio"
+        class="bg-image"
+      >
+      <div class="bg-overlay"></div>
+  </div>
+
+  <!-- Register Card -->
+  <div class="register-card-wrapper">
+    <div class="register-card">
+
+      <div class="card-header">
+        <h2 class="title-text">Regístrate</h2>
+
+        <!-- Tabs de Tipo de Usuario -->
+        <div class="user-type-tabs">
+          <button
+            class="tab-btn"
+            [class.active]="userType === 'estudiante'"
+            (click)="userType = 'estudiante'">
+            Estudiante
+          </button>
+          <button
+            class="tab-btn"
+            [class.active]="userType === 'propietario'"
+            (click)="userType = 'propietario'">
+            Propietario
+          </button>
+        </div>
+      </div>
+
+      <!-- Formulario Estudiante -->
+      <form *ngIf="userType === 'estudiante'" class="register-form" (ngSubmit)="onRegister()">
+        <div class="form-grid">
+
+          <!-- Nombres -->
+          <div class="form-group">
+            <label for="nombres" class="label-text">Nombres</label>
+            <input type="text" id="nombres" name="nombres" [(ngModel)]="studentData.nombres" class="form-input" required>
+          </div>
+
+          <!-- Apellidos -->
+          <div class="form-group">
+            <label for="apellidos" class="label-text">Apellidos</label>
+            <input type="text" id="apellidos" name="apellidos" [(ngModel)]="studentData.apellidos" class="form-input" required>
+          </div>
+
+          <!-- Correo Institucional -->
+          <div class="form-group full-width">
+            <label for="correo" class="label-text">Correo Institucional</label>
+            <input type="email" id="correo" name="correo" [(ngModel)]="studentData.correo" class="form-input" required>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="form-group full-width">
+            <label for="password" class="label-text">Contraseña</label>
+            <input type="password" id="password" name="password" [(ngModel)]="studentData.password" class="form-input" required>
+          </div>
+
+          <!-- Universidad -->
+          <div class="form-group full-width">
+            <label for="universidad" class="label-text">Universidad</label>
+            <input type="text" id="universidad" name="universidad" [(ngModel)]="studentData.universidad" class="form-input" required>
+          </div>
+
+          <!-- Ciclo -->
+          <div class="form-group full-width">
+            <label for="ciclo" class="label-text">Ciclo</label>
+            <input type="text" id="ciclo" name="ciclo" [(ngModel)]="studentData.ciclo" class="form-input" required>
+          </div>
+
+          <!-- Distrito Preferencia -->
+          <div class="form-group full-width">
+            <label for="distrito" class="label-text">Distrito preferencia</label>
+            <input type="text" id="distrito" name="distrito" [(ngModel)]="studentData.distrito" class="form-input" required>
+          </div>
+        </div>
+
+        <!-- Botón Registrarse -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-full btn-primary btn-shadow">
+            Registrarse
+          </button>
+        </div>
+      </form>
+
+      <!-- Formulario Propietario -->
+      <form *ngIf="userType === 'propietario'" class="register-form" (ngSubmit)="onRegister()">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="label-text">Nombres</label>
+            <input type="text" class="form-input" [(ngModel)]="ownerData.nombres" name="owner-nombres" required>
+          </div>
+          <div class="form-group">
+            <label class="label-text">Apellidos</label>
+            <input type="text" class="form-input" [(ngModel)]="ownerData.apellidos" name="owner-apellidos" required>
+          </div>
+          <div class="form-group full-width">
+            <label class="label-text">Correo Electrónico</label>
+            <input type="email" class="form-input" [(ngModel)]="ownerData.correo" name="owner-correo" required>
+          </div>
+          <div class="form-group full-width">
+            <label class="label-text">Contraseña</label>
+            <input type="password" class="form-input" [(ngModel)]="ownerData.password" name="owner-password" required>
+          </div>
+          <div class="form-group full-width">
+            <label for="owner-telefono" class="label-text">Teléfono de Contacto</label>
+            <input type="tel" id="owner-telefono" name="owner-telefono" [(ngModel)]="ownerData.telefono" class="form-input" required>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-full btn-primary btn-shadow">
+            Registrarse
+          </button>
+        </div>
+      </form>
+
+      <!-- Link Login (Movido fuera de los formularios) -->
+      <div class="form-footer-links">
+        <span class="text-gray">¿Ya tienes cuenta? </span>
+        <a routerLink="/auth/login" class="link-highlight">Ingresa aquí</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<app-footer />

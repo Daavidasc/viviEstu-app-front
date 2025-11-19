@@ -1,0 +1,29 @@
+<nav class="navbar">
+  <div class="container navbar-content">
+    <!-- Logo -->
+    <div class="brand-logo" routerLink="/student/dashboard">
+      <div class="logo-icon">
+        <i class="fas fa-map-marker-alt"></i>
+      </div>
+      <span class="logo-text">ViviEstu</span>
+    </div>
+    <div class="nav-links desktop-only">
+      <a routerLink="/student/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Inicio</a>
+      <a routerLink="/student/accommodations" routerLinkActive="active" class="nav-link">Departamentos</a>
+      <a routerLink="/student/compare" routerLinkActive="active" class="nav-link">Comparar</a>
+    </div>
+    <a routerLink="/student/profile" class="user-actions">
+      <div class="user-avatar">
+        @if (currentUser && currentUser.avatarUrl && !imageLoadError) {
+          <img
+            [src]="currentUser.avatarUrl"
+            alt="Avatar de {{currentUser.name}}"
+            class="avatar-image"
+            (error)="handleImageError()">
+        } @else {
+          <i class="far fa-user-circle"></i>
+        }
+      </div>
+    </a>
+  </div>
+</nav>

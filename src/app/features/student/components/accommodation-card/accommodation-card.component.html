@@ -1,0 +1,30 @@
+<div class="accommodation-card">
+  <div class="card-image">
+    <img [src]="accommodation.image" [alt]="accommodation.district">
+    @if (accommodation.isFeatured) {
+      <div class="card-badge">Destacado</div>
+    }
+  </div>
+  <div class="card-details">
+    <div class="card-header-row">
+      <h3 class="price">S/.{{accommodation.price}} <span class="period">/mes</span></h3>
+      <button class="btn-favorite" (click)="toggleFavorite()" [attr.aria-label]="accommodation.isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'">
+        <i class="fa-heart" [class.fas]="accommodation.isFavorite" [class.far]="!accommodation.isFavorite"></i>
+      </button>
+    </div>
+
+    <h4 class="district">{{accommodation.district}}</h4>
+    <p class="description">{{accommodation.description}}</p>
+
+    <div class="features-row">
+      <div class="feature-item" title="Área">
+        <i class="fas fa-ruler-combined"></i> {{accommodation.area}}m²
+      </div>
+      <div class="feature-item" title="Dormitorios">
+        <i class="fas fa-bed"></i> {{accommodation.rooms}}
+      </div>
+    </div>
+
+    <a [routerLink]="['/student/accommodations', accommodation.id]" class="btn btn-primary btn-info">Más Información</a>
+  </div>
+</div>

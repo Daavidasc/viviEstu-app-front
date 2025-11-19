@@ -1,0 +1,83 @@
+<!-- Fuentes e Iconos -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+<app-navbar-landing />
+
+<!-- LOGIN CONTENT -->
+<main class="main-content">
+
+  <!-- Background Decoration -->
+  <div class="bg-decoration">
+      <img
+        src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+        alt="Fondo habitación estudio"
+        class="bg-image"
+      >
+      <div class="bg-overlay"></div>
+  </div>
+
+  <!-- Login Card -->
+  <div class="login-card-wrapper">
+    <div class="login-card">
+
+      <div class="card-header">
+        <h2 class="title-text">Ingresar</h2>
+        <p class="subtitle-text">Bienvenido de nuevo a tu comunidad universitaria</p>
+      </div>
+
+      <form class="login-form" (ngSubmit)="onLogin()">
+        <div class="form-inputs">
+
+          <!-- Correo Input -->
+          <div class="form-group">
+            <label for="email-address" class="label-text">Correo</label>
+            <input
+              id="email-address"
+              name="correo"
+              type="email"
+              autocomplete="email"
+              required
+              [(ngModel)]="loginData.correo"
+              class="form-input"
+              placeholder="username@gmail.com"
+            >
+          </div>
+
+          <!-- Contraseña Input -->
+          <div class="form-group">
+            <label for="password" class="label-text">Contraseña</label>
+            <input
+              id="password"
+              name="contrasenia"
+              type="password"
+              autocomplete="current-password"
+              required
+              [(ngModel)]="loginData.contrasenia"
+              class="form-input"
+              placeholder="Contraseña"
+            >
+          </div>
+        </div>
+
+        <!-- Botón Submit -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-full btn-primary btn-shadow" [disabled]="isLoading">
+            {{ isLoading ? 'Cargando...' : 'Listo' }}
+          </button>
+        </div>
+
+        <p *ngIf="errorMessage" class="error-text">{{ errorMessage }}</p>
+      </form>
+
+      <!-- Enlace Registro (Movido fuera del formulario) -->
+      <div class="form-footer-links">
+        <span class="text-gray">¿No tienes cuenta aún?  </span>
+        <a routerLink="/auth/register" class="link-highlight"> Regístrate aquí</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<app-footer />
