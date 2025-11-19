@@ -1,0 +1,47 @@
+<div class="app-container">
+  <app-student-navbar />
+
+  <main class="main-content">
+    <div class="container">
+
+      <h1 class="page-title">Mi Perfil</h1>
+
+      <!-- HEADER PERFIL -->
+      <div class="profile-header-card">
+        <div class="profile-avatar">
+           <i class="far fa-user-circle"></i>
+        </div>
+        <div class="profile-basic-info">
+          <h2 class="profile-name">{{ student.fullName }}</h2>
+          <p class="profile-email">{{ student.email }}</p>
+        </div>
+      </div>
+
+      <!-- INFORMACIÓN DETALLADA -->
+      <app-profile-info-card [student]="student" />
+
+      <!-- SECCIÓN FAVORITOS -->
+      <div class="section-spacer"></div>
+      <h2 class="section-subtitle">Favoritos</h2>
+
+      <div class="favorites-list">
+        <app-accommodation-card *ngFor="let fav of favorites" [accommodation]="fav" />
+      </div>
+
+      <div class="see-more-container">
+         <a href="#" class="see-more-link">Ver mas...</a>
+      </div>
+
+      <!-- SECCIÓN SOLICITUDES ACTIVAS -->
+      <div class="section-spacer"></div>
+      <h2 class="section-subtitle">Solicitudes Activas</h2>
+
+      <div class="requests-list">
+        <app-request-card *ngFor="let req of requests" [request]="req" />
+      </div>
+
+    </div>
+  </main>
+
+  <app-footer />
+</div>

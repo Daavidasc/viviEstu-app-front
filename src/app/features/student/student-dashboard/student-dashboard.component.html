@@ -1,8 +1,7 @@
 <div class="app-container">
-  <!-- 1. NAVBAR -->
+  <!-- Pasa el objeto currentUser al navbar -->
   <app-student-navbar [currentUser]="currentUser" />
 
-  <!-- 2. MAIN CONTENT -->
   <main class="main-content">
     <div class="container" *ngIf="currentUser">
 

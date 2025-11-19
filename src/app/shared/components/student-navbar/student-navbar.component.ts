@@ -12,4 +12,9 @@ import { UserProfile } from '../../../core/models/student.models';
 })
 export class StudentNavbarComponent {
   @Input() currentUser: UserProfile | null = null;
+  imageLoadError = false;
+
+  handleImageError() {
+    this.imageLoadError = true;
+  }
 }

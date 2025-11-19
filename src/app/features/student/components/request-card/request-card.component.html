@@ -1,0 +1,13 @@
+<div class="request-card">
+   <div class="req-image">
+     <img [src]="request.image" [alt]="request.district">
+   </div>
+   <div class="req-content">
+      <h3 class="req-price">S/.{{ request.price }} /mes</h3>
+      <p class="req-district">{{ request.district }}</p>
+   </div>
+   <div class="req-actions">
+     <button class="btn btn-primary btn-action">Ver</button>
+     <button class="btn btn-primary btn-action">Cancelar</button>
+   </div>
+</div>

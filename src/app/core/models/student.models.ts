@@ -34,3 +34,24 @@ export interface ContactForm {
   offer: number | null;
   message: string;
 }
+
+export interface StudentProfile {
+  fullName: string;
+  email: string;
+  dni: string;
+  phone: string;
+  age: number;
+  preferredZone: string;
+  budget: string;
+  university: string;
+  semester: number;
+  career: string;
+}
+
+export interface ActiveRequest {
+  id: number;
+  image: string;
+  price: number;
+  district: string;
+  status: 'Pendiente' | 'Aceptada' | 'Rechazada';
+}

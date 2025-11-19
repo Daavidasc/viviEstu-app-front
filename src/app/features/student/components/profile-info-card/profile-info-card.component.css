@@ -1,0 +1,23 @@
+:host {
+  --primary: #B88E2F;
+  --primary-hover: #a07a26;
+  --white: #ffffff;
+}
+.info-card {
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.info-section { margin-bottom: 2rem; }
+.info-section:last-of-type { margin-bottom: 0; }
+.info-title { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem; }
+.info-grid { display: grid; gap: 0.8rem; }
+.info-item { font-size: 0.9rem; }
+.label { font-weight: 700; color: #333; }
+.value { color: #000; font-weight: 400; }
+.action-row { display: flex; justify-content: flex-end; margin-top: 2rem; }
+.btn { border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+.btn-primary { background-color: var(--primary); color: var(--white); }
+.btn-primary:hover { background-color: var(--primary-hover); }
+.btn-edit { padding: 0.8rem 2rem; font-size: 0.9rem; }
