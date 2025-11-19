@@ -60,7 +60,7 @@ import { CommonModule } from '@angular/common';
     .footer-content {
       display: flex;
       gap: 8rem;
-      height: 25rem;
+      height: 21rem;
     }
 
     .direccion-p {
