@@ -1,0 +1,417 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+
+@Component({
+  selector: 'app-Landing',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    
+    <div class="principal">
+
+        <nav class="principal-box">
+
+            <nav class="box-contenido">
+                <h1>Vive y estudia sin <br> preocupaciones en <br> todo Lima </h1>
+
+                <p>Encuentra alojamiento según tu distrito, universidad o <br> presupuesto.</p>
+
+
+                <a href="#" class="button">EMPEZAR</a>
+
+            </nav>
+
+        </nav>
+    </div>
+
+    <div class="nosotros">
+        <img class="logo1" src="/assets/logo.png">
+        <div class="nosotros-elementos">
+        <nav class="nosotros-box">
+            <nav class="nosotros-contenido">
+                <h2>Quiénes Somos</h2>
+                <p>En ViviStu entendemos lo difícil que puede ser encontrar alojamiento en Lima, tanto para estudiantes locales que buscan estar cerca de su universidad como para quienes llegan de fuera y necesitan un lugar seguro y accesible. Nuestra misión es que cada estudiante encuentre un hogar en Lima de forma rápida, confiable y sin complicaciones.</p>
+            </nav>
+        </nav>
+
+        <img class="foco" src="/assets/foco.png">
+    </div>
+    </div>
+
+    <div class="ofrecemos">
+        <h2>Ofrecemos</h2>  
+
+        <div class="contenido-ofrecemos">
+
+        <div class="primera-columna">
+            <div class="caracteristica">
+                <img src="/assets/preciosIcon.png">
+                <p>Precios accesibles: opciones que se ajustan al bolsillo de los estudiantes.</p>
+            
+            </div>
+
+            <div class="caracteristica">
+                <img src="/assets/busquedaIcon.png">
+                <p>Búsqueda fácil: encuentra tu alojamiento filtrando por distrito, universidad o presupuesto.</p>
+            
+            </div>
+        </div>
+
+        <div class="segunda-columna">
+
+            <div class="caracteristica">
+                <img src="/assets/seguridadIcon.png">
+                <p>Seguridad garantizada: trabajamos con alojamientos verificados para tu tranquilidad.</p>
+            
+            </div>
+        </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="preguntas">
+
+    <img class="banner2" src="/assets/banner2.png">
+
+    <div class="preguntas-contenido">
+
+            <img class="logo2" src="/assets/logo.png">
+        <h2>Preguntas Frecuentes</h2>
+
+
+        <div class="pregunta-box1">
+            
+            <div class="pregunta-contenido1">
+                <h3>¿La app es gratuita?</h3>
+                <p> Sí, puedes registrarte y explorar alojamientos sin costo</p>
+            </div>
+        </div>
+
+        <div class="pregunta-box2">
+            
+            <div class="pregunta-contenido2">
+                <h3>¿Cómo verifican los alojamientos?</h3>
+                <p> Cada publicación pasa por un proceso de validación para garantizar que sea confiable y segura.</p>
+            </div>
+        </div>
+
+        <div class="pregunta-box3">
+            
+            <div class="pregunta-contenido3">
+                <h3>¿Puedo reservar directamente desde viviEstu?</h3>
+                <p> Sí, puedes contactar al propietario y concretar tu reserva a través de nuestra plataforma.</p>
+            </div>
+        </div>
+
+        <div class="pregunta-box4">
+            
+            <div class="pregunta-contenido4">
+                <h3>¿En qué distritos funciona?</h3>
+                <p> Actualmente estamos enfocados en Lima Metropolitana, cerca de las principales universidades.</p>
+            </div>
+        </div>
+
+    </div>
+    </div> 
+  `,
+  styles: [`
+    .principal{
+        background-image: url("/assets/Banner.png");
+        height: 90vh; 
+        background-size: cover; 
+        display: flex;
+        align-items: center;
+
+    }
+
+    .principal-box{
+        height: 34rem;
+        width: 53rem;
+        margin-left: 15rem;
+        background-color: rgba(255, 243, 227, 0.9);
+        border-radius: 10px;
+
+    }
+
+    .box-contenido{
+        margin-left: 4rem;
+        margin-top: 4rem;
+        color: #B88E2F;
+    }
+
+    .box-contenido h1{
+        font-size: 60px;
+        font-weight: 700;
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.3;
+    }
+
+    .box-contenido p{
+        font-size: 22px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        margin-top: 1rem;
+
+    }
+
+    .button{
+        font-size: 20px;
+        margin-top: 4rem;
+        background-color: #B88E2F;
+        color: #FFFFFF;
+        padding: 17px 83px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        font-family: "Poppins", sans-serif;
+        margin-top: 3rem;
+        display: inline-block;
+    }
+
+    .logo1{
+        height: 188px;
+        margin-left: 2rem;
+        margin-top: -3.5rem;
+    }
+
+    .nosotros-elementos{
+        display: flex;
+
+    }
+
+    .foco{
+        height: 400px;
+        margin-left: 6rem;
+
+    }
+
+    .nosotros{
+    background-color: #FFFFFF;
+    height: 38rem;
+    
+    }
+
+    .nosotros-box{
+        margin-top: 1.8rem;
+        background-color: #FFF3E3;
+        width: 80rem;
+        height: 22rem;
+        
+    }
+
+    .nosotros-contenido{
+        padding-left: 13rem;
+        padding-top: 3rem;
+    }
+
+    .nosotros-contenido h2{
+        font-size: 42px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        color: #B88E2F;
+    }
+
+    .nosotros-contenido p{
+        padding-left: 2rem;
+        padding-top: 1rem;
+        font-size: 22px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        color: #000000;
+        width: 60rem;
+    }
+
+    .ofrecemos{
+        background-color: #FCF8F3;
+        padding-top: 5rem;
+
+    }
+
+    .ofrecemos h2{
+        font-size: 42px;
+        font-family: 'Poppins', sans-serif; 
+        font-weight: 700;
+        color: #000000;
+        text-align: center;
+        
+    }
+
+    .contenido-ofrecemos img {
+        height: 190px;
+    }
+
+    .contenido-ofrecemos p {
+        color: #000000;
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif;
+        font-size: 24px;
+        margin-top: 1rem;
+        width: 320px;
+        margin-left: 2rem;
+    }
+
+    .primera-columna{
+        margin-top: 5rem;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .caracteristica{
+        display: flex;
+
+    }
+
+    .segunda-columna{
+        display: flex;
+        justify-content: center;
+        margin-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    .preguntas{
+        background-color: #FFFFFF;
+        display: flex;
+
+    }
+
+    .banner2{
+        width: 800px;
+    }
+
+    .preguntas-contenido{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .preguntas-contenido h2{
+        font-size: 42px;
+        font-family: 'Poppins', sans-serif; 
+        font-weight: 700;
+        color: #B88E2F;
+        text-align: center;
+
+    }
+
+    .pregunta-box{
+        margin-top: 5rem;
+        color: #000000;
+    }
+
+    .logo2{
+        height: 120px;
+        margin-left: auto;
+        margin-right: 4rem;
+        margin-top: -3rem;
+    }
+
+    .pregunta-box1{
+        background-color: #FCF8F3;
+        margin-top: 5rem;
+        width: 50rem;
+    }
+
+    .pregunta-box2{
+        background-color: #B88E2F;
+        margin-top: 5rem;
+        width: 50rem;
+        margin-left: auto;
+    }
+
+    .pregunta-box3{
+        margin-top: 5rem;
+        background-color: #FFF5E6;
+        width: 50rem;
+    }
+
+    .pregunta-box4{
+        margin-top: 5rem;
+        background-color: #FCF8F3;
+        margin-left: auto;
+        width: 50rem;
+
+    }
+
+    .pregunta-contenido1{
+        color: #000000;
+        padding: 2rem;
+        padding-left: 8rem;
+    }
+
+    .pregunta-contenido1 h3{
+        font-weight: 700;
+        font-family: 'Poppins', sans-serif;
+        font-size: 22px;
+    }
+
+    .pregunta-contenido1 p{
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif;
+        font-size: 22px;
+        width: 30rem;
+    }
+
+    .pregunta-contenido2{
+        color: #FFFFFF;
+        padding: 2rem;
+        padding-left: 7rem;
+    }
+
+    .pregunta-contenido2 h3{
+        font-weight: 700;
+        font-family: 'Poppins', sans-serif;
+        font-size: 22px;
+    }
+
+    .pregunta-contenido2 p{
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif;
+        font-size: 22px;
+        width: 40rem;
+    }
+
+    .pregunta-contenido3{
+        color: #000000;
+        padding: 2rem;
+        padding-left: 8rem;
+    }
+
+    .pregunta-contenido3 h3{
+        font-weight: 700;
+        font-family: 'Poppins', sans-serif;
+        font-size: 22px;
+    }
+
+    .pregunta-contenido3 p{
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif;
+        font-size: 22px;
+        width: 38rem;
+    }
+
+    .pregunta-contenido4{
+        color: #000000;
+        padding: 2rem;
+        padding-left: 7rem;
+    }
+
+    .pregunta-contenido4 h3{
+        font-weight: 700;
+        font-family: 'Poppins', sans-serif;
+        font-size: 22px;
+    }
+
+    .pregunta-contenido4 p{
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif;
+        font-size: 22px;
+        width: 38rem;
+    }
+
+
+      `]
+})
+export class LandingComponent {}
