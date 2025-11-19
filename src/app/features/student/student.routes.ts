@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
 import { AccommodationDetailComponent } from './accommodation-detail/accommodation-detail.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { DistrictsPageComponent } from './districts-page/districts-page.component';
 
 export const studentRoutes: Routes = [
   {
@@ -15,6 +16,10 @@ export const studentRoutes: Routes = [
   {
     path: 'profile',
     component: StudentProfileComponent
+  },
+  {
+    path: 'districts',
+    component: DistrictsPageComponent
   },
   {
     path: '',

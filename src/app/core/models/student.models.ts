@@ -55,3 +55,9 @@ export interface ActiveRequest {
   district: string;
   status: 'Pendiente' | 'Aceptada' | 'Rechazada';
 }
+
+export interface Zone {
+  id: number;
+  name: string;
+  image: string;
+}
