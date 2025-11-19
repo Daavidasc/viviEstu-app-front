@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NavbarLandingComponent } from '../../../shared/components/navbar-landing';
-import { FooterComponent } from '../../../shared/components/footer';
+import { NavbarLandingComponent } from '../../../shared/components/navbar-landing/navbar-landing.component';
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
 
 // Interfaces basadas en el diseño de la API REST
 export interface LoginRequestDTO {
