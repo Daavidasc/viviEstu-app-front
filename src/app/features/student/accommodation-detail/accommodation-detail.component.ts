@@ -19,17 +19,9 @@ export class AccommodationDetailComponent implements OnInit {
   accommodation: AccommodationDetail | null = null;
   newComment: string = '';
 
-  constructor(private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    // En una app real, usaríamos el ID para fetchear data de un servicio
-    const accommodationId = this.route.snapshot.paramMap.get('id');
-    console.log('Accommodation ID:', accommodationId);
-    this.loadMockData();
-  }
-
-  loadMockData() {
-    this.accommodation = {
+  // Array con todos los datos de prueba
+  private allAccommodationDetails: AccommodationDetail[] = [
+    {
       id: 1,
       title: 'Amplio y cómodo departamento',
       price: 650,
@@ -47,9 +39,50 @@ export class AccommodationDetailComponent implements OnInit {
       nearbyUniversities: ['UPC MO', 'ESAN', 'UDEP'],
       mobilityOptions: ['Bicicleta', 'A pie', 'Bus'],
       isFavorite: false,
-      image: '', // Propiedades de Accommodation base
+      image: '',
+      isFeatured: true
+    },
+    {
+      id: 2,
+      title: 'Moderno loft con vista a parque',
+      price: 1200,
+      description: 'Moderno loft con vista a parque, zona segura. Incluye vigilancia. Perfecto para una persona o pareja.',
+      images: [
+        'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+      ],
+      area: 92,
+      baths: 1,
+      rooms: 2,
+      address: 'Av. Primavera 567, San Borja',
+      district: 'San Borja',
+      nearbyUniversities: ['Universidad de Lima'],
+      mobilityOptions: ['Metropolitano', 'Corredor Rojo'],
+      isFavorite: true,
+      image: '',
       isFeatured: false
-    };
+    }
+  ];
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    // Obtenemos el ID de la URL, lo convertimos a número y cargamos los datos
+    const accommodationId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadAccommodationData(accommodationId);
+  }
+
+  loadAccommodationData(id: number) {
+    // Buscamos el alojamiento en nuestro array de datos de prueba
+    const foundAccommodation = this.allAccommodationDetails.find(acc => acc.id === id);
+    if (foundAccommodation) {
+      this.accommodation = foundAccommodation;
+    } else {
+      // Opcional: manejar el caso en que no se encuentre el ID
+      console.error(`Alojamiento con ID ${id} no encontrado.`);
+      // Aquí podrías redirigir a una página de "no encontrado"
+    }
   }
 
   toggleFavorite() {
