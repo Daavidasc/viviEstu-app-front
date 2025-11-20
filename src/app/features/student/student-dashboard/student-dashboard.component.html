@@ -8,14 +8,13 @@
       <!-- Header Section -->
       <div class="dashboard-header">
         <h1 class="greeting">Hola {{ currentUser.name }}</h1>
-        <h2 class="section-subtitle">Recomendados en tu zona: <span class="highlight">{{ currentUser.preferredDistrict }}</span></h2>
+        <h2 class="section-subtitle">Recomendados en tu zona: <span class="highlight">{{ currentUser.preferredDistrict
+            }}</span></h2>
       </div>
 
       <!-- Listado 1: Recomendados en tu zona -->
       <div class="accommodation-list" *ngIf="zoneRecommendations.length > 0; else noZoneData">
-        <app-accommodation-card
-          *ngFor="let item of zoneRecommendations"
-          [accommodation]="item"
+        <app-accommodation-card *ngFor="let item of zoneRecommendations" [accommodation]="item"
           (favoriteToggled)="handleFavoriteToggle($event)">
         </app-accommodation-card>
       </div>
@@ -27,17 +26,17 @@
       </ng-template>
 
       <div class="see-more-container" *ngIf="zoneRecommendations.length > 0">
-         <a href="#" class="see-more-link">Ver más en {{ currentUser.preferredDistrict }}...</a>
+        <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: currentUser.preferredDistrict }"
+          class="see-more-link">Ver más en {{ currentUser.preferredDistrict }}...</a>
       </div>
 
       <!-- Listado 2: Recomendados cerca a Universidad -->
       <div class="section-spacer"></div>
-      <h2 class="section-subtitle secondary">Recomendados cerca a <span class="highlight">{{ currentUser.university }}</span></h2>
+      <h2 class="section-subtitle secondary">Recomendados cerca a <span class="highlight">{{ currentUser.university
+          }}</span></h2>
 
       <div class="accommodation-list" *ngIf="uniRecommendations.length > 0; else noUniData">
-        <app-accommodation-card
-          *ngFor="let item of uniRecommendations"
-          [accommodation]="item"
+        <app-accommodation-card *ngFor="let item of uniRecommendations" [accommodation]="item"
           (favoriteToggled)="handleFavoriteToggle($event)">
         </app-accommodation-card>
       </div>
@@ -48,8 +47,9 @@
         </div>
       </ng-template>
 
-       <div class="see-more-container" *ngIf="uniRecommendations.length > 0">
-         <a href="#" class="see-more-link">Ver más cerca a la U...</a>
+      <div class="see-more-container" *ngIf="uniRecommendations.length > 0">
+        <a [routerLink]="['/student/accommodations']" [queryParams]="{ university: currentUser.university }"
+          class="see-more-link">Ver más cerca a la U...</a>
       </div>
 
     </div>

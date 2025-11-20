@@ -1,0 +1,38 @@
+<div class="app-container">
+    <app-student-navbar></app-student-navbar>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <div class="header-row">
+                    <h1 class="page-title">
+                        {{ district ? 'Departamentos en ' + district : (accommodations.length > 0 &&
+                        accommodations[0].universityNear && !district ? 'Departamentos cerca a ' +
+                        accommodations[0].universityNear
+                        : 'Todos los departamentos') }}
+                    </h1>
+                    <button class="btn-filter">
+                        <i class="fas fa-sliders-h"></i> Filtros
+                    </button>
+                </div>
+                <p class="results-count">
+                    {{ accommodations.length }} resultados encontrados
+                </p>
+            </div>
+
+            <div class="accommodations-list" *ngIf="accommodations.length > 0; else noResults">
+                <app-accommodation-card *ngFor="let item of accommodations" [accommodation]="item"
+                    (favoriteToggled)="handleFavoriteToggle($event)">
+                </app-accommodation-card>
+            </div>
+
+            <ng-template #noResults>
+                <div class="empty-state">
+                    <p class="empty-message">No se encontraron departamentos en esta zona.</p>
+                </div>
+            </ng-template>
+        </div>
+    </main>
+
+    <app-footer></app-footer>
+</div>
