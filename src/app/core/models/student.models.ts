@@ -36,16 +36,20 @@ export interface ContactForm {
 }
 
 export interface StudentProfile {
+  id?: number;
+  name?: string;
   fullName: string;
   email: string;
   dni: string;
   phone: string;
   age: number;
   preferredZone: string;
+  preferredDistrict?: string;
   budget: string;
   university: string;
   semester: number;
   career: string;
+  avatarUrl?: string;
 }
 
 export interface ActiveRequest {

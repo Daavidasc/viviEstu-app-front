@@ -6,6 +6,7 @@ import { AccommodationCardComponent } from '../components/accommodation-card/acc
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { UserProfile, Accommodation } from '../../../core/models/student.models';
 import { AccommodationService } from '../../../core/services/accommodation.service';
+import { StudentService } from '../../../core/services/student.service';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -15,42 +16,49 @@ import { AccommodationService } from '../../../core/services/accommodation.servi
   styleUrls: ['./student-dashboard.component.css']
 })
 export class StudentDashboardComponent implements OnInit {
-  currentUser: UserProfile = {
-    id: 101,
-    name: 'Henry',
-    university: 'UPC Monterrico',
-    preferredDistrict: 'Monterrico',
-    avatarUrl: 'assets/avatar.png'
-  };
+  currentUser: UserProfile | null = null;
 
   allAccommodations: Accommodation[] = [];
   zoneRecommendations: Accommodation[] = [];
   uniRecommendations: Accommodation[] = [];
 
-  constructor(private accommodationService: AccommodationService) { }
+  constructor(
+    private accommodationService: AccommodationService,
+    private studentService: StudentService
+  ) { }
 
   ngOnInit() {
     this.loadDashboardData();
   }
 
   loadDashboardData() {
-    this.accommodationService.getAccommodations().subscribe(data => {
-      this.allAccommodations = data;
+    this.studentService.getProfile().subscribe(profile => {
+      this.currentUser = {
+        id: profile.id || 0,
+        name: profile.name || '',
+        university: profile.university,
+        preferredDistrict: profile.preferredDistrict || '',
+        avatarUrl: profile.avatarUrl || ''
+      };
 
-      this.zoneRecommendations = this.allAccommodations
-        .filter(item => item.district === this.currentUser.preferredDistrict)
-        .slice(0, 3);
+      this.accommodationService.getAccommodations().subscribe(data => {
+        this.allAccommodations = data;
 
-      this.uniRecommendations = this.allAccommodations
-        .filter(item => item.universityNear === this.currentUser.university)
-        .slice(0, 3);
+        if (this.currentUser) {
+          this.zoneRecommendations = this.allAccommodations
+            .filter(item => item.district === this.currentUser!.preferredDistrict)
+            .slice(0, 3);
+
+          this.uniRecommendations = this.allAccommodations
+            .filter(item => item.universityNear === this.currentUser!.university)
+            .slice(0, 3);
+        }
+      });
     });
   }
 
   handleFavoriteToggle(item: Accommodation) {
     this.accommodationService.toggleFavorite(item.id);
-    // Refresh data to update UI if needed, or just rely on local state update in service if observable was a behavior subject
-    // For now, we just toggle in service. In a real app with backend, we would call API.
     console.log(`Alojamiento ${item.id} favorito toggled`);
   }
 }

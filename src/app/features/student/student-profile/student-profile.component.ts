@@ -6,6 +6,7 @@ import { ProfileInfoCardComponent } from '../components/profile-info-card/profil
 import { AccommodationCardComponent } from '../components/accommodation-card/accommodation-card.component'; // Importación cambiada
 import { RequestCardComponent } from '../components/request-card/request-card.component';
 import { StudentProfile, Accommodation, ActiveRequest } from '../../../core/models/student.models';
+import { StudentService } from '../../../core/services/student.service';
 
 @Component({
   selector: 'app-student-profile',
@@ -15,28 +16,23 @@ import { StudentProfile, Accommodation, ActiveRequest } from '../../../core/mode
   styleUrls: ['./student-profile.component.css']
 })
 export class StudentProfileComponent implements OnInit {
-  student: StudentProfile = {
-    fullName: 'Henry Antonio Mendoza',
-    email: 'u202212345@upc.edu.pe',
-    dni: '74325432',
-    phone: '987 654 321',
-    age: 20,
-    preferredZone: 'Surco',
-    budget: 'S/. 1000 - S/. 1500',
-    university: 'UPC Monterrico',
-    semester: 6,
-    career: 'Ciencias de la Computacion'
-  };
+  student!: StudentProfile;
+  favorites: Accommodation[] = [];
+  requests: ActiveRequest[] = [];
 
-  favorites: Accommodation[] = [
-    { id: 1, image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', price: 650, district: 'Monterrico', description: 'Amplio y comodo departamento cerca a la UPC monterrico y ESAN.', area: 80, baths: 1, rooms: 1, isFavorite: true },
-    { id: 2, image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', price: 1200, district: 'Monterrico', description: 'Moderno loft con vista a parque, zona segura.', area: 92, baths: 1, rooms: 2, isFavorite: true },
-    { id: 3, image: 'https://images.unsplash.com/photo-1484154218962-a1c002085d2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', price: 950, district: 'Monterrico', description: 'Minidepartamento amoblado, incluye servicios.', area: 45, baths: 1, rooms: 1, isFavorite: true }
-  ];
+  constructor(private studentService: StudentService) { }
 
-  requests: ActiveRequest[] = [
-    { id: 101, image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', price: 650, district: 'Monterrico', status: 'Pendiente' }
-  ];
+  ngOnInit() {
+    this.studentService.getProfile().subscribe(data => {
+      this.student = data;
+    });
 
-  ngOnInit() {}
+    this.studentService.getFavorites().subscribe(data => {
+      this.favorites = data;
+    });
+
+    this.studentService.getRequests().subscribe(data => {
+      this.requests = data;
+    });
+  }
 }
