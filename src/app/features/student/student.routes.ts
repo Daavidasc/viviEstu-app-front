@@ -3,6 +3,7 @@ import { StudentDashboardComponent } from './student-dashboard/student-dashboard
 import { AccommodationDetailComponent } from './accommodation-detail/accommodation-detail.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { DistrictsPageComponent } from './districts-page/districts-page.component';
+import { ComparePageComponent } from './compare-page/compare-page.component';
 
 export const studentRoutes: Routes = [
   {
@@ -20,6 +21,10 @@ export const studentRoutes: Routes = [
   {
     path: 'districts',
     component: DistrictsPageComponent
+  },
+  {
+    path: 'compare',
+    component: ComparePageComponent
   },
   {
     path: '',

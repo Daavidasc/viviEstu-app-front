@@ -1,0 +1,46 @@
+<div class="comparison-card">
+  <div class="card-image-wrapper">
+    <img [src]="item.image" [alt]="item.district" class="card-image">
+  </div>
+  <div class="card-body">
+    <div class="header-row">
+      <h2 class="price">S/.{{ item.price }} /mes</h2>
+      <button class="btn-favorite" (click)="toggleFavorite()">
+        <i class="fa-heart" [class.fas]="item.isFavorite" [class.far]="!item.isFavorite"></i>
+      </button>
+    </div>
+    <p class="description">{{ item.description }}</p>
+    <div class="info-block">
+      <h3 class="info-label">Incluye:</h3>
+      <div class="features-row">
+        <span class="feature">{{ item.area }}m²</span>
+        <span class="feature">{{ item.baths }} baño{{ item.baths !== 1 ? 's' : ''}}</span>
+        <span class="feature">{{ item.rooms }} dorm.</span>
+      </div>
+    </div>
+    <div class="info-block">
+      <h3 class="info-label">Ubicación:</h3>
+      <p class="info-text">{{ item.address }}</p>
+      <p class="info-text">{{ item.district }}</p>
+    </div>
+    <div class="info-block">
+      <h3 class="info-label">Universidades Cercanas:</h3>
+      <div class="tags-row">
+        @for(uni of item.nearbyUniversities; track uni){
+          <span class="tag">{{ uni }}</span>
+        }
+      </div>
+    </div>
+    <div class="info-block">
+      <h3 class="info-label">Opciones de movilidad</h3>
+      <div class="tags-row">
+        @for(mob of item.mobilityOptions; track mob){
+          <span class="tag">{{ mob }}</span>
+        }
+      </div>
+    </div>
+    <div class="action-row">
+       <button class="btn btn-primary btn-change">Cambiar</button>
+    </div>
+  </div>
+</div>

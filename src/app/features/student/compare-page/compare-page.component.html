@@ -1,0 +1,22 @@
+<div class="app-container">
+  <app-student-navbar />
+
+  <main class="main-content">
+    <div class="container">
+      <h1 class="page-title">Comparar</h1>
+      <div class="comparison-grid">
+        <!-- Columna 1 -->
+        @if (itemsToCompare.length > 0) {
+          <app-comparison-card [item]="itemsToCompare[0]" />
+        }
+
+        <!-- Columna 2 -->
+        @if (itemsToCompare.length > 1) {
+          <app-comparison-card [item]="itemsToCompare[1]" />
+        }
+      </div>
+    </div>
+  </main>
+
+  <app-footer />
+</div>
