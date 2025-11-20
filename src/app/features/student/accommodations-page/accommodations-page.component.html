@@ -20,22 +20,24 @@
                 </p>
             </div>
 
-            <div class="accommodations-list" *ngIf="accommodations.length > 0; else noResults">
-                <app-accommodation-card *ngFor="let item of accommodations" [accommodation]="item"
-                    (favoriteToggled)="handleFavoriteToggle($event)">
+            @if (accommodations.length > 0) {
+            <div class="accommodations-list">
+                @for (item of accommodations; track item.id) {
+                <app-accommodation-card [accommodation]="item" (favoriteToggled)="handleFavoriteToggle($event)">
                 </app-accommodation-card>
+                }
             </div>
-
-            <ng-template #noResults>
-                <div class="empty-state">
-                    <p class="empty-message">No se encontraron departamentos en esta zona.</p>
-                </div>
-            </ng-template>
+            } @else {
+            <div class="empty-state">
+                <p class="empty-message">No se encontraron departamentos en esta zona.</p>
+            </div>
+            }
         </div>
     </main>
 
     <!-- Filter Modal -->
-    <div class="modal-overlay" *ngIf="showFilterModal" (click)="toggleFilterModal()">
+    @if (showFilterModal) {
+    <div class="modal-overlay" (click)="toggleFilterModal()">
         <div class="modal-content" (click)="$event.stopPropagation()">
             <div class="modal-header">
                 <h3>Filtrar Departamentos</h3>
@@ -45,13 +47,17 @@
                 <div class="form-group">
                     <label>Distrito</label>
                     <select [(ngModel)]="filterCriteria.district">
-                        <option *ngFor="let dist of districts" [value]="dist">{{ dist }}</option>
+                        @for (dist of districts; track dist) {
+                        <option [value]="dist">{{ dist }}</option>
+                        }
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Universidad Cercana</label>
                     <select [(ngModel)]="filterCriteria.university">
-                        <option *ngFor="let uni of universities" [value]="uni">{{ uni }}</option>
+                        @for (uni of universities; track uni) {
+                        <option [value]="uni">{{ uni }}</option>
+                        }
                     </select>
                 </div>
                 <div class="form-group">
@@ -69,6 +75,7 @@
             </div>
         </div>
     </div>
+    }
 
     <app-footer></app-footer>
 </div>
