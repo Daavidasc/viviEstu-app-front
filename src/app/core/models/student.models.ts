@@ -64,4 +64,10 @@ export interface Zone {
   id: number;
   name: string;
   image: string;
+  secondaryImage?: string;
+  securityRating?: number;
+  averagePrice?: number;
+  nearbyUniversities?: string[];
+  mobilityOptions?: string[];
+  description?: string;
 }

@@ -6,6 +6,7 @@ import { DistrictsPageComponent } from './districts-page/districts-page.componen
 import { ComparePageComponent } from './compare-page/compare-page.component';
 import { EditStudentProfilePageComponent } from './edit-student-profile-page/edit-student-profile-page.component';
 import { AccommodationsPageComponent } from './accommodations-page/accommodations-page.component';
+import { DistrictDetailPageComponent } from './district-detail-page/district-detail-page.component';
 
 export const studentRoutes: Routes = [
   {
@@ -31,6 +32,10 @@ export const studentRoutes: Routes = [
   {
     path: 'districts',
     component: DistrictsPageComponent
+  },
+  {
+    path: 'districts/:id',
+    component: DistrictDetailPageComponent
   },
   {
     path: 'compare',

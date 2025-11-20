@@ -1,0 +1,73 @@
+<div class="app-container">
+    <app-student-navbar></app-student-navbar>
+
+    <main class="main-content" *ngIf="zone">
+        <div class="container">
+            <div class="detail-card">
+                <div class="detail-header">
+                    <h1>{{ zone.name }}</h1>
+                    <button class="btn-favorite">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+
+                <div class="images-grid">
+                    <div class="main-image">
+                        <img [src]="zone.image" [alt]="zone.name">
+                    </div>
+                    <div class="secondary-image" *ngIf="zone.secondaryImage">
+                        <img [src]="zone.secondaryImage" [alt]="zone.name + ' view'">
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="left-column">
+                        <div class="section statistics">
+                            <h3>Estadisticas:</h3>
+                            <p class="stat-item">
+                                <span class="label">Seguridad:</span>
+                                <span class="value highlight">{{ zone.securityRating }}/5</span>
+                            </p>
+                            <p class="stat-item">
+                                <span class="label">precio promedio:</span>
+                                <span class="value highlight">{{ zone.averagePrice }} PEN</span>
+                            </p>
+                        </div>
+
+                        <div class="section mobility">
+                            <h3>Opciones de movilidad</h3>
+                            <div class="tags">
+                                <span class="tag" *ngFor="let option of zone.mobilityOptions">{{ option }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="right-column">
+                        <div class="section universities">
+                            <h3>Universidades Cercanas:</h3>
+                            <div class="uni-list">
+                                <span class="uni-item" *ngFor="let uni of zone.nearbyUniversities">{{ uni }}</span>
+                            </div>
+                        </div>
+
+                        <div class="section description">
+                            <h3>Descripcion:</h3>
+                            <p>"{{ zone.description }}"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section comments">
+                    <h3>Comentarios:</h3>
+                    <div class="comment-box">
+                        <textarea [(ngModel)]="commentText" placeholder="Escribe un comentario..."></textarea>
+                        <button class="btn-comment" (click)="addComment()">Comentar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <app-footer></app-footer>
+</div>

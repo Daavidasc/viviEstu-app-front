@@ -4,7 +4,10 @@
   </div>
   <div class="card-body">
     <h2 class="zone-name">{{ zone.name }}</h2>
-    <!-- El botón ahora es un enlace que navega a la página de departamentos con el distrito como parámetro -->
-    <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: zone.name }" class="btn btn-primary btn-search">Buscar</a>
+    <div class="card-actions">
+      <a [routerLink]="['/student/districts', zone.id]" class="btn btn-outline btn-detail">Ver detalle</a>
+      <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: zone.name }"
+        class="btn btn-primary btn-search">Buscar</a>
+    </div>
   </div>
 </div>
