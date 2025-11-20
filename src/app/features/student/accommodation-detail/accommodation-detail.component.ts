@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AccommodationDetail } from '../../../core/models/student.models';
@@ -11,7 +10,7 @@ import { ContactFormComponent } from '../components/contact-form/contact-form.co
 @Component({
   selector: 'app-accommodation-detail',
   standalone: true,
-  imports: [CommonModule, FormsModule, StudentNavbarComponent, FooterComponent, GalleryComponent, ContactFormComponent],
+  imports: [FormsModule, StudentNavbarComponent, FooterComponent, GalleryComponent, ContactFormComponent],
   templateUrl: './accommodation-detail.component.html',
   styleUrls: ['./accommodation-detail.component.css']
 })

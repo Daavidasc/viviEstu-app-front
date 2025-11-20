@@ -107,19 +107,22 @@
       </div>
 
       <div class="faq-list">
-        <div *ngFor="let faq of faqs; let i = index"
-             class="faq-item"
-             [class.highlight]="i === 1"
-             [class.active]="faq.isOpen"
-             (click)="toggleFaq(i)">
-          <div class="faq-question">
-            {{ faq.question }}
-            <i class="fas" [ngClass]="faq.isOpen ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        @for (faq of faqs; track $index; let i = $index) {
+          <div class="faq-item"
+               [class.highlight]="i === 1"
+               [class.active]="faq.isOpen"
+               (click)="toggleFaq(i)">
+            <div class="faq-question">
+              {{ faq.question }}
+              <i class="fas" [ngClass]="faq.isOpen ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            </div>
+            @if (faq.isOpen) {
+              <div class="faq-answer">
+                {{ faq.answer }}
+              </div>
+            }
           </div>
-          <div class="faq-answer" *ngIf="faq.isOpen">
-            {{ faq.answer }}
-          </div>
-        </div>
+        }
       </div>
     </div>
   </section>

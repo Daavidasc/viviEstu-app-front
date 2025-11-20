@@ -1,7 +1,8 @@
 <div class="app-container">
   <app-student-navbar />
 
-  <main class="main-content" *ngIf="accommodation">
+  @if (accommodation) {
+  <main class="main-content">
     <div class="container content-grid">
 
       <!-- COLUMNA IZQUIERDA: Detalles del Alojamiento -->
@@ -41,7 +42,9 @@
             <div class="section-block">
               <h3 class="section-label">Universidades Cercanas:</h3>
               <div class="tags-row">
-                <span *ngFor="let uni of accommodation.nearbyUniversities" class="uni-tag">{{ uni }}</span>
+                @for (uni of accommodation.nearbyUniversities; track uni) {
+                  <span class="uni-tag">{{ uni }}</span>
+                }
               </div>
             </div>
 
@@ -49,7 +52,9 @@
             <div class="section-block">
               <h3 class="section-label">Opciones de movilidad</h3>
               <div class="tags-row">
-                <span *ngFor="let mob of accommodation.mobilityOptions" class="mobility-tag">{{ mob }}</span>
+                @for (mob of accommodation.mobilityOptions; track mob) {
+                  <span class="mobility-tag">{{ mob }}</span>
+                }
               </div>
             </div>
 
@@ -77,6 +82,7 @@
 
     </div>
   </main>
+  }
 
   <app-footer />
 </div>
