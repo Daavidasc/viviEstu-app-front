@@ -11,7 +11,7 @@
                         accommodations[0].universityNear
                         : 'Todos los departamentos') }}
                     </h1>
-                    <button class="btn-filter">
+                    <button class="btn-filter" (click)="toggleFilterModal()">
                         <i class="fas fa-sliders-h"></i> Filtros
                     </button>
                 </div>
@@ -33,6 +33,42 @@
             </ng-template>
         </div>
     </main>
+
+    <!-- Filter Modal -->
+    <div class="modal-overlay" *ngIf="showFilterModal" (click)="toggleFilterModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Filtrar Departamentos</h3>
+                <button class="close-btn" (click)="toggleFilterModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Distrito</label>
+                    <select [(ngModel)]="filterCriteria.district">
+                        <option *ngFor="let dist of districts" [value]="dist">{{ dist }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Universidad Cercana</label>
+                    <select [(ngModel)]="filterCriteria.university">
+                        <option *ngFor="let uni of universities" [value]="uni">{{ uni }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Precio (S/.)</label>
+                    <div class="price-inputs">
+                        <input type="number" placeholder="Min" [(ngModel)]="filterCriteria.minPrice">
+                        <span>-</span>
+                        <input type="number" placeholder="Max" [(ngModel)]="filterCriteria.maxPrice">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" (click)="toggleFilterModal()">Cancelar</button>
+                <button class="btn-primary" (click)="applyFilters()">Aplicar Filtros</button>
+            </div>
+        </div>
+    </div>
 
     <app-footer></app-footer>
 </div>

@@ -38,4 +38,26 @@ export class AccommodationService {
             accommodation.isFavorite = !accommodation.isFavorite;
         }
     }
+
+    filterAccommodations(filters: { district?: string, university?: string, minPrice?: number, maxPrice?: number }): Observable<Accommodation[]> {
+        let filtered = this.allAccommodations;
+
+        if (filters.district && filters.district !== 'Todos') {
+            filtered = filtered.filter(item => item.district === filters.district);
+        }
+
+        if (filters.university && filters.university !== 'Todas') {
+            filtered = filtered.filter(item => item.universityNear === filters.university);
+        }
+
+        if (filters.minPrice) {
+            filtered = filtered.filter(item => item.price >= filters.minPrice!);
+        }
+
+        if (filters.maxPrice) {
+            filtered = filtered.filter(item => item.price <= filters.maxPrice!);
+        }
+
+        return of(filtered);
+    }
 }
