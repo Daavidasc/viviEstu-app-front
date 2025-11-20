@@ -60,6 +60,11 @@
   color: var(--primary-color);
 }
 
+.nav-actions {
+  display: flex;
+  gap: 1rem;
+}
+
 /* --- Buttons --- */
 .btn {
   padding: 0.6rem 1.8rem;
@@ -69,6 +74,7 @@
   cursor: pointer;
   transition: all 0.2s;
   font-family: var(--font-family);
+  border: 1px solid transparent;
 }
 .btn-primary {
   background-color: var(--primary-color);
@@ -76,6 +82,16 @@
 }
 .btn-primary:hover {
   background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+.btn-secondary {
+  background-color: transparent;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.btn-secondary:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
   transform: translateY(-1px);
 }
 
