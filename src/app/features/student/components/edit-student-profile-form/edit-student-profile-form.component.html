@@ -1,0 +1,32 @@
+<div class="form-card" *ngIf="student">
+  <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+    <div class="form-group">
+      <label class="label-text">Nombre Completo</label>
+      <input type="text" class="form-input" [(ngModel)]="student.fullName" name="fullName" required>
+    </div>
+    <div class="form-group">
+      <label class="label-text">Email</label>
+      <input type="email" class="form-input" [(ngModel)]="student.email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label class="label-text">Universidad</label>
+      <input type="text" class="form-input" [(ngModel)]="student.university" name="university" required>
+    </div>
+    <div class="form-group">
+      <label class="label-text">Ciclo</label>
+      <input type="number" class="form-input" [(ngModel)]="student.semester" name="cycle" required>
+    </div>
+    <div class="form-group">
+      <label class="label-text">Zona Preferida</label>
+      <input type="text" class="form-input" [(ngModel)]="student.preferredZone" name="preferredZone" required>
+    </div>
+    <div class="form-group">
+      <label class="label-text">Presupuesto (S/.)</label>
+      <input type="number" class="form-input" [(ngModel)]="student.budget" name="budget" required>
+    </div>
+    <div class="form-actions">
+      <a routerLink="/student/profile" class="btn btn-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </div>
+  </form>
+</div>

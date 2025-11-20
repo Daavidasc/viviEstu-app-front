@@ -1,0 +1,20 @@
+:host {
+  --primary: #B88E2F;
+  --white: #ffffff;
+  --border-color: #ccc;
+}
+.form-card {
+  background-color: var(--white);
+  padding: 3rem;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+.form-group { margin-bottom: 1.5rem; }
+.label-text { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; display: block; }
+.form-input { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 1rem; outline: none; }
+.form-input:focus { border-color: var(--primary); }
+.form-actions { margin-top: 2.5rem; display: flex; justify-content: flex-end; gap: 1rem; }
+.btn { padding: 0.8rem 2.5rem; border: none; border-radius: 6px; font-weight: 700; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+.btn-primary { background-color: var(--primary); color: var(--white); }
+.btn-secondary { background-color: #f0f0f0; color: #333; border: 1px solid #ccc; }

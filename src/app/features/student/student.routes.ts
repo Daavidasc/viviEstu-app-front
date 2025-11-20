@@ -4,6 +4,7 @@ import { AccommodationDetailComponent } from './accommodation-detail/accommodati
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { DistrictsPageComponent } from './districts-page/districts-page.component';
 import { ComparePageComponent } from './compare-page/compare-page.component';
+import { EditStudentProfilePageComponent } from './edit-student-profile-page/edit-student-profile-page.component';
 
 export const studentRoutes: Routes = [
   {
@@ -17,6 +18,10 @@ export const studentRoutes: Routes = [
   {
     path: 'profile',
     component: StudentProfileComponent
+  },
+  {
+    path: 'profile/edit',
+    component: EditStudentProfilePageComponent
   },
   {
     path: 'districts',
