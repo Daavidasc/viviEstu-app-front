@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-footer', //como se va a llamar al componente
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   template: `
-  <footer class="footer">
+  <footer id="contacto" class="footer">
     <div class="footer-content">
       <div class="logo-section">
         <img class="footer-logo" src="/assets/LogoFull.jpg">
@@ -16,16 +17,16 @@ import { CommonModule } from '@angular/common';
         <p>LIMA 54321 PERU</p>
         <div class="social-media">
           <a href="#"><img src="/assets/FacebookIcon.png" alt="Facebook"></a>
-          <a href="#"><img src="/assets/InstagramIcon.png" alt="Instagram"></a>
+          <a href="https://www.instagram.com/"><img src="/assets/InstagramIcon.png" alt="Instagram"></a>
           <a href="#"><img src="/assets/LinkedinIcon.png" alt="Linkedin"></a>
       </div>
       </div> 
       <nav class="footer-nav">
         <p>Enlaces</p>
-        <a href="#">Inicio</a>
-        <a href="#">Quienes Somos</a>
-        <a href="#">FAQ</a>
-        <a href="#">Unete</a>
+        <a href="/#menu">Inicio</a>
+        <a href="/#nosotros">Quienes Somos</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/auth/register">Unete</a>
       </nav>
 
     </div>

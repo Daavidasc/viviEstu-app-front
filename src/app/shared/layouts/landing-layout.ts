@@ -1,30 +1,29 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { FooterComponent } from '../components/footer';
 import { LandingComponent } from '../../features/landing/pages/landingComponent';
 
 @Component({
   selector: 'app-landing-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FooterComponent, LandingComponent],
+  imports: [CommonModule, RouterModule, FooterComponent, LandingComponent],
   template: `
-  <div class="navbar">
+  <div id="menu" class="navbar">
   <nav class="navegacion-principal">
-    <a href="#" > <img class="img" src="/assets/LogoFull.jpg"></a>
+    <a href="/#menu" > <img class="img" src="/assets/LogoFull.jpg"></a>
     <ul>
-    <li><a href="#">Quienes Somos</a></li>
-    <li><a href="#">Preguntas Frecuentes</a></li>
-    <li><a href="#">Contactenos</a></li>
+    <li><a href="/#nosotros">Quienes Somos</a></li>
+    <li><a href="/#faq">Preguntas Frecuentes</a></li>
+    <li><a href="/#contacto">Contactenos</a></li>
     </ul>
-
     
-    <a href="#" class="button">Unete Ahora</a>
+    <a routerLink="/auth/register" class="button">Unete Ahora</a>
   </nav>
   </div>
 
     <main>
-      <app-Landing />
+      <router-outlet></router-outlet>
     </main>
 
   <app-footer/>

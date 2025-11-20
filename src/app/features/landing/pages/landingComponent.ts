@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
         </nav>
     </div>
 
-    <div class="nosotros">
+    <div id="nosotros" class="nosotros">
         <img class="logo1" src="/assets/logo.png">
         <div class="nosotros-elementos">
         <nav class="nosotros-box">
@@ -72,11 +72,11 @@ import { CommonModule } from '@angular/common';
 
     </div>
 
-    <div class="preguntas">
+    <div id="faq" class="preguntas">
 
     <img class="banner2" src="/assets/banner2.png">
 
-    <div class="preguntas-contenido">
+    <div  class="preguntas-contenido">
 
             <img class="logo2" src="/assets/logo.png">
         <h2>Preguntas Frecuentes</h2>

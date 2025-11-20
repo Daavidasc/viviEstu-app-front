@@ -7,7 +7,8 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./features/landing/home.routes').then(m => m.homeRoutes)
+    //loadChildren: () => import('./features/landing/home.routes').then(m => m.homeRoutes)
+    loadChildren: () => import('./features/landing/landing.routes').then(m => m.landingRoutes)
   },
   {
     path: 'student',
