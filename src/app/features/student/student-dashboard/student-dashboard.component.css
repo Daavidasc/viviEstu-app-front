@@ -5,6 +5,7 @@
   --bg-cream: #FFF8E7;
   --font-family: 'Poppins', sans-serif;
 }
+
 .app-container {
   font-family: var(--font-family);
   color: var(--text-dark);
@@ -13,44 +14,90 @@
   display: flex;
   flex-direction: column;
 }
+
 .container {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
+
 .main-content {
   padding-top: 2rem;
   padding-bottom: 4rem;
   flex-grow: 1;
 }
-.section-spacer { height: 3rem; }
-.highlight { color: var(--primary-color); }
-.dashboard-header { margin-bottom: 2rem; }
+
+.section-spacer {
+  height: 3rem;
+}
+
+.highlight {
+  color: var(--primary-color);
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
 .greeting {
   font-size: 2rem;
   font-weight: 800;
   color: #000;
   margin-bottom: 0.5rem;
 }
+
+.subtitle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-districts {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+}
+
+.btn-districts:hover {
+  opacity: 0.9;
+}
+
 .section-subtitle {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--text-dark);
   text-transform: lowercase;
 }
-.section-subtitle::first-letter { text-transform: uppercase; }
-.section-subtitle .highlight { text-transform: capitalize; }
-.section-subtitle.secondary { margin-bottom: 1.5rem; }
+
+.section-subtitle::first-letter {
+  text-transform: uppercase;
+}
+
+.section-subtitle .highlight {
+  text-transform: capitalize;
+}
+
+.section-subtitle.secondary {
+  margin-bottom: 1.5rem;
+}
+
 .accommodation-list {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
+
 .see-more-container {
   text-align: center;
   margin-top: 2rem;
 }
+
 .see-more-link {
   color: var(--primary-color);
   font-weight: 600;
@@ -58,7 +105,11 @@
   border-bottom: 2px solid transparent;
   text-decoration: none;
 }
-.see-more-link:hover { border-bottom-color: var(--primary-color); }
+
+.see-more-link:hover {
+  border-bottom-color: var(--primary-color);
+}
+
 .empty-state {
   text-align: center;
   padding: 2rem;
@@ -67,7 +118,13 @@
   border: 1px dashed #ccc;
   color: var(--text-gray);
 }
+
 @media (max-width: 768px) {
-  .dashboard-header h1 { font-size: 1.5rem; }
-  .dashboard-header h2 { font-size: 1rem; }
+  .dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1rem;
+  }
 }
