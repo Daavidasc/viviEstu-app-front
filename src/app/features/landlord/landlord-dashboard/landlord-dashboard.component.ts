@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { LandlordNavbarComponent } from '../../../shared/components/landlord-navbar/landlord-navbar.component';
 import { RequestsSectionComponent } from '../components/requests-section/requests-section.component';
@@ -9,7 +10,7 @@ import { RequestItem, MyRentalItem } from '../../../core/models/landlord.models'
 @Component({
   selector: 'app-landlord-dashboard',
   standalone: true,
-  imports: [CommonModule, FooterComponent, LandlordNavbarComponent, RequestsSectionComponent, LandlordRentalCardComponent],
+  imports: [CommonModule, RouterModule, FooterComponent, LandlordNavbarComponent, RequestsSectionComponent, LandlordRentalCardComponent],
   templateUrl: './landlord-dashboard.component.html',
   styleUrls: ['./landlord-dashboard.component.css']
 })

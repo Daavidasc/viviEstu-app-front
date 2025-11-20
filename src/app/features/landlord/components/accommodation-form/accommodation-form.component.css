@@ -1,0 +1,30 @@
+:host {
+  --primary-gold: #B88E2F;
+  --white: #ffffff;
+  --border-color: #ccc;
+}
+.form-card {
+    background-color: var(--white);
+    padding: 3rem;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+.form-title { font-size: 2rem; font-weight: 800; margin-bottom: 2rem; color: #000; }
+.form-group { margin-bottom: 1.2rem; }
+.inline-group { display: flex; align-items: center; gap: 1rem; }
+.label-text { font-weight: 600; font-size: 1rem; margin-bottom: 0.3rem; display: block; }
+.inline-group .label-text { margin-bottom: 0; min-width: 200px; }
+.form-input { width: 100%; padding: 0.6rem 0.8rem; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; font-size: 0.9rem; outline: none; }
+.form-input:focus { border-color: var(--primary-gold); }
+.short-input { width: 80px; }
+.medium-input { width: 100%; max-width: 300px; }
+.form-checkbox { width: 20px; height: 20px; border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer; }
+.file-upload-wrapper { position: relative; }
+.file-box { width: 60px; height: 30px; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--white); }
+.file-input { position: absolute; top: 0; left: 0; width: 60px; height: 30px; opacity: 0; cursor: pointer; }
+.form-actions { margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; }
+.btn { border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+.btn-primary { background-color: #B08D35; color: var(--white); }
+.btn-secondary { background-color: #f0f0f0; color: #333; border: 1px solid #ccc; }
+.btn-publish, .btn-secondary { padding: 0.8rem 4rem; font-size: 1.1rem; border-radius: 8px; }

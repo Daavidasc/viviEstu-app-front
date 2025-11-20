@@ -17,3 +17,15 @@ export interface MyRentalItem {
   clicks: number;
   requestsCount: number;
 }
+
+export interface NewAccommodation {
+  title: string;
+  description: string;
+  rooms: number | null;
+  price: number | null;
+  location: string;
+  nearbyUniversities: string;
+  roomiesAllowed: boolean;
+  floor: number | null;
+  images: File[];
+}
