@@ -8,14 +8,13 @@
     </div>
     <div class="nav-links desktop-only">
       <a routerLink="/landlord/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Inicio</a>
-      <a routerLink="/landlord/accommodations" routerLinkActive="active" class="nav-link">Departamentos</a>
-      <a routerLink="/landlord/calculator" routerLinkActive="active" class="nav-link">Calculadora</a>
-      <a routerLink="/landlord/forum" routerLinkActive="active" class="nav-link">Foro</a>
+      <a routerLink="/landlord/properties" routerLinkActive="active" class="nav-link">Mis Propiedades</a>
+      <a routerLink="/landlord/requests" routerLinkActive="active" class="nav-link">Solicitudes</a>
     </div>
     <div class="user-actions">
-       <div class="user-avatar-nav">
+       <a routerLink="/landlord/profile" class="user-avatar-nav">
          <i class="far fa-user-circle"></i>
-       </div>
+       </a>
     </div>
   </div>
 </nav>

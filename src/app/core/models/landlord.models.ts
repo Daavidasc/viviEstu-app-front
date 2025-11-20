@@ -29,3 +29,13 @@ export interface NewAccommodation {
   floor: number | null;
   images: File[];
 }
+
+export interface LandlordProfile {
+  fullName: string;
+  email: string;
+  dni: string;
+  phone: string;
+  age: number;
+  address: string;
+  propertiesCount: number;
+}

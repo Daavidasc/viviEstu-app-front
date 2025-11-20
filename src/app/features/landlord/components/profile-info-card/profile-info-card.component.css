@@ -1,0 +1,21 @@
+:host {
+  --primary: #B88E2F;
+  --primary-hover: #a07a26;
+  --white: #ffffff;
+}
+.info-card {
+  background-color: var(--white);
+  border-radius: 12px;
+  padding: 3rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.info-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 1.5rem; }
+.info-grid { display: flex; flex-direction: column; gap: 1.2rem; }
+.info-row { font-size: 1rem; color: #000; }
+.label { font-weight: 700; margin-right: 0.5rem; }
+.value { font-weight: 400; }
+.action-row { margin-top: 3rem; display: flex; justify-content: flex-end; }
+.btn { border: none; border-radius: 6px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+.btn-primary { background-color: var(--primary); color: var(--white); }
+.btn-primary:hover { background-color: var(--primary-hover); }
+.btn-edit { padding: 0.8rem 2.5rem; font-size: 0.95rem; border-radius: 6px; }
