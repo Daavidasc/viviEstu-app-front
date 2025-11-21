@@ -44,9 +44,35 @@ export class LoginComponent {
       next: (response) => {
         console.log('Login exitoso', response);
         localStorage.setItem('token', response.token);
-        // Aquí podrías guardar más datos del usuario si es necesario
-        alert('¡Bienvenido ' + response.name + '!');
-        this.router.navigate(['/dashboard']); // Asumiendo ruta dashboard
+
+        // Decodificar JWT para obtener el rol del usuario
+        try {
+          const payload = JSON.parse(atob(response.token.split('.')[1]));
+          const role = payload.role; // "ROLE_PROPIETARIO" o "ROLE_ESTUDIANTE"
+          const userId = payload.Id;
+
+          // Guardar información del usuario
+          localStorage.setItem('userId', userId.toString());
+          localStorage.setItem('userRole', role);
+          this.cdr.detectChanges();
+
+          // Navegar según el rol
+          if (role === 'ROLE_PROPIETARIO') {
+            this.router.navigate(['/landlord/dashboard']);
+          } else if (role === 'ROLE_ESTUDIANTE') {
+            this.router.navigate(['/student/dashboard']);
+          } else {
+            this.errorMessage = 'Tipo de usuario no reconocido';
+            this.isLoading = false;
+            return;
+          }
+
+          this.isLoading = false;
+        } catch (error) {
+          console.error('Error al decodificar JWT:', error);
+          this.errorMessage = 'Error al procesar la autenticación';
+          this.isLoading = false;
+        }
         this.isLoading = false;
       },
       error: (err) => {
