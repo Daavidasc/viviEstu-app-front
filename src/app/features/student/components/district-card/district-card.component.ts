@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Zone } from '../../../../core/models/student.models';
+import { DistritoResponse } from '../../../../core/models/accommodation.models';
 
 @Component({
   selector: 'app-district-card',
@@ -11,5 +11,5 @@ import { Zone } from '../../../../core/models/student.models';
   styleUrls: ['./district-card.component.css']
 })
 export class DistrictCardComponent {
-  @Input() zone!: Zone;
+  @Input() zone!: DistritoResponse;
 }

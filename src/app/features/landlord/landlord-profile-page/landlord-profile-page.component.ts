@@ -4,7 +4,7 @@ import { LandlordNavbarComponent } from '../../../shared/components/landlord-nav
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { ProfileHeaderCardComponent } from '../components/profile-header-card/profile-header-card.component';
 import { ProfileInfoCardComponent } from '../components/profile-info-card/profile-info-card.component';
-import { LandlordProfile } from '../../../core/models/landlord.models';
+import { LandlordProfileViewModel } from '../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-landlord-profile-page',
@@ -14,11 +14,14 @@ import { LandlordProfile } from '../../../core/models/landlord.models';
   styleUrls: ['./landlord-profile-page.component.css']
 })
 export class LandlordProfilePageComponent {
-  landlord: LandlordProfile = {
+  landlord: LandlordProfileViewModel = {
+    id: 1,
+    nombre: 'Henry Antonio',
+    apellidos: 'Mendoza',
     fullName: 'Henry Antonio Mendoza',
-    email: 'hmendoza@propiedades.com',
+    correo: 'hmendoza@propiedades.com',
     dni: '74325432',
-    phone: '987 654 321',
+    telefono: '987 654 321',
     age: 45,
     address: 'Surco, Lima',
     propertiesCount: 3

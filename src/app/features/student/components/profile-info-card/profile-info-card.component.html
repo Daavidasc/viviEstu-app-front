@@ -1,43 +1,43 @@
 @if (student) {
-  <div class="info-card">
-    <div class="info-section">
-      <h3 class="info-title">Información Personal</h3>
-      <div class="info-grid">
-        <div class="info-item">
-          <span class="label">DNI:</span> <span class="value">{{ student.dni }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">Teléfono:</span> <span class="value">{{ student.phone }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">Edad:</span> <span class="value">{{ student.age }} años</span>
-        </div>
-        <div class="info-item">
-          <span class="label">Zona preferida:</span> <span class="value">{{ student.preferredZone }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">Presupuesto:</span> <span class="value">S/. {{ student.budget }}</span>
-        </div>
+<div class="info-card">
+  <div class="info-section">
+    <h3 class="info-title">Información Personal</h3>
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="label">DNI:</span> <span class="value">{{ student.dni }}</span>
       </div>
-    </div>
-
-    <div class="info-section">
-      <h3 class="info-title">Información Académica</h3>
-      <div class="info-grid">
-        <div class="info-item">
-          <span class="label">Universidad:</span> <span class="value">{{ student.university }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">Ciclo:</span> <span class="value">{{ student.semester }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">Carrera:</span> <span class="value">{{ student.career }}</span>
-        </div>
+      <div class="info-item">
+        <span class="label">Teléfono:</span> <span class="value">{{ student.telefono }}</span>
       </div>
-    </div>
-
-    <div class="action-row">
-      <a routerLink="/student/profile/edit" class="btn btn-primary btn-edit">Editar Información</a>
+      <div class="info-item">
+        <span class="label">Edad:</span> <span class="value">{{ student.age }} años</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Zona preferida:</span> <span class="value">{{ student.preferredZone }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Presupuesto:</span> <span class="value">S/. {{ student.budget }}</span>
+      </div>
     </div>
   </div>
+
+  <div class="info-section">
+    <h3 class="info-title">Información Académica</h3>
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="label">Universidad:</span> <span class="value">{{ student.universidad }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Ciclo:</span> <span class="value">{{ student.ciclo }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Carrera:</span> <span class="value">{{ student.carrera }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-row">
+    <a routerLink="/student/profile/edit" class="btn btn-primary btn-edit">Editar Información</a>
+  </div>
+</div>
 }

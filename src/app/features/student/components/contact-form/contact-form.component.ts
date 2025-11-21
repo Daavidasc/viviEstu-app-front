@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ContactForm } from '../../../../core/models/student.models';
+import { ContactFormViewModel } from '../../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-contact-form',
@@ -11,7 +11,9 @@ import { ContactForm } from '../../../../core/models/student.models';
   styleUrls: ['./contact-form.component.css']
 })
 export class ContactFormComponent {
-  contactForm: ContactForm = {
+  @Input() accommodationId!: number;
+
+  contactForm: ContactFormViewModel = {
     occupants: null,
     months: null,
     offer: null,
@@ -20,7 +22,8 @@ export class ContactFormComponent {
 
   sendRequest() {
     console.log('Enviando solicitud de contacto:', this.contactForm);
-    // Lógica para enviar formulario al backend
+    console.log('Alojamiento ID:', this.accommodationId);
+    // Aquí se llamaría al servicio para enviar la solicitud, usando accommodationId y el ID del estudiante actual
     alert('Solicitud enviada al arrendador');
   }
 }

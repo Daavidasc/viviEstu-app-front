@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { AccommodationCardComponent } from '../components/accommodation-card/accommodation-card.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
-import { UserProfile, Accommodation } from '../../../core/models/student.models';
+import { StudentProfileViewModel, AccommodationCardViewModel } from '../../../core/models/ui-view.models';
 import { AccommodationService } from '../../../core/services/accommodation.service';
 import { StudentService } from '../../../core/services/student.service';
 
@@ -16,11 +16,11 @@ import { StudentService } from '../../../core/services/student.service';
   styleUrls: ['./student-dashboard.component.css']
 })
 export class StudentDashboardComponent implements OnInit {
-  currentUser: UserProfile | null = null;
+  currentUser: StudentProfileViewModel | null = null;
 
-  allAccommodations: Accommodation[] = [];
-  zoneRecommendations: Accommodation[] = [];
-  uniRecommendations: Accommodation[] = [];
+  allAccommodations: AccommodationCardViewModel[] = [];
+  zoneRecommendations: AccommodationCardViewModel[] = [];
+  uniRecommendations: AccommodationCardViewModel[] = [];
 
   constructor(
     private accommodationService: AccommodationService,
@@ -33,22 +33,17 @@ export class StudentDashboardComponent implements OnInit {
 
   loadDashboardData() {
     this.studentService.getProfile().subscribe(profile => {
-      this.currentUser = {
-        id: profile.id || 0,
-        name: profile.name || '',
-        university: profile.university,
-        preferredDistrict: profile.preferredDistrict || '',
-        avatarUrl: profile.avatarUrl || ''
-      };
+      this.currentUser = profile;
 
-      this.accommodationService.getAccommodations().subscribe(data => {
+      this.accommodationService.getAllCards().subscribe(data => {
         this.allAccommodations = data;
 
         if (this.currentUser) {
           this.zoneRecommendations = this.allAccommodations
-            .filter(item => item.district === this.currentUser!.preferredDistrict)
+            .filter(item => item.district === this.currentUser!.district)
             .slice(0, 3);
 
+          // Filter by universityNear field if available
           this.uniRecommendations = this.allAccommodations
             .filter(item => item.universityNear === this.currentUser!.university)
             .slice(0, 3);
@@ -57,7 +52,7 @@ export class StudentDashboardComponent implements OnInit {
     });
   }
 
-  handleFavoriteToggle(item: Accommodation) {
+  handleFavoriteToggle(item: AccommodationCardViewModel) {
     this.accommodationService.toggleFavorite(item.id);
     console.log(`Alojamiento ${item.id} favorito toggled`);
   }

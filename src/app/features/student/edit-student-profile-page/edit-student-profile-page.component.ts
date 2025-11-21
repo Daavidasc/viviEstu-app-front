@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { EditStudentProfileFormComponent } from '../components/edit-student-profile-form/edit-student-profile-form.component';
-import { StudentProfile } from '../../../core/models/student.models';
+import { StudentProfileViewModel } from '../../../core/models/ui-view.models';
 import { StudentService } from '../../../core/services/student.service';
 
 @Component({
@@ -15,14 +15,14 @@ import { StudentService } from '../../../core/services/student.service';
   styleUrls: ['./edit-student-profile-page.component.css']
 })
 export class EditStudentProfilePageComponent implements OnInit {
-  student!: StudentProfile;
+  student!: StudentProfileViewModel;
 
   constructor(
     private router: Router,
     private studentService: StudentService
   ) {
     const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras.state as { studentData: StudentProfile };
+    const state = navigation?.extras.state as { studentData: StudentProfileViewModel };
     if (state?.studentData) {
       this.student = state.studentData;
     }

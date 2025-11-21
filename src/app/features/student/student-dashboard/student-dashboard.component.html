@@ -10,7 +10,7 @@
       <div class="dashboard-header">
         <h1 class="greeting">Hola {{ currentUser.name }}</h1>
         <div class="subtitle-row">
-          <h2 class="section-subtitle">Recomendados en tu zona: <span class="highlight">{{ currentUser.preferredDistrict
+          <h2 class="section-subtitle">Recomendados en tu zona: <span class="highlight">{{ currentUser.district
               }}</span></h2>
           <a [routerLink]="['/student/districts']" class="btn-districts">Ver zonas</a>
         </div>
@@ -26,14 +26,14 @@
       </div>
       } @else {
       <div class="empty-state">
-        <p>No encontramos alojamientos en {{ currentUser.preferredDistrict }} por el momento.</p>
+        <p>No encontramos alojamientos en {{ currentUser.district }} por el momento.</p>
       </div>
       }
 
       @if (zoneRecommendations.length > 0) {
       <div class="see-more-container">
-        <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: currentUser.preferredDistrict }"
-          class="see-more-link">Ver más en {{ currentUser.preferredDistrict }}...</a>
+        <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: currentUser.district }"
+          class="see-more-link">Ver más en {{ currentUser.district }}...</a>
       </div>
       }
 

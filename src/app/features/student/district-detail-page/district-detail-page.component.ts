@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { LocationService } from '../../../core/services/location.service';
-import { Zone } from '../../../core/models/student.models';
+import { DistrictDetailViewModel } from '../../../core/models/ui-view.models';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./district-detail-page.component.css']
 })
 export class DistrictDetailPageComponent implements OnInit {
-  zone: Zone | undefined;
+  zone: DistrictDetailViewModel | undefined;
   commentText: string = '';
 
   constructor(

@@ -8,42 +8,43 @@
       <!-- COLUMNA IZQUIERDA: Detalles del Alojamiento -->
       <div class="details-column">
         <div class="card main-card">
-          <app-gallery [images]="accommodation.images" />
+          <app-gallery [images]="getImageUrls()" />
 
           <div class="info-content">
             <!-- Cabecera: Precio y Favorito -->
             <div class="header-row">
-              <h1 class="price-tag">S/.{{ accommodation.price }} <span class="period">/mes</span></h1>
+              <h1 class="price-tag">S/.{{ accommodation.precioMensual }} <span class="period">/mes</span></h1>
               <button class="btn-favorite" (click)="toggleFavorite()">
                 <i class="fa-heart" [class.fas]="accommodation.isFavorite" [class.far]="!accommodation.isFavorite"></i>
               </button>
             </div>
 
-            <p class="description-text">{{ accommodation.description }}</p>
+            <p class="description-text">{{ accommodation.descripcion }}</p>
 
             <!-- Características -->
             <div class="section-block">
               <h3 class="section-label">Incluye:</h3>
               <div class="features-list">
                 <span class="feature-tag">{{ accommodation.area }}m²</span>
-                <span class="feature-tag">{{ accommodation.baths }} baño{{ accommodation.baths !== 1 ? 's' : '' }}</span>
-                <span class="feature-tag">{{ accommodation.rooms }} dorm.</span>
+                <span class="feature-tag">{{ accommodation.banios }} baño{{ accommodation.banios !== 1 ? 's' : ''
+                  }}</span>
+                <span class="feature-tag">{{ accommodation.habitaciones }} dorm.</span>
               </div>
             </div>
 
             <!-- Ubicación -->
             <div class="section-block">
               <h3 class="section-label">Ubicación:</h3>
-              <p class="info-text">{{ accommodation.address }}</p>
-              <p class="info-text highlight">{{ accommodation.district }}</p>
+              <p class="info-text">{{ accommodation.direccion }}</p>
+              <p class="info-text highlight">{{ accommodation.distrito }}</p>
             </div>
 
             <!-- Universidades Cercanas -->
             <div class="section-block">
               <h3 class="section-label">Universidades Cercanas:</h3>
               <div class="tags-row">
-                @for (uni of accommodation.nearbyUniversities; track uni) {
-                  <span class="uni-tag">{{ uni }}</span>
+                @for (uni of accommodation.universidades; track uni) {
+                <span class="uni-tag">{{ uni }}</span>
                 }
               </div>
             </div>
@@ -52,8 +53,8 @@
             <div class="section-block">
               <h3 class="section-label">Opciones de movilidad</h3>
               <div class="tags-row">
-                @for (mob of accommodation.mobilityOptions; track mob) {
-                  <span class="mobility-tag">{{ mob }}</span>
+                @for (mob of accommodation.transportes; track mob) {
+                <span class="mobility-tag">{{ mob }}</span>
                 }
               </div>
             </div>
@@ -61,12 +62,8 @@
             <!-- Sección de Comentarios -->
             <div class="comments-section">
               <h3 class="section-label">Comentarios:</h3>
-              <textarea
-                class="comment-input"
-                rows="4"
-                placeholder="Escribe tu duda o comentario aquí..."
-                [(ngModel)]="newComment"
-              ></textarea>
+              <textarea class="comment-input" rows="4" placeholder="Escribe tu duda o comentario aquí..."
+                [(ngModel)]="newComment"></textarea>
               <div class="comment-actions">
                 <button class="btn btn-primary btn-comment" (click)="postComment()">Comentar</button>
               </div>
@@ -77,7 +74,7 @@
 
       <!-- COLUMNA DERECHA: Formulario de Contacto (Sticky) -->
       <div class="sidebar-column">
-        <app-contact-form />
+        <app-contact-form [accommodationId]="accommodation.id" />
       </div>
 
     </div>

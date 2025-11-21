@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { LandlordProfile } from '../../../../core/models/landlord.models';
+import { LandlordProfileViewModel } from '../../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-edit-profile-form',
@@ -12,7 +12,7 @@ import { LandlordProfile } from '../../../../core/models/landlord.models';
   styleUrls: ['./edit-profile-form.component.css']
 })
 export class EditProfileFormComponent {
-  @Input() landlord!: LandlordProfile;
+  @Input() landlord!: LandlordProfileViewModel;
 
   onSubmit() {
     console.log('Guardando cambios:', this.landlord);

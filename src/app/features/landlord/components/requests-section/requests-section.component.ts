@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RequestItem } from '../../../../core/models/landlord.models';
+import { LandlordRequestViewModel } from '../../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-requests-section',
@@ -10,6 +10,6 @@ import { RequestItem } from '../../../../core/models/landlord.models';
   styleUrls: ['./requests-section.component.css']
 })
 export class RequestsSectionComponent {
-  @Input() requests: RequestItem[] = [];
+  @Input() requests: LandlordRequestViewModel[] = [];
   activeTab: string = 'recientes';
 }

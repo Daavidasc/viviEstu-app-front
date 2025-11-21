@@ -7,14 +7,22 @@
       <span class="logo-text">ViviEstu</span>
     </div>
     <div class="nav-links desktop-only">
-      <a routerLink="/landlord/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Inicio</a>
+      <a routerLink="/landlord/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        class="nav-link">Inicio</a>
       <a routerLink="/landlord/properties" routerLinkActive="active" class="nav-link">Mis Propiedades</a>
       <a routerLink="/landlord/requests" routerLinkActive="active" class="nav-link">Solicitudes</a>
     </div>
     <div class="user-actions">
-       <a routerLink="/landlord/profile" class="user-avatar-nav">
-         <i class="far fa-user-circle"></i>
-       </a>
+      <a routerLink="/landlord/profile" class="user-avatar-nav">
+        <div class="user-avatar">
+          @if (currentUser && currentUser.urlFotoPerfil && !imageLoadError) {
+          <img [src]="currentUser.urlFotoPerfil" alt="Avatar de {{currentUser.nombre}}" class="avatar-image"
+            (error)="handleImageError()">
+          } @else {
+          <i class="far fa-user-circle"></i>
+          }
+        </div>
+      </a>
     </div>
   </div>
 </nav>

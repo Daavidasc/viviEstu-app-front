@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AccommodationService } from '../../../core/services/accommodation.service';
-import { Accommodation } from '../../../core/models/student.models';
+import { AccommodationCardViewModel } from '../../../core/models/ui-view.models';
 import { AccommodationCardComponent } from '../components/accommodation-card/accommodation-card.component';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./accommodations-page.component.css']
 })
 export class AccommodationsPageComponent implements OnInit {
-    accommodations: Accommodation[] = [];
+    accommodations: AccommodationCardViewModel[] = [];
     district: string | null = null;
 
     showFilterModal = false;
@@ -57,24 +57,24 @@ export class AccommodationsPageComponent implements OnInit {
     }
 
     loadAccommodationsByDistrict(district: string): void {
-        this.accommodationService.getAccommodationsByDistrict(district).subscribe(data => {
+        this.accommodationService.filterAccommodations({ district }).subscribe(data => {
             this.accommodations = data;
         });
     }
 
     loadAccommodationsByUniversity(university: string): void {
-        this.accommodationService.getAccommodationsByUniversity(university).subscribe(data => {
+        this.accommodationService.filterAccommodations({ university }).subscribe(data => {
             this.accommodations = data;
         });
     }
 
     loadAllAccommodations(): void {
-        this.accommodationService.getAccommodations().subscribe(data => {
+        this.accommodationService.getAllCards().subscribe(data => {
             this.accommodations = data;
         });
     }
 
-    handleFavoriteToggle(item: Accommodation): void {
+    handleFavoriteToggle(item: AccommodationCardViewModel): void {
         this.accommodationService.toggleFavorite(item.id);
     }
 

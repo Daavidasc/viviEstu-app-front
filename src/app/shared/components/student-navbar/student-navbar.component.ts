@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { UserProfile } from '../../../core/models/student.models';
+import { StudentProfileViewModel } from '../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-student-navbar',
@@ -11,7 +11,7 @@ import { UserProfile } from '../../../core/models/student.models';
   styleUrls: ['./student-navbar.component.css']
 })
 export class StudentNavbarComponent {
-  @Input() currentUser: UserProfile | null = null;
+  @Input() currentUser: StudentProfileViewModel | null = null;
   imageLoadError = false;
 
   handleImageError() {

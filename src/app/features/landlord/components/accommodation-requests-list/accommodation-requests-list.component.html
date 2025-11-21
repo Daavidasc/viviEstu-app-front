@@ -5,33 +5,33 @@
     </div>
     } @else {
     <div class="requests-list">
-        @for (request of requests; track request.id) {
+        @for (request of requests; track request.requestId) {
         <div class="request-card">
             <div class="request-header">
                 <div class="student-info">
                     @if (request.studentPhotoUrl) {
-                    <img [src]="request.studentPhotoUrl" [alt]="request.applicantName" class="student-photo">
+                    <img [src]="request.studentPhotoUrl" [alt]="request.studentName" class="student-photo">
                     }
                     <div class="student-details">
-                        <h4 class="student-name">{{ request.applicantName }}</h4>
+                        <h4 class="student-name">{{ request.studentName }}</h4>
                         @if (request.studentUniversity) {
                         <span class="student-university">{{ request.studentUniversity }}</span>
                         }
                     </div>
                 </div>
-                <span class="request-status" [class]="'status-' + request.status">
-                    {{ request.status }}
+                <span class="request-status" [class]="'status-' + request.statusColor">
+                    {{ request.statusLabel }}
                 </span>
             </div>
 
-            @if (request.studentMessage) {
+            @if (request.message) {
             <div class="request-message">
-                <p>{{ request.studentMessage }}</p>
+                <p>{{ request.message }}</p>
             </div>
             }
 
             <div class="request-footer">
-                <span class="request-date">{{ request.requestDate | date:'dd/MM/yyyy' }}</span>
+                <span class="request-date">{{ request.date | date:'dd/MM/yyyy' }}</span>
                 <div class="request-actions">
                     <button class="btn-action btn-accept">Aceptar</button>
                     <button class="btn-action btn-reject">Rechazar</button>

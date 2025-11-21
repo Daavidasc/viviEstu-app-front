@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LandlordProfile } from '../../../../core/models/landlord.models';
+import { LandlordProfileViewModel } from '../../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-profile-header-card',
@@ -10,5 +10,5 @@ import { LandlordProfile } from '../../../../core/models/landlord.models';
   styleUrls: ['./profile-header-card.component.css']
 })
 export class ProfileHeaderCardComponent {
-  @Input() landlord!: LandlordProfile;
+  @Input() landlord!: LandlordProfileViewModel;
 }

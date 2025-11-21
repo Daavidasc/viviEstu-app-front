@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MyRentalItem } from '../../../../core/models/landlord.models';
+import { MyRentalViewModel } from '../../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-landlord-rental-card',
@@ -11,5 +11,5 @@ import { MyRentalItem } from '../../../../core/models/landlord.models';
   styleUrls: ['./landlord-rental-card.component.css']
 })
 export class LandlordRentalCardComponent {
-  @Input() rental!: MyRentalItem;
+  @Input() rental!: MyRentalViewModel;
 }

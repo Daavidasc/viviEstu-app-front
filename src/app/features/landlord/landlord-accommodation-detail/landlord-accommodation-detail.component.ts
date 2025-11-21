@@ -7,7 +7,7 @@ import { GalleryComponent } from '../../student/components/gallery/gallery.compo
 import { AccommodationRequestsListComponent } from '../components/accommodation-requests-list/accommodation-requests-list.component';
 import { AccommodationService } from '../../../core/services/accommodation.service';
 import { LandlordService } from '../../../core/services/landlord.service';
-import { RequestDetailedItem } from '../../../core/models/landlord.models';
+import { AccommodationDetailViewModel, LandlordRequestViewModel } from '../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-landlord-accommodation-detail',
@@ -19,8 +19,8 @@ import { RequestDetailedItem } from '../../../core/models/landlord.models';
 
 
 export class LandlordAccommodationDetailComponent implements OnInit {
-  accommodation: any | null = null;
-  requests: RequestDetailedItem[] = [];
+  accommodation: AccommodationDetailViewModel | null = null;
+  requests: LandlordRequestViewModel[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +35,7 @@ export class LandlordAccommodationDetailComponent implements OnInit {
   }
 
   loadAccommodationData(id: number) {
-    this.accommodationService.getAccommodationPreview(id).subscribe(data => {
+    this.accommodationService.getAccommodationDetail(id).subscribe(data => {
       this.accommodation = data;
     });
   }
@@ -44,5 +44,9 @@ export class LandlordAccommodationDetailComponent implements OnInit {
     this.landlordService.getRequestsByAccommodationId(id).subscribe(data => {
       this.requests = data;
     });
+  }
+
+  getImageUrls(): string[] {
+    return this.accommodation?.imagenes?.map(img => img.url) || [];
   }
 }

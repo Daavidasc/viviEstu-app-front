@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { StudentProfile } from '../../../../core/models/student.models';
+import { StudentProfileViewModel } from '../../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-edit-student-profile-form',
@@ -12,7 +12,7 @@ import { StudentProfile } from '../../../../core/models/student.models';
   styleUrls: ['./edit-student-profile-form.component.css']
 })
 export class EditStudentProfileFormComponent {
-  @Input() student!: StudentProfile;
+  @Input() student!: StudentProfileViewModel;
 
   onSubmit() {
     console.log('Guardando cambios:', this.student);

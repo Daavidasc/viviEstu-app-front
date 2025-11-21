@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { LandlordProfileViewModel } from '../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-landlord-navbar',
@@ -10,4 +11,10 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./landlord-navbar.component.css']
 })
 export class LandlordNavbarComponent {
+  @Input() currentUser: LandlordProfileViewModel | null = null;
+  imageLoadError = false;
+
+  handleImageError() {
+    this.imageLoadError = true;
+  }
 }

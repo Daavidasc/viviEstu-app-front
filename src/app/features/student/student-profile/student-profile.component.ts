@@ -3,22 +3,22 @@ import { CommonModule } from '@angular/common';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { ProfileInfoCardComponent } from '../components/profile-info-card/profile-info-card.component';
-import { AccommodationCardComponent } from '../components/accommodation-card/accommodation-card.component'; // Importación cambiada
+import { AccommodationCardComponent } from '../components/accommodation-card/accommodation-card.component';
 import { RequestCardComponent } from '../components/request-card/request-card.component';
-import { StudentProfile, Accommodation, ActiveRequest } from '../../../core/models/student.models';
+import { AccommodationCardViewModel, StudentRequestViewModel, StudentProfileViewModel } from '../../../core/models/ui-view.models';
 import { StudentService } from '../../../core/services/student.service';
 
 @Component({
   selector: 'app-student-profile',
   standalone: true,
-  imports: [CommonModule, StudentNavbarComponent, FooterComponent, ProfileInfoCardComponent, AccommodationCardComponent, RequestCardComponent], // Componente cambiado
+  imports: [CommonModule, StudentNavbarComponent, FooterComponent, ProfileInfoCardComponent, AccommodationCardComponent, RequestCardComponent],
   templateUrl: './student-profile.component.html',
   styleUrls: ['./student-profile.component.css']
 })
 export class StudentProfileComponent implements OnInit {
-  student!: StudentProfile;
-  favorites: Accommodation[] = [];
-  requests: ActiveRequest[] = [];
+  student!: StudentProfileViewModel;
+  favorites: AccommodationCardViewModel[] = [];
+  requests: StudentRequestViewModel[] = [];
 
   constructor(private studentService: StudentService) { }
 

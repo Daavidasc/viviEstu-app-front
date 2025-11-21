@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { DistrictCardComponent } from '../components/district-card/district-card.component';
-import { Zone } from '../../../core/models/student.models';
+import { DistritoResponse } from '../../../core/models/accommodation.models';
 import { LocationService } from '../../../core/services/location.service';
 
 @Component({
@@ -14,7 +14,7 @@ import { LocationService } from '../../../core/services/location.service';
   styleUrls: ['./districts-page.component.css']
 })
 export class DistrictsPageComponent {
-  zones: Zone[] = [];
+  zones: DistritoResponse[] = [];
 
   constructor(private locationService: LocationService) {
     this.locationService.getZones().subscribe(data => {

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router'; // 1. Importar RouterModule
-import { NewAccommodation } from '../../../../core/models/landlord.models';
+import { NewAccommodationViewModel } from '../../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-accommodation-form',
@@ -12,7 +12,7 @@ import { NewAccommodation } from '../../../../core/models/landlord.models';
   styleUrls: ['./accommodation-form.component.css']
 })
 export class AccommodationFormComponent {
-  newAccommodation: NewAccommodation = {
+  newAccommodation: NewAccommodationViewModel = {
     title: '',
     description: '',
     rooms: null,

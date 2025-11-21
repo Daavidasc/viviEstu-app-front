@@ -1,15 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { NavbarLandingComponent } from '../../../shared/components/navbar-landing/navbar-landing.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
-
-// Interfaces basadas en el diseño de la API REST
-export interface LoginRequestDTO {
-  correo: string;
-  contrasenia: string;
-}
+import { AuthService } from '../../../core/services/auth.service';
+import { LoginRequest } from '../../../core/models/auth.models';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +15,10 @@ export interface LoginRequestDTO {
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginData: LoginRequestDTO = {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  loginData: LoginRequest = {
     correo: '',
     contrasenia: ''
   };
@@ -30,20 +29,21 @@ export class LoginComponent {
   onLogin() {
     this.isLoading = true;
     this.errorMessage = '';
-    console.log('Intentando ingresar con:', this.loginData);
 
-    // Simulación de llamada a la API
-    setTimeout(() => {
-      if (this.loginData.correo && this.loginData.contrasenia) {
-        // Simulación de éxito
-        console.log('Login exitoso');
-        alert('¡Bienvenido!');
-        // Aquí iría la redirección, por ejemplo: this.router.navigate(['/dashboard']);
-      } else {
-        // Simulación de error
+    this.authService.login(this.loginData).subscribe({
+      next: (response) => {
+        console.log('Login exitoso', response);
+        localStorage.setItem('token', response.token);
+        // Aquí podrías guardar más datos del usuario si es necesario
+        alert('¡Bienvenido ' + response.name + '!');
+        this.router.navigate(['/dashboard']); // Asumiendo ruta dashboard
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Login error', err);
         this.errorMessage = 'Correo o contraseña incorrectos.';
+        this.isLoading = false;
       }
-      this.isLoading = false;
-    }, 1500);
+    });
   }
 }

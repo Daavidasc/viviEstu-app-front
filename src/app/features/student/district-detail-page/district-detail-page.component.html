@@ -1,78 +1,54 @@
 <div class="app-container">
-    <app-student-navbar></app-student-navbar>
+    <app-student-navbar />
 
     <main class="main-content">
         @if (zone) {
         <div class="container">
-            <div class="detail-card">
-                <div class="detail-header">
-                    <h1>{{ zone.name }}</h1>
-                    <button class="btn-favorite">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
+            <section class="hero-section">
+                <h1 class="zone-title">{{ zone.nombre }}</h1>
+                <p class="zone-description">{{ zone.descripcion }}</p>
+            </section>
 
-                <div class="images-grid">
-                    <div class="main-image">
-                        <img [src]="zone.image" [alt]="zone.name">
-                    </div>
-                    @if (zone.secondaryImage) {
-                    <div class="secondary-image">
-                        <img [src]="zone.secondaryImage" [alt]="zone.name + ' view'">
-                    </div>
-                    }
-                </div>
-
+            <section class="info-section">
                 <div class="info-grid">
-                    <div class="left-column">
-                        <div class="section statistics">
-                            <h3>Estadisticas:</h3>
-                            <p class="stat-item">
-                                <span class="label">Seguridad:</span>
-                                <span class="value highlight">{{ zone.securityRating }}/5</span>
-                            </p>
-                            <p class="stat-item">
-                                <span class="label">precio promedio:</span>
-                                <span class="value highlight">{{ zone.averagePrice }} PEN</span>
-                            </p>
-                        </div>
+                    <div class="info-card">
+                        <h3 class="info-title">Ubicación</h3>
+                        <p class="info-text">{{ zone.nombre }}</p>
+                    </div>
 
-                        <div class="section mobility">
-                            <h3>Opciones de movilidad</h3>
-                            <div class="tags">
-                                @for (option of zone.mobilityOptions; track option) {
-                                <span class="tag">{{ option }}</span>
-                                }
-                            </div>
+                    <div class="info-card">
+                        <h3 class="info-title">Universidades Cercanas</h3>
+                        <div class="tags-list">
+                            @for (universidad of zone.universidades; track universidad) {
+                            <span class="tag">{{ universidad }}</span>
+                            }
                         </div>
                     </div>
 
-                    <div class="right-column">
-                        <div class="section universities">
-                            <h3>Universidades Cercanas:</h3>
-                            <div class="uni-list">
-                                @for (uni of zone.nearbyUniversities; track uni) {
-                                <span class="uni-item">{{ uni }}</span>
-                                }
-                            </div>
+                    <div class="info-card">
+                        <h3 class="info-title">Opciones de Movilidad</h3>
+                        <div class="tags-list">
+                            @for (transporte of zone.transportes; track transporte) {
+                            <span class="tag">{{ transporte }}</span>
+                            }
                         </div>
+                    </div>
 
-                        <div class="section description">
-                            <h3>Descripcion:</h3>
-                            <p>"{{ zone.description }}"</p>
-                        </div>
+                    <div class="info-card">
+                        <h3 class="info-title">Nivel de Seguridad</h3>
+                        <p class="info-text">{{ zone.nivelSeguridad }}</p>
                     </div>
                 </div>
+            </section>
 
-                <div class="section comments">
-                    <h3>Comentarios:</h3>
-                    <div class="comment-box">
-                        <textarea [(ngModel)]="commentText" placeholder="Escribe un comentario..."></textarea>
-                        <button class="btn-comment" (click)="addComment()">Comentar</button>
-                    </div>
+            <section class="comments-section">
+                <h2 class="section-title">Comentarios</h2>
+                <div class="comment-form">
+                    <textarea [(ngModel)]="commentText" class="comment-textarea"
+                        placeholder="Escribe tu comentario aquí..." rows="4"></textarea>
+                    <button class="btn-comment" (click)="addComment()">Comentar</button>
                 </div>
-
-            </div>
+            </section>
         </div>
         }
     </main>

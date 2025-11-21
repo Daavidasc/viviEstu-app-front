@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccommodationDetail } from '../../../../core/models/student.models';
+import { AccommodationCardViewModel } from '../../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-comparison-card',
@@ -10,7 +10,7 @@ import { AccommodationDetail } from '../../../../core/models/student.models';
   styleUrls: ['./comparison-card.component.css']
 })
 export class ComparisonCardComponent {
-  @Input() item!: AccommodationDetail;
+  @Input() item!: AccommodationCardViewModel;
 
   toggleFavorite() {
     this.item.isFavorite = !this.item.isFavorite;
