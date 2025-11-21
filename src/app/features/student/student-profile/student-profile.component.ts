@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { FooterComponent } from '../../../shared/components/footer';
 import { ProfileInfoCardComponent } from '../components/profile-info-card/profile-info-card.component';
 import { AccommodationCardComponent } from '../components/accommodation-card/accommodation-card.component'; // Importación cambiada
 import { RequestCardComponent } from '../components/request-card/request-card.component';

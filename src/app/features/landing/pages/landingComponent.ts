@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-Landing',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
     
     <div class="principal">
@@ -18,7 +19,7 @@ import { CommonModule } from '@angular/common';
                 <p>Encuentra alojamiento según tu distrito, universidad o <br> presupuesto.</p>
 
 
-                <a href="#" class="button">EMPEZAR</a>
+                <a href="/auth/register" class="button">EMPEZAR</a>
 
             </nav>
 

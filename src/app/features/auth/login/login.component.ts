@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { AuthService } from './../../../core/services/auth.service';
+// login.component.ts
+import { ChangeDetectorRef, Component, inject } from '@angular/core'; // Añadir 'inject'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { NavbarLandingComponent } from '../../../shared/components/navbar-landing/navbar-landing.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { RouterModule, Router } from '@angular/router'; // Importar Router
+import { NavbarLandingComponent } from '../../../shared/components/navbar-landing';
+import { FooterComponent } from '../../../shared/components/footer';
+import { LoginRequest } from '../../../core/models/user.model';
 
-// Interfaces basadas en el diseño de la API REST
+
 export interface LoginRequestDTO {
   correo: string;
   contrasenia: string;
@@ -14,12 +17,13 @@ export interface LoginRequestDTO {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, NavbarLandingComponent, FooterComponent],
+  imports: [CommonModule, FormsModule, RouterModule, FooterComponent, NavbarLandingComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginData: LoginRequestDTO = {
+  // Usar LoginRequest del modelo
+  loginData: LoginRequest = {
     correo: '',
     contrasenia: ''
   };
@@ -27,23 +31,34 @@ export class LoginComponent {
   isLoading: boolean = false;
   errorMessage: string = '';
 
+  // Inyectar servicios
+  private authService = inject(AuthService);
+  private router = inject(Router); // Para la redirección
+  private cdr = inject(ChangeDetectorRef);
+
   onLogin() {
     this.isLoading = true;
     this.errorMessage = '';
     console.log('Intentando ingresar con:', this.loginData);
 
-    // Simulación de llamada a la API
-    setTimeout(() => {
-      if (this.loginData.correo && this.loginData.contrasenia) {
-        // Simulación de éxito
-        console.log('Login exitoso');
-        alert('¡Bienvenido!');
-        // Aquí iría la redirección, por ejemplo: this.router.navigate(['/dashboard']);
-      } else {
-        // Simulación de error
-        this.errorMessage = 'Correo o contraseña incorrectos.';
+    // Llama al servicio de autenticación
+    this.authService.login(this.loginData).subscribe({
+      next: (response) => {
+        // En el tap del AuthService ya se guarda el token y el usuario.
+        console.log('Login exitoso. Token:', response.token);
+
+        // Redirige al usuario al área protegida (ej: dashboard)
+        this.router.navigate(['/dashboard']); // <-- AJUSTA ESTA RUTA SEGÚN TU APP
+      },
+      error: (err) => {
+        console.error('Error de Login:', err);
+        this.errorMessage = err.error?.message || 'Error al intentar iniciar sesión. Verifica tus credenciales.';
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      complete: () => {
+        this.isLoading = false;
       }
-      this.isLoading = false;
-    }, 1500);
+    });
   }
 }

@@ -6,17 +6,19 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-  <div class="navbar">
+  <div id="menu" class="navbar">
   <nav class="navegacion-principal">
-    <a href="#" > <img class="img" src="/assets/LogoFull.jpg"></a>
+    <a href="/#menu" > <img class="img" src="/assets/LogoFull.jpg"></a>
     <ul>
-    <li><a href="#">Quienes Somos</a></li>
-    <li><a href="#">Preguntas Frecuentes</a></li>
-    <li><a href="#">Contactenos</a></li>
+    <li><a href="/#nosotros">Quienes Somos</a></li>
+    <li><a href="/#faq">Preguntas Frecuentes</a></li>
+    <li><a href="/#contacto">Contactenos</a></li>
     </ul>
-    <a href="#" class="button">Unete Ahora</a>
+
+    <a routerLink="/auth/register" class="button">Unete Ahora</a>
   </nav>
   </div>
+
 
   `,
   styles: [`
@@ -24,7 +26,7 @@ import { CommonModule } from '@angular/common';
       background-color: #FFFFFF;
       padding: 1.5rem 0;
       margin: 0;
-      font-size: 20px;
+      font-size: 18px;
       padding-left: 46px;
       padding-right: 46px;
     }
@@ -69,8 +71,10 @@ import { CommonModule } from '@angular/common';
       color: #FFFFFF;
       padding: 11px 40px;
       border-radius: 8px;
+      font-weight: 600;
     }
-  `
-  ]
+
+
+    `]
 })
 export class NavbarLandingComponent {}

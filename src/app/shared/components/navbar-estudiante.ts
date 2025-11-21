@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-navbar-estudiante',
+  selector: 'app-student-navbar',
   standalone: true,
   imports: [CommonModule],
   template: `
@@ -23,7 +23,7 @@ import { CommonModule } from '@angular/common';
       background-color: #FFFFFF;
       padding: 1.5rem 0;
       margin: 0;
-      font-size: 20px;
+      font-size: 18px;
       padding-left: 46px;
       padding-right: 46px;
     }
@@ -68,8 +68,10 @@ import { CommonModule } from '@angular/common';
       color: #FFFFFF;
       padding: 11px 40px;
       border-radius: 8px;
+      font-weight: 600;
     }
-  `
-  ]
+
+
+    `]
 })
 export class NavbarEstudianteComponent {}

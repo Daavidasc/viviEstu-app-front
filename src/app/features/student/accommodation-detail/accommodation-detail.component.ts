@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AccommodationDetail } from '../../../core/models/student.models';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { GalleryComponent } from '../components/gallery/gallery.component';
 import { ContactFormComponent } from '../components/contact-form/contact-form.component';
+import { FooterComponent } from './../../../shared/components/footer';
 
 @Component({
   selector: 'app-accommodation-detail',

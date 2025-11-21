@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -7,8 +8,13 @@ export const routes: Routes = [
   },
   {
     path: '',
-    //loadChildren: () => import('./features/landing/home.routes').then(m => m.homeRoutes)
     loadChildren: () => import('./features/landing/landing.routes').then(m => m.landingRoutes)
+  },
+  {
+    path: 'dashboard',
+    // Componente privado, por ejemplo
+    loadComponent: () => import('./features/student/student-dashboard/student-dashboard.component').then(m => m.StudentDashboardComponent),
+    canActivate: [authGuard] // AÑADIDO: Protege la ruta, requiere token/sesión
   },
   {
     path: 'student',
