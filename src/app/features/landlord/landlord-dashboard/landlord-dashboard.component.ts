@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { FooterComponent } from './../../../shared/components/footer';
 import { LandlordNavbarComponent } from '../../../shared/components/landlord-navbar/landlord-navbar.component';
 import { RequestsSectionComponent } from '../components/requests-section/requests-section.component';
 import { LandlordRentalCardComponent } from '../components/landlord-rental-card/landlord-rental-card.component';

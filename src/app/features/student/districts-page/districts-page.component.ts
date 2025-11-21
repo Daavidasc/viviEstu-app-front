@@ -1,8 +1,9 @@
+import { DistrictCardComponent } from './../components/district-card/district-card.component';
+import { FooterComponent } from './../../../shared/components/footer';
+import { StudentNavbarComponent } from './../../../shared/components/student-navbar/student-navbar.component';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
-import { DistrictCardComponent } from '../components/district-card/district-card.component';
+
 import { DistritoResponse } from '../../../core/models/accommodation.models';
 import { LocationService } from '../../../core/services/location.service';
 

@@ -1,14 +1,12 @@
+import { FooterComponent } from './../../../shared/components/footer';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccommodationCardComponent } from '../components/accommodation-card/accommodation-card.component';
-import { FooterComponent } from '../../../shared/components/footer';
-import { UserProfile, Accommodation } from '../../../core/models/student.models';
+
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 
 import { RouterModule } from '@angular/router';
-import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { AccommodationCardComponent } from '../components/accommodation-card/accommodation-card.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+
 import { StudentProfileViewModel, AccommodationCardViewModel } from '../../../core/models/ui-view.models';
 import { AccommodationService } from '../../../core/services/accommodation.service';
 import { StudentService } from '../../../core/services/student.service';

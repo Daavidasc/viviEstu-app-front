@@ -56,7 +56,7 @@ export class LoginComponent {
 
         this.errorMessage = err.error?.message || 'Error al intentar iniciar sesión. Verifica tus credenciales.';
         this.isLoading = false;
-        this.cdr.detectChanges();
+
               },
       complete: () => {
       }

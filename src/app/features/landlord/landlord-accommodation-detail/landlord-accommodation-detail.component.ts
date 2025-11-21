@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { LandlordNavbarComponent } from '../../../shared/components/landlord-navbar/landlord-navbar.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { FooterComponent } from './../../../shared/components/footer';
 import { GalleryComponent } from '../../student/components/gallery/gallery.component';
 import { AccommodationRequestsListComponent } from '../components/accommodation-requests-list/accommodation-requests-list.component';
 import { AccommodationService } from '../../../core/services/accommodation.service';

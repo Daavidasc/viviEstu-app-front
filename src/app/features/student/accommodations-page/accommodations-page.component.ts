@@ -5,7 +5,7 @@ import { AccommodationService } from '../../../core/services/accommodation.servi
 import { AccommodationCardViewModel } from '../../../core/models/ui-view.models';
 import { AccommodationCardComponent } from '../components/accommodation-card/accommodation-card.component';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { FooterComponent } from './../../../shared/components/footer';
 
 import { FormsModule } from '@angular/forms';
 

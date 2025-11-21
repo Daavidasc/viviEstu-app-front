@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LandlordNavbarComponent } from '../../../shared/components/landlord-navbar/landlord-navbar.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { FooterComponent } from './../../../shared/components/footer';
 import { ProfileHeaderCardComponent } from '../components/profile-header-card/profile-header-card.component';
 import { ProfileInfoCardComponent } from '../components/profile-info-card/profile-info-card.component';
 import { LandlordProfileViewModel } from '../../../core/models/ui-view.models';

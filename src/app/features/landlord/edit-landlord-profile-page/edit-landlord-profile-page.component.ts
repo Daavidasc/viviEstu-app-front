@@ -1,7 +1,8 @@
+import { FooterComponent } from './../../../shared/components/footer';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LandlordNavbarComponent } from '../../../shared/components/landlord-navbar/landlord-navbar.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+
 import { EditProfileFormComponent } from '../components/edit-profile-form/edit-profile-form.component';
 import { LandlordProfileViewModel } from '../../../core/models/ui-view.models';
 

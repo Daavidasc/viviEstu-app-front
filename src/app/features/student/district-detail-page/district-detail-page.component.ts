@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { LocationService } from '../../../core/services/location.service';
 import { DistrictDetailViewModel } from '../../../core/models/ui-view.models';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { FooterComponent } from './../../../shared/components/footer';
 import { FormsModule } from '@angular/forms';
 
 @Component({

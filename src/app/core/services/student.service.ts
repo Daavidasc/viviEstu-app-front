@@ -1,93 +1,107 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { EstudianteProfileResponse } from '../models/auth.models';
-import { AccommodationCardViewModel, StudentRequestViewModel, StudentProfileViewModel } from '../models/ui-view.models';
+import { HttpClient } from '@angular/common/http';
+import { Observable, forkJoin } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+
+
+
+// Importar ViewModels
+import { AccommodationCardViewModel, StudentProfileViewModel, StudentRequestViewModel } from '../models/ui-view.models';
+
+// Importar AccommodationService para buscar detalles de favoritos
+import { AccommodationService } from './accommodation.service';
+import { EstudianteResponseDTO, FavoritosResponseDTO, SolicitudResponseDTO } from '../models/api-response';
 
 @Injectable({
     providedIn: 'root'
 })
 export class StudentService {
+    // Endpoints de la API
+    private estudiantesUrl = 'http://localhost:8080/api/v1/estudiantes';
+    private favoritosUrl = 'http://localhost:8080/api/v1/favoritos';
+    private solicitudesUrl = 'http://localhost:8080/api/v1/solicitudes';
 
-    private currentStudent: StudentProfileViewModel = {
-        id: 101,
-        nombre: 'Henry Antonio',
-        apellidos: 'Mendoza',
-        name: 'Henry Antonio Mendoza',
-        correo: 'u202212345@upc.edu.pe',
-        dni: '74325432',
-        telefono: '987 654 321',
-        distrito: 'Monterrico',
-        universidad: 'UPC Monterrico',
-        ciclo: 6,
-        carrera: 'Ciencias de la Computacion',
-        district: 'Monterrico',
-        university: 'UPC Monterrico',
-        age: 22,
-        preferredZone: 'Monterrico',
-        budget: 1500
-    };
+    // ** TEMPORAL: ID del estudiante logueado (debe venir del servicio de Auth/Token) **
+    private currentStudentId = 1;
 
-    private mockFavorites: AccommodationCardViewModel[] = [
-        {
-            id: 1,
-            thumbnailUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-            price: 650,
-            district: 'Monterrico',
-            title: 'Amplio y comodo departamento cerca a la UPC monterrico y ESAN.',
-            isFavorite: true,
-            score: 4.5,
-            date: new Date()
-        },
-        {
-            id: 2,
-            thumbnailUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-            price: 1200,
-            district: 'Monterrico',
-            title: 'Moderno loft con vista a parque, zona segura.',
-            isFavorite: true,
-            score: 4.8,
-            date: new Date()
-        },
-        {
-            id: 3,
-            thumbnailUrl: 'https://images.unsplash.com/photo-1484154218962-a1c002085d2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-            price: 950,
-            district: 'Monterrico',
-            title: 'Minidepartamento amoblado, incluye servicios.',
-            isFavorite: true,
-            score: 4.2,
-            date: new Date()
-        }
-    ];
+    constructor(
+        private http: HttpClient,
+        private accommodationService: AccommodationService // Necesario para obtener detalles de la tarjeta de alojamiento
+    ) { }
 
-    private mockRequests: StudentRequestViewModel[] = [
-        {
-            requestId: 101,
-            thumbnailUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
-            price: 650,
-            district: 'Monterrico',
-            status: 'Pendiente',
-            statusColor: 'yellow'
-        }
-    ];
-
-    constructor() { }
-
+    // --- 1. Obtener Perfil (getProfile) ---
     getProfile(): Observable<StudentProfileViewModel> {
-        return of(this.currentStudent);
+        // Endpoint: GET /estudiantes/{id}
+        return this.http.get<EstudianteResponseDTO>(`${this.estudiantesUrl}/${this.currentStudentId}`)
+            .pipe(
+                map((dto: EstudianteResponseDTO) => ({
+                    id: dto.id,
+                    name: `${dto.nombre} ${dto.apellidos}`, // Campo calculado
+                    university: dto.universidad,
+                    district: dto.distrito,
+                    career: dto.carrera,
+                    currentCycle: dto.ciclo,
+                    // Asegúrate de mapear todos los campos necesarios de StudentProfileViewModel
+                    // Los campos que faltan (age, avatarUrl, etc.) se quedan como 'undefined' o deben ser calculados/mapeados
+                } as StudentProfileViewModel))
+            );
     }
 
-    updateProfile(profile: StudentProfileViewModel): Observable<StudentProfileViewModel> {
-        this.currentStudent = { ...this.currentStudent, ...profile };
-        return of(this.currentStudent);
-    }
-
+    // --- 2. Obtener Favoritos (getFavorites) ---
     getFavorites(): Observable<AccommodationCardViewModel[]> {
-        return of(this.mockFavorites);
+        // Endpoint: GET /favoritos/estudiante/{estudianteId}
+        return this.http.get<FavoritosResponseDTO[]>(`${this.favoritosUrl}/estudiante/${this.currentStudentId}`).pipe(
+            // switchMap para cambiar de una lista de FavoritosDTOs a una lista de Observables (detalles de alojamiento)
+            switchMap((favoritosDtos: FavoritosResponseDTO[]) => {
+                if (favoritosDtos.length === 0) {
+                    return new Observable<AccommodationCardViewModel[]>(subscriber => {
+                        subscriber.next([]);
+                        subscriber.complete();
+                    });
+                }
+
+                // Crea un array de Observables, uno por cada AlojamientoCardViewModel (desde AccommodationService)
+                const cardObservables = favoritosDtos.map(favDto =>
+                    this.accommodationService.getCardById(favDto.alojamientoId) // **Ver nota abajo**
+                );
+
+                // forkJoin espera que todos los Observables se completen y emite un array con sus resultados
+                return forkJoin(cardObservables).pipe(
+                    // Filtra cualquier resultado nulo si getCardById devuelve null
+                    map(cards => cards.filter(card => card !== null) as AccommodationCardViewModel[])
+                );
+            })
+        );
     }
 
+    // --- 3. Obtener Solicitudes (getRequests) ---
     getRequests(): Observable<StudentRequestViewModel[]> {
-        return of(this.mockRequests);
+        // Endpoint: GET /solicitudes/estudiante/{id}
+        return this.http.get<SolicitudResponseDTO[]>(`${this.solicitudesUrl}/estudiante/${this.currentStudentId}`).pipe(
+            map((dtos: SolicitudResponseDTO[]) => dtos.map(dto => {
+                let statusColor: 'green' | 'yellow' | 'red' | 'gray';
+
+                switch (dto.estado) {
+                    case 'ACEPTADO':
+                        statusColor = 'green';
+                        break;
+                    case 'RECHAZADO':
+                        statusColor = 'red';
+                        break;
+                    default:
+                        statusColor = 'yellow'; // PENDIENTE o cualquier otro
+                        break;
+                }
+
+                return {
+                    requestId: dto.id,
+                    thumbnailUrl: 'assets/placeholder-request.jpg', // No hay URL en SolicitudDTO, usa un placeholder temporal
+                    price: dto.oferta, // Usar la oferta como precio de referencia
+                    district: 'N/A', // El DTO no tiene el distrito, se podría obtener en otro paso
+                    status: dto.estado,
+                    statusColor: statusColor
+                } as StudentRequestViewModel;
+            }))
+        );
     }
 }

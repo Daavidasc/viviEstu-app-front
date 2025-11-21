@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { FooterComponent } from './../../../shared/components/footer';
 import { ComparisonCardComponent } from '../components/comparison-card/comparison-card.component';
 import { AccommodationCardViewModel } from '../../../core/models/ui-view.models';
 

@@ -1,0 +1,16 @@
+<div class="app-container">
+  <app-student-navbar />
+
+  <main class="main-content">
+    <div class="container">
+      <h1 class="page-title">Zonas</h1>
+      <div class="zones-grid">
+        @for (zone of zones; track zone.id) {
+          <app-district-card [zone]="zone" />
+        }
+      </div>
+    </div>
+  </main>
+
+  <app-footer />
+</div>

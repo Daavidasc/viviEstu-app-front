@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LandlordNavbarComponent } from '../../../shared/components/landlord-navbar/landlord-navbar.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { FooterComponent } from './../../../shared/components/footer';
 import { AccommodationFormComponent } from '../components/accommodation-form/accommodation-form.component';
 
 @Component({
