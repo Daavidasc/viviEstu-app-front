@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActiveRequest } from '../../../../core/models/student.models';
+import { StudentRequestViewModel } from '../../../../core/models/ui-view.models';
 
 @Component({
   selector: 'app-request-card',
@@ -10,5 +10,5 @@ import { ActiveRequest } from '../../../../core/models/student.models';
   styleUrls: ['./request-card.component.css']
 })
 export class RequestCardComponent {
-  @Input() request!: ActiveRequest;
+  @Input() request!: StudentRequestViewModel;
 }

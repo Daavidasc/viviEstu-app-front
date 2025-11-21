@@ -1,0 +1,28 @@
+<div class="app-container">
+  <app-landlord-navbar />
+
+  <main class="main-content">
+    <div class="container">
+      <div class="dashboard-header">
+        <h1 class="greeting">Hola {{ userName }}</h1>
+        <div class="header-actions">
+            <h2 class="section-title-gold">Flujo de Alquileres</h2>
+            <a routerLink="/landlord/upload" class="btn btn-primary btn-upload">Subir Alojamiento</a>
+        </div>
+      </div>
+
+      <app-requests-section [requests]="requests" />
+
+      <section class="my-rentals-section">
+        <h3 class="section-subtitle-orange">Mis Alquileres</h3>
+        <div class="rentals-list">
+            @for(rental of myRentals; track rental.id) {
+              <app-landlord-rental-card [rental]="rental" />
+            }
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <app-footer />
+</div>

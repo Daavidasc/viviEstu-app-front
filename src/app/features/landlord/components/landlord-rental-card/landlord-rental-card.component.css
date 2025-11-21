@@ -1,0 +1,108 @@
+:host {
+    --white: #ffffff;
+    --primary-gold: #B88E2F;
+}
+
+.rental-card {
+    background-color: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: row;
+}
+
+.card-image-wrapper {
+    width: 40%;
+    flex-shrink: 0;
+    position: relative;
+    /* Clave: para contener la imagen absoluta */
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    /* Clave: saca la imagen del flujo para que no defina la altura */
+    top: 0;
+    left: 0;
+}
+
+.card-details {
+    padding: 1.5rem 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Alinea el contenido como en la referencia */
+}
+
+.price {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 0.2rem;
+}
+
+.district {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1rem;
+    max-width: 80%;
+}
+
+.features-row {
+    display: flex;
+    gap: 1rem;
+    /* margin-bottom: 1.5rem; <-- Eliminado porque space-between ya gestiona el espacio */
+}
+
+.feature {
+    font-weight: 700;
+    color: #D35400;
+    /* Color rojizo/naranja de la imagen */
+    font-size: 0.85rem;
+}
+
+.card-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.btn-stats {
+    background-color: #B08D35;
+    color: var(--white);
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.btn-preview {
+    background-color: transparent;
+    color: var(--primary-gold);
+    border: 2px solid var(--primary-gold);
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-preview:hover {
+    background-color: var(--primary-gold);
+    color: var(--white);
+}

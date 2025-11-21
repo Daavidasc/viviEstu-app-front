@@ -3,56 +3,67 @@
   <app-student-navbar/>
 
   <main class="main-content">
-    <div class="container" *ngIf="currentUser">
+    @if (currentUser) {
+    <div class="container">
 
       <!-- Header Section -->
       <div class="dashboard-header">
         <h1 class="greeting">Hola {{ currentUser.name }}</h1>
-        <h2 class="section-subtitle">Recomendados en tu zona: <span class="highlight">{{ currentUser.preferredDistrict }}</span></h2>
+        <div class="subtitle-row">
+          <h2 class="section-subtitle">Recomendados en tu zona: <span class="highlight">{{ currentUser.district
+              }}</span></h2>
+          <a [routerLink]="['/student/districts']" class="btn-districts">Ver zonas</a>
+        </div>
       </div>
 
       <!-- Listado 1: Recomendados en tu zona -->
-      <div class="accommodation-list" *ngIf="zoneRecommendations.length > 0; else noZoneData">
-        <app-accommodation-card
-          *ngFor="let item of zoneRecommendations"
-          [accommodation]="item"
-          (favoriteToggled)="handleFavoriteToggle($event)">
+      @if (zoneRecommendations.length > 0) {
+      <div class="accommodation-list">
+        @for (item of zoneRecommendations; track item.id) {
+        <app-accommodation-card [accommodation]="item" (favoriteToggled)="handleFavoriteToggle($event)">
         </app-accommodation-card>
+        }
       </div>
-
-      <ng-template #noZoneData>
-        <div class="empty-state">
-          <p>No encontramos alojamientos en {{ currentUser.preferredDistrict }} por el momento.</p>
-        </div>
-      </ng-template>
-
-      <div class="see-more-container" *ngIf="zoneRecommendations.length > 0">
-         <a href="#" class="see-more-link">Ver más en {{ currentUser.preferredDistrict }}...</a>
+      } @else {
+      <div class="empty-state">
+        <p>No encontramos alojamientos en {{ currentUser.district }} por el momento.</p>
       </div>
+      }
+
+      @if (zoneRecommendations.length > 0) {
+      <div class="see-more-container">
+        <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: currentUser.district }"
+          class="see-more-link">Ver más en {{ currentUser.district }}...</a>
+      </div>
+      }
 
       <!-- Listado 2: Recomendados cerca a Universidad -->
       <div class="section-spacer"></div>
-      <h2 class="section-subtitle secondary">Recomendados cerca a <span class="highlight">{{ currentUser.university }}</span></h2>
+      <h2 class="section-subtitle secondary">Recomendados cerca a <span class="highlight">{{ currentUser.university
+          }}</span></h2>
 
-      <div class="accommodation-list" *ngIf="uniRecommendations.length > 0; else noUniData">
-        <app-accommodation-card
-          *ngFor="let item of uniRecommendations"
-          [accommodation]="item"
-          (favoriteToggled)="handleFavoriteToggle($event)">
+      @if (uniRecommendations.length > 0) {
+      <div class="accommodation-list">
+        @for (item of uniRecommendations; track item.id) {
+        <app-accommodation-card [accommodation]="item" (favoriteToggled)="handleFavoriteToggle($event)">
         </app-accommodation-card>
+        }
       </div>
-
-      <ng-template #noUniData>
-        <div class="empty-state">
-          <p>No hay recomendaciones cerca a {{ currentUser.university }} actualmente.</p>
-        </div>
-      </ng-template>
-
-       <div class="see-more-container" *ngIf="uniRecommendations.length > 0">
-         <a href="#" class="see-more-link">Ver más cerca a la U...</a>
+      } @else {
+      <div class="empty-state">
+        <p>No hay recomendaciones cerca a {{ currentUser.university }} actualmente.</p>
       </div>
+      }
+
+      @if (uniRecommendations.length > 0) {
+      <div class="see-more-container">
+        <a [routerLink]="['/student/accommodations']" [queryParams]="{ university: currentUser.university }"
+          class="see-more-link">Ver más cerca a la U...</a>
+      </div>
+      }
 
     </div>
+    }
   </main>
 
   <!-- FOOTER -->

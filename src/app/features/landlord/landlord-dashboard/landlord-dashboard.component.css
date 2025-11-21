@@ -1,0 +1,39 @@
+:host {
+  --primary-gold: #B88E2F;
+  --bg-cream: #FFF8E7;
+  --white: #ffffff;
+  --font-family: 'Poppins', sans-serif;
+}
+.app-container {
+  font-family: var(--font-family);
+  background-color: var(--bg-cream);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-content { padding: 3rem 1rem; flex-grow: 1; }
+.container { width: 100%; max-width: 1100px; margin: 0 auto; }
+.greeting { font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; }
+.dashboard-header { margin-bottom: 2rem; }
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.section-title-gold { font-size: 1.8rem; color: var(--primary-gold); font-weight: 700; }
+.btn { border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+.btn-primary { background-color: var(--primary-gold); color: var(--white); }
+.btn-upload { padding: 0.8rem 2rem; font-size: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.my-rentals-section { margin-top: 4rem; }
+.section-subtitle-orange {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #B88E2F;
+    margin-bottom: 1.5rem;
+}
+.rentals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}

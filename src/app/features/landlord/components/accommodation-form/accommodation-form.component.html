@@ -1,0 +1,48 @@
+<div class="form-card">
+  <h1 class="form-title">Registrar Alojamiento</h1>
+  <form (ngSubmit)="onSubmit()" #accommodationForm="ngForm">
+    <div class="form-group">
+      <label class="label-text">Título</label>
+      <input type="text" class="form-input" [(ngModel)]="newAccommodation.title" name="title" required placeholder="Ej: Habitación cerca a la UPC">
+    </div>
+    <div class="form-group">
+      <label class="label-text">Descripción</label>
+      <textarea class="form-input" rows="3" [(ngModel)]="newAccommodation.description" name="description" required placeholder="Describe el alojamiento..."></textarea>
+    </div>
+    <div class="form-group inline-group">
+      <label class="label-text">Nº habitaciones:</label>
+      <input type="number" class="form-input short-input" [(ngModel)]="newAccommodation.rooms" name="rooms" required min="1">
+    </div>
+    <div class="form-group">
+      <label class="label-text">Precio:</label>
+      <input type="number" class="form-input medium-input" [(ngModel)]="newAccommodation.price" name="price" required min="200" max="5000" placeholder="S/.">
+    </div>
+    <div class="form-group">
+      <label class="label-text">Ubicacion:</label>
+      <input type="text" class="form-input" [(ngModel)]="newAccommodation.location" name="location" required placeholder="Dirección o referencia">
+    </div>
+    <div class="form-group">
+      <label class="label-text">Universidades cerca:</label>
+      <input type="text" class="form-input" [(ngModel)]="newAccommodation.nearbyUniversities" name="nearbyUniversities" placeholder="UPC, U Lima, ESAN...">
+    </div>
+    <div class="form-group inline-group">
+      <label class="label-text">Se aceptan roomies:</label>
+      <input type="checkbox" class="form-checkbox" [(ngModel)]="newAccommodation.roomiesAllowed" name="roomiesAllowed">
+    </div>
+    <div class="form-group inline-group">
+      <label class="label-text">Piso en el que se encuentra:</label>
+      <input type="number" class="form-input short-input" [(ngModel)]="newAccommodation.floor" name="floor" min="1">
+    </div>
+    <div class="form-group inline-group">
+      <label class="label-text">Imagenes,fotos o videos:</label>
+      <div class="file-upload-wrapper">
+        <input type="file" (change)="onFileSelected($event)" multiple class="file-input" accept="image/*,video/*">
+        <div class="file-box"></div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <a routerLink="/landlord/dashboard" class="btn btn-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-primary btn-publish">Publicar</button>
+    </div>
+  </form>
+</div>

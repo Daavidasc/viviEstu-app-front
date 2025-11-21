@@ -1,4 +1,5 @@
-<div class="info-card" *ngIf="student">
+@if (student) {
+<div class="info-card">
   <div class="info-section">
     <h3 class="info-title">Información Personal</h3>
     <div class="info-grid">
@@ -6,7 +7,7 @@
         <span class="label">DNI:</span> <span class="value">{{ student.dni }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Teléfono:</span> <span class="value">{{ student.phone }}</span>
+        <span class="label">Teléfono:</span> <span class="value">{{ student.telefono }}</span>
       </div>
       <div class="info-item">
         <span class="label">Edad:</span> <span class="value">{{ student.age }} años</span>
@@ -15,7 +16,7 @@
         <span class="label">Zona preferida:</span> <span class="value">{{ student.preferredZone }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Presupuesto:</span> <span class="value">{{ student.budget }}</span>
+        <span class="label">Presupuesto:</span> <span class="value">S/. {{ student.budget }}</span>
       </div>
     </div>
   </div>
@@ -24,18 +25,19 @@
     <h3 class="info-title">Información Académica</h3>
     <div class="info-grid">
       <div class="info-item">
-        <span class="label">Universidad:</span> <span class="value">{{ student.university }}</span>
+        <span class="label">Universidad:</span> <span class="value">{{ student.universidad }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Semestre:</span> <span class="value">{{ student.semester }}</span>
+        <span class="label">Ciclo:</span> <span class="value">{{ student.ciclo }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Carrera:</span> <span class="value">{{ student.career }}</span>
+        <span class="label">Carrera:</span> <span class="value">{{ student.carrera }}</span>
       </div>
     </div>
   </div>
 
   <div class="action-row">
-    <button class="btn btn-primary btn-edit">Editar Informacion</button>
+    <a routerLink="/student/profile/edit" class="btn btn-primary btn-edit">Editar Información</a>
   </div>
 </div>
+}

@@ -1,0 +1,24 @@
+<div class="rental-card">
+    <div class="card-image-wrapper">
+        <img [src]="rental.image" [alt]="rental.district">
+    </div>
+    <div class="card-details">
+        <h3 class="price">S/.{{ rental.price }} /mes</h3>
+        <h4 class="district">{{ rental.district }}</h4>
+        <p class="description">{{ rental.description }}</p>
+
+        <div class="features-row">
+            <span class="feature">{{ rental.area }}m²</span>
+            <span class="feature">{{ rental.baths }} baño</span>
+            <span class="feature">{{ rental.rooms }} dorm.</span>
+        </div>
+
+        <div class="card-actions">
+            <button class="btn-stats">
+                {{ rental.clicks }} clicks, {{ rental.requestsCount }} Solicitud{{ rental.requestsCount !== 1 ? 'es' :
+                '' }}
+            </button>
+            <a [routerLink]="['/landlord/accommodations', rental.id]" class="btn-preview">Ver Publicación</a>
+        </div>
+    </div>
+</div>

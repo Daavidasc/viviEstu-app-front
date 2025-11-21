@@ -1,14 +1,15 @@
 <div class="accommodation-card">
   <div class="card-image">
-    <img [src]="accommodation.image" [alt]="accommodation.district">
+    <img [src]="accommodation.thumbnailUrl" [alt]="accommodation.district">
     @if (accommodation.isFeatured) {
-      <div class="card-badge">Destacado</div>
+    <div class="card-badge">Destacado</div>
     }
   </div>
   <div class="card-details">
     <div class="card-header-row">
       <h3 class="price">S/.{{accommodation.price}} <span class="period">/mes</span></h3>
-      <button class="btn-favorite" (click)="toggleFavorite()" [attr.aria-label]="accommodation.isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'">
+      <button class="btn-favorite" (click)="toggleFavorite()"
+        [attr.aria-label]="accommodation.isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'">
         <i class="fa-heart" [class.fas]="accommodation.isFavorite" [class.far]="!accommodation.isFavorite"></i>
       </button>
     </div>
@@ -16,15 +17,27 @@
     <h4 class="district">{{accommodation.district}}</h4>
     <p class="description">{{accommodation.description}}</p>
 
+    @if (accommodation.area || accommodation.baths || accommodation.rooms) {
     <div class="features-row">
-      <div class="feature-item" title="Área">
+      @if (accommodation.area) {
+      <span class="feature-item">
         <i class="fas fa-ruler-combined"></i> {{accommodation.area}}m²
-      </div>
-      <div class="feature-item" title="Dormitorios">
-        <i class="fas fa-bed"></i> {{accommodation.rooms}}
-      </div>
+      </span>
+      }
+      @if (accommodation.baths) {
+      <span class="feature-item">
+        <i class="fas fa-bath"></i> {{accommodation.baths}} baño{{accommodation.baths > 1 ? 's' : ''}}
+      </span>
+      }
+      @if (accommodation.rooms) {
+      <span class="feature-item">
+        <i class="fas fa-bed"></i> {{accommodation.rooms}} dorm.
+      </span>
+      }
     </div>
+    }
 
-    <a [routerLink]="['/student/accommodations', accommodation.id]" class="btn btn-primary btn-info">Más Información</a>
+    <a [routerLink]="['/student/accommodations', accommodation.id]" class="btn btn-primary btn-info">Más
+      Información</a>
   </div>
 </div>

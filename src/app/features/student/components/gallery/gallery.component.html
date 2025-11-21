@@ -1,14 +1,18 @@
-<div class="image-gallery" *ngIf="images.length > 0">
-  <div class="main-image-wrapper">
-      <img [src]="currentImage" alt="Vista del alojamiento" class="main-image">
-      <button class="nav-btn prev" (click)="prevImage()"><i class="fas fa-chevron-left"></i></button>
-      <button class="nav-btn next" (click)="nextImage()"><i class="fas fa-chevron-right"></i></button>
+@if (images.length > 0) {
+  <div class="image-gallery">
+    <div class="main-image-wrapper">
+        <img [src]="currentImage" alt="Vista del alojamiento" class="main-image">
+        <button class="nav-btn prev" (click)="prevImage()"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next" (click)="nextImage()"><i class="fas fa-chevron-right"></i></button>
 
-      <div class="dots-container">
-          <span *ngFor="let img of images; let i = index"
+        <div class="dots-container">
+            @for (img of images; track $index; let i = $index) {
+              <span
                 class="dot"
                 [class.active]="i === currentImageIndex"
                 (click)="setImage(i)"></span>
-      </div>
+            }
+        </div>
+    </div>
   </div>
-</div>
+}

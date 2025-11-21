@@ -1,0 +1,28 @@
+<div class="info-card">
+  <h3 class="info-title">Información Personal</h3>
+  <div class="info-grid">
+    <div class="info-row">
+      <span class="label">DNI:</span>
+      <span class="value">{{ landlord.dni }}</span>
+    </div>
+    <div class="info-row">
+      <span class="label">Teléfono:</span>
+      <span class="value">{{ landlord.telefono }}</span>
+    </div>
+    <div class="info-row">
+      <span class="label">Edad:</span>
+      <span class="value">{{ landlord.age }} años</span>
+    </div>
+    <div class="info-row">
+      <span class="label">Dirección:</span>
+      <span class="value">{{ landlord.address }}</span>
+    </div>
+    <div class="info-row">
+      <span class="label">Propiedades activas:</span>
+      <span class="value">{{ landlord.propertiesCount }}</span>
+    </div>
+  </div>
+  <div class="action-row">
+    <a routerLink="/landlord/profile/edit" class="btn btn-primary btn-edit">Editar Información</a>
+  </div>
+</div>

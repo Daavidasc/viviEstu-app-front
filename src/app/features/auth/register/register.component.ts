@@ -1,10 +1,12 @@
 import { AuthValidators } from './../validators/auth.validators';
 import { AuthService } from './../../../core/services/auth.service';
 import { Component, inject, ChangeDetectorRef, OnInit } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 // CAMBIO CLAVE: Reemplazamos FormsModule por ReactiveFormsModule
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+
 import { NavbarLandingComponent } from '../../../shared/components/navbar-landing';
 import { FooterComponent } from '../../../shared/components/footer';
 import { RegisterEstudianteRequest, RegisterPropietarioRequest } from '../../../core/models/user.model';
@@ -21,6 +23,7 @@ import { DISTRITOS, SelectOption, UNIVERSIDADES } from '../../../core/constants/
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
 export class RegisterComponent implements OnInit {
 
   // Inyección de servicios
@@ -36,6 +39,7 @@ export class RegisterComponent implements OnInit {
 
   public universidades: SelectOption[] = UNIVERSIDADES;
   public distritos: SelectOption[] = DISTRITOS;
+
 
   userType: 'estudiante' | 'propietario' = 'estudiante';
 
@@ -100,11 +104,14 @@ export class RegisterComponent implements OnInit {
     return form.get(name);
   }
 
+
+
   onRegister() {
     this.loading = true;
     this.errorMessage = null;
 
     if (this.userType === 'estudiante') {
+
       // Usamos el formulario reactivo para validar
       if (this.studentForm.invalid) {
         this.studentForm.markAllAsTouched();
@@ -156,6 +163,7 @@ export class RegisterComponent implements OnInit {
             this.errorMessage = err.error?.message || 'Error desconocido al registrar propietario.';
           }
           this.cdr.detectChanges();
+
         }
       });
     }

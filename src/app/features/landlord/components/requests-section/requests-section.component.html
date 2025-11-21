@@ -1,0 +1,22 @@
+<section class="solicitudes-section">
+  <h3 class="section-subtitle">SOLICITUDES</h3>
+  <div class="solicitudes-container">
+      <div class="tabs-row">
+          <button class="tab-btn" [class.active]="activeTab === 'recientes'" (click)="activeTab = 'recientes'">Recientes</button>
+          <button class="tab-btn" [class.active]="activeTab === 'todas'" (click)="activeTab = 'todas'">Todas</button>
+          <button class="tab-btn" [class.active]="activeTab === 'pendientes'" (click)="activeTab = 'pendientes'">Pendientes</button>
+          <button class="tab-btn" [class.active]="activeTab === 'agendados'" (click)="activeTab = 'agendados'">Agendados</button>
+      </div>
+      <div class="requests-list">
+          @for(req of requests; track req.id) {
+            <div class="request-row">
+                <div class="req-info">
+                    <span class="req-text">{{ req.accommodationTitle }}</span>
+                    <span class="req-applicant">{{ req.applicantName }}</span>
+                </div>
+                <button class="btn-view">ver</button>
+            </div>
+          }
+      </div>
+  </div>
+</section>

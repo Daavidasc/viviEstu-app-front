@@ -14,6 +14,7 @@ export interface LoginRequestDTO {
   contrasenia: string;
 }
 
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -22,7 +23,6 @@ export interface LoginRequestDTO {
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  // Usar LoginRequest del modelo
   loginData: LoginRequest = {
     correo: '',
     contrasenia: ''
@@ -39,25 +39,26 @@ export class LoginComponent {
   onLogin() {
     this.isLoading = true;
     this.errorMessage = '';
-    console.log('Intentando ingresar con:', this.loginData);
 
-    // Llama al servicio de autenticación
     this.authService.login(this.loginData).subscribe({
       next: (response) => {
-        // En el tap del AuthService ya se guarda el token y el usuario.
-        console.log('Login exitoso. Token:', response.token);
-
-        // Redirige al usuario al área protegida (ej: dashboard)
-        this.router.navigate(['/dashboard']); // <-- AJUSTA ESTA RUTA SEGÚN TU APP
+        console.log('Login exitoso', response);
+        localStorage.setItem('token', response.token);
+        // Aquí podrías guardar más datos del usuario si es necesario
+        alert('¡Bienvenido ' + response.name + '!');
+        this.router.navigate(['/dashboard']); // Asumiendo ruta dashboard
+        this.isLoading = false;
       },
       error: (err) => {
-        console.error('Error de Login:', err);
+        console.error('Login error', err);
+        this.errorMessage = 'Correo o contraseña incorrectos.';
+
+
         this.errorMessage = err.error?.message || 'Error al intentar iniciar sesión. Verifica tus credenciales.';
         this.isLoading = false;
         this.cdr.detectChanges();
-      },
+              },
       complete: () => {
-        this.isLoading = false;
       }
     });
   }

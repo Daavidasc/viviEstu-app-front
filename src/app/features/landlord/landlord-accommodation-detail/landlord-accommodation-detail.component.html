@@ -1,0 +1,73 @@
+<div class="app-container">
+    <app-landlord-navbar />
+
+    @if (accommodation) {
+    <main class="main-content">
+        <div class="container content-grid">
+
+            <!-- COLUMNA IZQUIERDA: Detalles del Alojamiento -->
+            <div class="details-column">
+                <div class="card main-card">
+                    <app-gallery [images]="getImageUrls()" />
+
+                    <div class="info-content">
+                        <!-- Cabecera: Precio y Editar -->
+                        <div class="header-row">
+                            <h1 class="price-tag">S/.{{ accommodation.precioMensual }} <span class="period">/mes</span>
+                            </h1>
+                            <a [routerLink]="['/landlord/upload']" class="btn-edit">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                        </div>
+
+                        <p class="description-text">{{ accommodation.descripcion }}</p>
+
+                        <!-- Ubicación -->
+                        <div class="section-block">
+                            <h3 class="section-label">Ubicación:</h3>
+                            <p class="info-text">{{ accommodation.direccion }}</p>
+                            <p class="info-text highlight">{{ accommodation.distrito }}</p>
+                        </div>
+
+                        <!-- Universidades Cercanas -->
+                        <div class="section-block">
+                            <h3 class="section-label">Universidades Cercanas:</h3>
+                            <div class="tags-row">
+                                @for (uni of accommodation.universidades; track uni) {
+                                <span class="uni-tag">{{ uni }}</span>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Opciones de Movilidad -->
+                        <div class="section-block">
+                            <h3 class="section-label">Opciones de movilidad</h3>
+                            <div class="tags-row">
+                                @for (mob of accommodation.transportes; track mob) {
+                                <span class="mobility-tag">{{ mob }}</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA: Solicitudes -->
+            <div class="sidebar-column">
+                <div class="card requests-card">
+                    <div class="requests-header">
+                        <h3>Solicitudes</h3>
+                        <span class="requests-count">{{ requests.length }}</span>
+                    </div>
+                    <div class="requests-content">
+                        <app-accommodation-requests-list [requests]="requests" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    }
+
+    <app-footer />
+</div>
