@@ -4,8 +4,8 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core'; // Añadir
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router'; // Importar Router
-import { NavbarLandingComponent } from '../../../shared/components/navbar-landing';
-import { FooterComponent } from '../../../shared/components/footer';
+import { NavbarLandingComponent } from '../../../shared/components/navbar-landing/navbar-landing.component';
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { LoginRequest } from '../../../core/models/user.model';
 
 
@@ -57,7 +57,7 @@ export class LoginComponent {
         this.errorMessage = err.error?.message || 'Error al intentar iniciar sesión. Verifica tus credenciales.';
         this.isLoading = false;
 
-              },
+      },
       complete: () => {
       }
     });

@@ -2,123 +2,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
-<!-- Estilos para los mensajes de error -->
-<style>
-  /* Estilos Tailwind CSS implícitos */
-  .main-content {
-  @apply relative min-h-screen flex items-center justify-center p-4 sm:p-8;
-  }
-  .bg-decoration {
-    @apply fixed inset-0 overflow-hidden;
-  }
-  .bg-image {
-    @apply w-full h-full object-cover;
-  }
-  .bg-overlay {
-    @apply absolute inset-0 bg-gray-900 bg-opacity-70;
-  }
-  .register-card-wrapper {
-    @apply relative z-10 w-full max-w-4xl flex justify-center;
-  }
-  .register-card {
-    @apply w-full max-w-lg bg-white bg-opacity-95 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-2xl;
-  }
-  .card-header {
-    @apply mb-6 text-center;
-  }
-  .title-text {
-    @apply text-3xl font-bold text-gray-800 mb-4;
-  }
-  .user-type-tabs {
-    @apply flex justify-center space-x-2 p-1 bg-gray-100 rounded-full;
-  }
-  .tab-btn {
-    @apply px-4 py-2 text-sm font-medium text-gray-600 rounded-full transition-colors duration-200;
-  }
-  .tab-btn.active {
-    @apply bg-indigo-600 text-white shadow-md;
-  }
-  .error-alert {
-    @apply flex items-center justify-between p-3 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50;
-  }
-  .error-message {
-    @apply text-red-500 text-xs mt-1 transition-all duration-300;
-  }
-  .form-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
-  }
-  .form-group {
-    @apply relative;
-  }
-  .full-width {
-    @apply sm:col-span-2;
-  }
-  .label-text {
-    @apply block text-sm font-medium text-gray-700 mb-1;
-  }
-  .form-input {
-    @apply w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition-shadow duration-150;
-  }
-  /* Estilo para inputs inválidos */
-  .form-input.ng-invalid.ng-touched {
-    @apply border-red-500 ring-1 ring-red-500;
-  }
-  .form-actions {
-    @apply mt-6 sm:col-span-2;
-  }
-  .btn-primary {
-    @apply bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
-  }
-  .btn-shadow {
-    @apply shadow-lg shadow-indigo-500/50;
-  }
-  .btn-full {
-    @apply w-full py-3 font-semibold rounded-lg;
-  }
-  .form-footer-links {
-    @apply text-center mt-4;
-  }
-  .text-gray {
-    @apply text-gray-600 text-sm;
-  }
-  .link-highlight {
-    @apply text-indigo-600 hover:text-indigo-800 font-medium transition-colors;
-  }
-  .validation-list {
-    @apply mt-2 text-xs list-none p-0 ml-0;
-  }
-  .validation-item-invalid {
-    @apply text-red-500;
-  }
-  .validation-item-valid {
-@apply text-green-600;
-  }
-  /* Estilos Tailwind CSS implícitos */
- .label-text {
- @apply block text-sm font-medium text-gray-700 mb-1;
- }
- .form-input {
- @apply w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition-shadow duration-150;
-
-    /* 🚀 APLICAR COLOR DE TEXTO POR DEFECTO PARA EL SELECT 🚀 */
-    color: #1f2937; /* Gris oscuro (Tailwind gray-800 o gray-900) */
- }
-
-  /* 🚀 ASEGURAR QUE LAS OPCIONES DENTRO DEL SELECT SE VEAN NEGRAS 🚀 */
-  .form-input option {
-    color: #1f2937; /* Asegura el color para las opciones desplegadas */
-  }
-</style>
-
 <app-navbar-landing />
 <!-- REGISTER CONTENT -->
 <main class="main-content">
 
   <!-- Background Decoration -->
-<div class="bg-decoration">
-<img src="/assets/Banner.png" alt="Fondo universidad" class="bg-image">
-<div class="bg-overlay"></div>
-</div>
+  <div class="bg-decoration">
+    <img src="/assets/Banner.png" alt="Fondo universidad" class="bg-image">
+    <div class="bg-overlay"></div>
+  </div>
 
   <!-- Register Card -->
   <div class="register-card-wrapper">
@@ -129,343 +21,383 @@
 
         <!-- Tabs de Tipo de Usuario -->
         <div class="user-type-tabs">
-          <button
-            class="tab-btn"
-            [class.active]="userType === 'estudiante'"
-            (click)="userType = 'estudiante'">
+          <button class="tab-btn" [class.active]="userType === 'estudiante'" (click)="userType = 'estudiante'">
             Estudiante
           </button>
-          <button
-            class="tab-btn"
-            [class.active]="userType === 'propietario'"
-            (click)="userType = 'propietario'">
+          <button class="tab-btn" [class.active]="userType === 'propietario'" (click)="userType = 'propietario'">
             Propietario
           </button>
         </div>
       </div>
 
-    <!-- MENSAJE DE ERROR -->
-    <div *ngIf="errorMessage" class="error-alert">
-      <i class="fas fa-exclamation-triangle"></i>
-      {{ errorMessage }}
-      <button (click)="errorMessage = null" class="close-btn" aria-label="Cerrar alerta de error">&times;</button>
-    </div>
+      <!-- MENSAJE DE ERROR -->
+      <div *ngIf="errorMessage" class="error-alert">
+        <i class="fas fa-exclamation-triangle"></i>
+        {{ errorMessage }}
+        <button (click)="errorMessage = null" class="close-btn" aria-label="Cerrar alerta de error">&times;</button>
+      </div>
 
 
       <!-- Formulario Estudiante (REACTIVE FORMS) -->
-    <form *ngIf="userType === 'estudiante'"
-          class="register-form"
-          [formGroup]="studentForm"
-          (ngSubmit)="onRegister()">
-      <div class="form-grid">
+      <form *ngIf="userType === 'estudiante'" class="register-form" [formGroup]="studentForm" (ngSubmit)="onRegister()">
+        <div class="form-grid">
 
-        <div class="form-group">
-          <label for="nombres" class="label-text">Nombres</label>
-          <input type="text"
-                 id="nombres"
-                 formControlName="nombre"
-                 class="form-input"
-                 [class.ng-invalid]="getControl(studentForm, 'nombre')?.invalid && getControl(studentForm, 'nombre')?.touched">
-          <!-- ERROR FEEDBACK: Required -->
-          <div *ngIf="getControl(studentForm, 'nombre')?.errors?.['required'] && getControl(studentForm, 'nombre')?.touched" class="error-message">
-            El nombre es obligatorio.
+          <div class="form-group">
+            <label for="nombres" class="label-text">Nombres</label>
+            <input type="text" id="nombres" formControlName="nombre" class="form-input"
+              [class.ng-invalid]="getControl(studentForm, 'nombre')?.invalid && getControl(studentForm, 'nombre')?.touched">
+            <!-- ERROR FEEDBACK: Required -->
+            <div
+              *ngIf="getControl(studentForm, 'nombre')?.errors?.['required'] && getControl(studentForm, 'nombre')?.touched"
+              class="error-message">
+              El nombre es obligatorio.
+            </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <label for="apellidos" class="label-text">Apellidos</label>
-          <input type="text"
-                 id="apellidos"
-                 formControlName="apellidos"
-                 class="form-input"
-                 [class.ng-invalid]="getControl(studentForm, 'apellidos')?.invalid && getControl(studentForm, 'apellidos')?.touched">
-          <!-- ERROR FEEDBACK: Required -->
-          <div *ngIf="getControl(studentForm, 'apellidos')?.errors?.['required'] && getControl(studentForm, 'apellidos')?.touched" class="error-message">
-            El apellido es obligatorio.
+          <div class="form-group">
+            <label for="apellidos" class="label-text">Apellidos</label>
+            <input type="text" id="apellidos" formControlName="apellidos" class="form-input"
+              [class.ng-invalid]="getControl(studentForm, 'apellidos')?.invalid && getControl(studentForm, 'apellidos')?.touched">
+            <!-- ERROR FEEDBACK: Required -->
+            <div
+              *ngIf="getControl(studentForm, 'apellidos')?.errors?.['required'] && getControl(studentForm, 'apellidos')?.touched"
+              class="error-message">
+              El apellido es obligatorio.
+            </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <label for="dni" class="label-text">DNI</label>
-          <input type="text"
-                 id="dni"
-                 formControlName="dni"
-                 class="form-input"
-                 placeholder="Solo 8 dígitos"
-                 [class.ng-invalid]="getControl(studentForm, 'dni')?.invalid && getControl(studentForm, 'dni')?.touched">
-          <!-- ERROR FEEDBACK: DNI Peruano -->
-          <div *ngIf="getControl(studentForm, 'dni')?.errors?.['invalidPeruvianDNI'] && getControl(studentForm, 'dni')?.touched" class="error-message">
-            El DNI debe ser exactamente 8 dígitos.
+          <div class="form-group">
+            <label for="dni" class="label-text">DNI</label>
+            <input type="text" id="dni" formControlName="dni" class="form-input" placeholder="Solo 8 dígitos"
+              [class.ng-invalid]="getControl(studentForm, 'dni')?.invalid && getControl(studentForm, 'dni')?.touched">
+            <!-- ERROR FEEDBACK: DNI Peruano -->
+            <div
+              *ngIf="getControl(studentForm, 'dni')?.errors?.['invalidPeruvianDNI'] && getControl(studentForm, 'dni')?.touched"
+              class="error-message">
+              El DNI debe ser exactamente 8 dígitos.
+            </div>
+            <!-- ERROR FEEDBACK: Required -->
+            <div *ngIf="getControl(studentForm, 'dni')?.errors?.['required'] && getControl(studentForm, 'dni')?.touched"
+              class="error-message">
+              El DNI es obligatorio.
+            </div>
           </div>
-          <!-- ERROR FEEDBACK: Required -->
-          <div *ngIf="getControl(studentForm, 'dni')?.errors?.['required'] && getControl(studentForm, 'dni')?.touched" class="error-message">
-            El DNI es obligatorio.
-          </div>
-        </div>
 
-        <div class="form-group">
-          <label for="telefono" class="label-text">Teléfono</label>
-          <input type="tel"
-                 id="telefono"
-                 formControlName="telefono"
-                 class="form-input"
-                 placeholder="Ej: 987654321"
-                 [class.ng-invalid]="getControl(studentForm, 'telefono')?.invalid && getControl(studentForm, 'telefono')?.touched">
-          <!-- ERROR FEEDBACK: Teléfono -->
-          <div *ngIf="getControl(studentForm, 'telefono')?.errors?.['notNumeric'] && getControl(studentForm, 'telefono')?.touched" class="error-message">
-            Solo se permiten números.
+          <div class="form-group">
+            <label for="telefono" class="label-text">Teléfono</label>
+            <input type="tel" id="telefono" formControlName="telefono" class="form-input" placeholder="Ej: 987654321"
+              [class.ng-invalid]="getControl(studentForm, 'telefono')?.invalid && getControl(studentForm, 'telefono')?.touched">
+            <!-- ERROR FEEDBACK: Teléfono -->
+            <div
+              *ngIf="getControl(studentForm, 'telefono')?.errors?.['notNumeric'] && getControl(studentForm, 'telefono')?.touched"
+              class="error-message">
+              Solo se permiten números.
+            </div>
+            <div
+              *ngIf="getControl(studentForm, 'telefono')?.errors?.['invalidLength'] && getControl(studentForm, 'telefono')?.touched"
+              class="error-message">
+              Debe tener 9 dígitos.
+            </div>
+            <!-- ERROR FEEDBACK: Required -->
+            <div
+              *ngIf="getControl(studentForm, 'telefono')?.errors?.['required'] && getControl(studentForm, 'telefono')?.touched"
+              class="error-message">
+              El teléfono es obligatorio.
+            </div>
           </div>
-          <div *ngIf="getControl(studentForm, 'telefono')?.errors?.['invalidLength'] && getControl(studentForm, 'telefono')?.touched" class="error-message">
-            Debe tener 9 dígitos.
-          </div>
-          <!-- ERROR FEEDBACK: Required -->
-          <div *ngIf="getControl(studentForm, 'telefono')?.errors?.['required'] && getControl(studentForm, 'telefono')?.touched" class="error-message">
-            El teléfono es obligatorio.
-          </div>
-        </div>
 
 
-        <div class="form-group full-width">
-          <label for="correo" class="label-text">Correo Institucional</label>
-          <input type="email"
-                 id="correo"
-                 formControlName="correo"
-                 class="form-input"
-                 [class.ng-invalid]="getControl(studentForm, 'correo')?.invalid && getControl(studentForm, 'correo')?.touched">
-          <!-- ERROR FEEDBACK: Email -->
-          <div *ngIf="getControl(studentForm, 'correo')?.errors?.['email'] && getControl(studentForm, 'correo')?.touched" class="error-message">
-            Debe ser un formato de correo válido.
+          <div class="form-group full-width">
+            <label for="correo" class="label-text">Correo Institucional</label>
+            <input type="email" id="correo" formControlName="correo" class="form-input"
+              [class.ng-invalid]="getControl(studentForm, 'correo')?.invalid && getControl(studentForm, 'correo')?.touched">
+            <!-- ERROR FEEDBACK: Email -->
+            <div
+              *ngIf="getControl(studentForm, 'correo')?.errors?.['email'] && getControl(studentForm, 'correo')?.touched"
+              class="error-message">
+              Debe ser un formato de correo válido.
+            </div>
+            <!-- ERROR FEEDBACK: Required -->
+            <div
+              *ngIf="getControl(studentForm, 'correo')?.errors?.['required'] && getControl(studentForm, 'correo')?.touched"
+              class="error-message">
+              El correo es obligatorio.
+            </div>
           </div>
-          <!-- ERROR FEEDBACK: Required -->
-          <div *ngIf="getControl(studentForm, 'correo')?.errors?.['required'] && getControl(studentForm, 'correo')?.touched" class="error-message">
-            El correo es obligatorio.
-          </div>
-        </div>
 
-        <div class="form-group full-width">
-          <label for="contrasenia" class="label-text">Contraseña</label>
-          <input type="password"
-                 id="contrasenia"
-                 formControlName="contrasenia"
-                 class="form-input"
-                 [class.ng-invalid]="getControl(studentForm, 'contrasenia')?.invalid && getControl(studentForm, 'contrasenia')?.touched">
-          <!-- ERROR FEEDBACK: Strong Password -->
-          <div *ngIf="getControl(studentForm, 'contrasenia')?.errors?.['weakPassword'] && getControl(studentForm, 'contrasenia')?.touched" class="error-message">
-            La contraseña es débil y debe cumplir:
-            <ul class="validation-list">
-              <li [class.validation-item-invalid]="!getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasMinLength"
+          <div class="form-group full-width">
+            <label for="contrasenia" class="label-text">Contraseña</label>
+            <input type="password" id="contrasenia" formControlName="contrasenia" class="form-input"
+              [class.ng-invalid]="getControl(studentForm, 'contrasenia')?.invalid && getControl(studentForm, 'contrasenia')?.touched">
+            <!-- ERROR FEEDBACK: Strong Password -->
+            <div
+              *ngIf="getControl(studentForm, 'contrasenia')?.errors?.['weakPassword'] && getControl(studentForm, 'contrasenia')?.touched"
+              class="error-message">
+              La contraseña es débil y debe cumplir:
+              <ul class="validation-list">
+                <li
+                  [class.validation-item-invalid]="!getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasMinLength"
                   [class.validation-item-valid]="getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasMinLength">
-                Mínimo {{ getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.requiredLength }} caracteres.
-              </li>
-              <li [class.validation-item-invalid]="!getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasUpperCase"
+                  Mínimo {{ getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.requiredLength }}
+                  caracteres.
+                </li>
+                <li
+                  [class.validation-item-invalid]="!getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasUpperCase"
                   [class.validation-item-valid]="getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasUpperCase">
-                Al menos una letra mayúscula.
-              </li>
-              <li [class.validation-item-invalid]="!getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasLowerCase"
+                  Al menos una letra mayúscula.
+                </li>
+                <li
+                  [class.validation-item-invalid]="!getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasLowerCase"
                   [class.validation-item-valid]="getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasLowerCase">
-                Al menos una letra minúscula.
-              </li>
-              <li [class.validation-item-invalid]="!getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasNumeric"
+                  Al menos una letra minúscula.
+                </li>
+                <li
+                  [class.validation-item-invalid]="!getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasNumeric"
                   [class.validation-item-valid]="getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasNumeric">
-                Al menos un número.
-              </li>
-              <li [class.validation-item-invalid]="!getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasSpecial"
+                  Al menos un número.
+                </li>
+                <li
+                  [class.validation-item-invalid]="!getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasSpecial"
                   [class.validation-item-valid]="getControl(studentForm, 'contrasenia')?.errors?.['weakPassword']?.hasSpecial">
-                Al menos un caracter especial.
-              </li>
-            </ul>
+                  Al menos un caracter especial.
+                </li>
+              </ul>
+            </div>
+            <!-- ERROR FEEDBACK: Required -->
+            <div
+              *ngIf="getControl(studentForm, 'contrasenia')?.errors?.['required'] && getControl(studentForm, 'contrasenia')?.touched"
+              class="error-message">
+              La contraseña es obligatoria.
+            </div>
           </div>
-          <!-- ERROR FEEDBACK: Required -->
-          <div *ngIf="getControl(studentForm, 'contrasenia')?.errors?.['required'] && getControl(studentForm, 'contrasenia')?.touched" class="error-message">
-            La contraseña es obligatoria.
+
+          <!-- CAMPO DE CONFIRMACIÓN DE CONTRASEÑA -->
+          <div class="form-group full-width">
+            <label class="label-text">Confirmar Contraseña</label>
+            <input type="password" formControlName="confirmarContrasenia" class="form-input"
+              [class.ng-invalid]="getControl(studentForm, 'confirmarContrasenia')?.invalid && getControl(studentForm, 'confirmarContrasenia')?.touched || (studentForm.errors?.['passwordMismatch'] && getControl(studentForm, 'confirmarContrasenia')?.touched)">
+
+            <div
+              *ngIf="studentForm.errors?.['passwordMismatch'] && getControl(studentForm, 'confirmarContrasenia')?.touched"
+              class="error-message">
+              Las contraseñas no coinciden.
+            </div>
+
+            <div
+              *ngIf="getControl(studentForm, 'confirmarContrasenia')?.errors?.['required'] && getControl(studentForm, 'confirmarContrasenia')?.touched"
+              class="error-message">
+              La confirmación de contraseña es obligatoria.
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="carrera" class="label-text">Carrera</label>
+            <input type="text" id="carrera" formControlName="carrera" class="form-input"
+              [class.ng-invalid]="getControl(studentForm, 'carrera')?.invalid && getControl(studentForm, 'carrera')?.touched">
+            <div
+              *ngIf="getControl(studentForm, 'carrera')?.errors?.['required'] && getControl(studentForm, 'carrera')?.touched"
+              class="error-message">
+              La carrera es obligatoria.
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="universidadId" class="label-text">Universidad</label>
+
+            <select id="universidadId" formControlName="universidadId" class="form-input"
+              [class.ng-invalid]="getControl(studentForm, 'universidadId')?.invalid && getControl(studentForm, 'universidadId')?.touched">
+
+              <option [ngValue]="null" disabled>Selecciona tu universidad</option>
+              <option *ngFor="let uni of universidades" [ngValue]="uni.id">
+                {{ uni.nombre }}
+              </option>
+            </select>
+
+            <div
+              *ngIf="getControl(studentForm, 'universidadId')?.errors?.['required'] && getControl(studentForm, 'universidadId')?.touched"
+              class="error-message">
+              La universidad es obligatoria.
+            </div>
+            <div
+              *ngIf="getControl(studentForm, 'universidadId')?.errors?.['min'] && getControl(studentForm, 'universidadId')?.touched"
+              class="error-message">
+              Debes seleccionar una universidad válida.
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="ciclo" class="label-text">Ciclo</label>
+            <input type="number" id="ciclo" formControlName="ciclo" class="form-input"
+              [class.ng-invalid]="getControl(studentForm, 'ciclo')?.invalid && getControl(studentForm, 'ciclo')?.touched">
+            <div
+              *ngIf="getControl(studentForm, 'ciclo')?.errors?.['required'] && getControl(studentForm, 'ciclo')?.touched"
+              class="error-message">
+              El ciclo es obligatorio.
+            </div>
+            <div
+              *ngIf="(getControl(studentForm, 'ciclo')?.errors?.['min'] || getControl(studentForm, 'ciclo')?.errors?.['max']) && getControl(studentForm, 'ciclo')?.touched"
+              class="error-message">
+              El ciclo debe ser entre 1 y 12.
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="distritoId" class="label-text">Distrito preferencia</label>
+
+            <select id="distritoId" formControlName="distritoId" class="form-input"
+              [class.ng-invalid]="getControl(studentForm, 'distritoId')?.invalid && getControl(studentForm, 'distritoId')?.touched">
+
+              <option [ngValue]="null" disabled>Selecciona tu distrito de preferencia</option>
+              <option *ngFor="let dist of distritos" [ngValue]="dist.id">
+                {{ dist.nombre }}
+              </option>
+            </select>
+
+            <div
+              *ngIf="getControl(studentForm, 'distritoId')?.errors?.['required'] && getControl(studentForm, 'distritoId')?.touched"
+              class="error-message">
+              El distrito es obligatorio.
+            </div>
+            <div
+              *ngIf="getControl(studentForm, 'distritoId')?.errors?.['min'] && getControl(studentForm, 'distritoId')?.touched"
+              class="error-message">
+              Debes seleccionar un distrito válido.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Botón Registrarse (deshabilitado si el formulario es inválido) -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-full btn-primary btn-shadow" [disabled]="studentForm.invalid">
+            Registrarse
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Formulario Propietario (REACTIVE FORMS) -->
+      <form *ngIf="userType === 'propietario'" class="register-form" [formGroup]="ownerForm" (ngSubmit)="onRegister()">
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label class="label-text">Nombres</label>
+            <input type="text" formControlName="nombre" class="form-input"
+              [class.ng-invalid]="getControl(ownerForm, 'nombre')?.invalid && getControl(ownerForm, 'nombre')?.touched">
+            <div
+              *ngIf="getControl(ownerForm, 'nombre')?.errors?.['required'] && getControl(ownerForm, 'nombre')?.touched"
+              class="error-message">
+              El nombre es obligatorio.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="label-text">Apellidos</label>
+            <input type="text" formControlName="apellidos" class="form-input"
+              [class.ng-invalid]="getControl(ownerForm, 'apellidos')?.invalid && getControl(ownerForm, 'apellidos')?.touched">
+            <div
+              *ngIf="getControl(ownerForm, 'apellidos')?.errors?.['required'] && getControl(ownerForm, 'apellidos')?.touched"
+              class="error-message">
+              El apellido es obligatorio.
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label class="label-text">DNI</label>
+            <input type="text" formControlName="dni" class="form-input" placeholder="Solo 8 dígitos"
+              [class.ng-invalid]="getControl(ownerForm, 'dni')?.invalid && getControl(ownerForm, 'dni')?.touched">
+            <!-- ERROR FEEDBACK: DNI Peruano -->
+            <div
+              *ngIf="getControl(ownerForm, 'dni')?.errors?.['invalidPeruvianDNI'] && getControl(ownerForm, 'dni')?.touched"
+              class="error-message">
+              El DNI debe ser exactamente 8 dígitos.
+            </div>
+            <div *ngIf="getControl(ownerForm, 'dni')?.errors?.['required'] && getControl(ownerForm, 'dni')?.touched"
+              class="error-message">
+              El DNI es obligatorio.
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="owner-telefono" class="label-text">Teléfono de Contacto</label>
+            <input type="tel" id="owner-telefono" formControlName="telefono" class="form-input"
+              placeholder="Ej: 987654321"
+              [class.ng-invalid]="getControl(ownerForm, 'telefono')?.invalid && getControl(ownerForm, 'telefono')?.touched">
+            <!-- ERROR FEEDBACK: Teléfono -->
+            <div
+              *ngIf="getControl(ownerForm, 'telefono')?.errors?.['notNumeric'] && getControl(ownerForm, 'telefono')?.touched"
+              class="error-message">
+              Solo se permiten números.
+            </div>
+            <div
+              *ngIf="getControl(ownerForm, 'telefono')?.errors?.['invalidLength'] && getControl(ownerForm, 'telefono')?.touched"
+              class="error-message">
+              Debe tener 9 dígitos.
+            </div>
+            <div
+              *ngIf="getControl(ownerForm, 'telefono')?.errors?.['required'] && getControl(ownerForm, 'telefono')?.touched"
+              class="error-message">
+              El teléfono es obligatorio.
+            </div>
           </div>
         </div>
 
-                <!-- CAMPO DE CONFIRMACIÓN DE CONTRASEÑA -->
-        <div class="form-group full-width">
-          <label class="label-text">Confirmar Contraseña</label>
-          <input type="password"
-                formControlName="confirmarContrasenia"
-                class="form-input"
-                [class.ng-invalid]="getControl(studentForm, 'confirmarContrasenia')?.invalid && getControl(studentForm, 'confirmarContrasenia')?.touched || (studentForm.errors?.['passwordMismatch'] && getControl(studentForm, 'confirmarContrasenia')?.touched)">
-
-          <div *ngIf="studentForm.errors?.['passwordMismatch'] && getControl(studentForm, 'confirmarContrasenia')?.touched" class="error-message">
-            Las contraseñas no coinciden.
-          </div>
-
-          <div *ngIf="getControl(studentForm, 'confirmarContrasenia')?.errors?.['required'] && getControl(studentForm, 'confirmarContrasenia')?.touched" class="error-message">
-            La confirmación de contraseña es obligatoria.
-          </div>
-        </div>
-
-        <div class="form-group full-width">
-          <label for="carrera" class="label-text">Carrera</label>
-          <input type="text" id="carrera" formControlName="carrera" class="form-input" [class.ng-invalid]="getControl(studentForm, 'carrera')?.invalid && getControl(studentForm, 'carrera')?.touched">
-          <div *ngIf="getControl(studentForm, 'carrera')?.errors?.['required'] && getControl(studentForm, 'carrera')?.touched" class="error-message">
-            La carrera es obligatoria.
-          </div>
-        </div>
-
-        <div class="form-group full-width">
-          <label for="universidadId" class="label-text">Universidad</label>
-
-          <select id="universidadId"
-                  formControlName="universidadId"
-                  class="form-input"
-                  [class.ng-invalid]="getControl(studentForm, 'universidadId')?.invalid && getControl(studentForm, 'universidadId')?.touched">
-
-            <option [ngValue]="null" disabled>Selecciona tu universidad</option>
-            <option *ngFor="let uni of universidades" [ngValue]="uni.id">
-              {{ uni.nombre }}
-            </option>
-          </select>
-
-          <div *ngIf="getControl(studentForm, 'universidadId')?.errors?.['required'] && getControl(studentForm, 'universidadId')?.touched" class="error-message">
-            La universidad es obligatoria.
-          </div>
-          <div *ngIf="getControl(studentForm, 'universidadId')?.errors?.['min'] && getControl(studentForm, 'universidadId')?.touched" class="error-message">
-            Debes seleccionar una universidad válida.
-          </div>
-        </div>
-
-        <div class="form-group full-width">
-          <label for="ciclo" class="label-text">Ciclo</label>
-          <input type="number" id="ciclo" formControlName="ciclo" class="form-input" [class.ng-invalid]="getControl(studentForm, 'ciclo')?.invalid && getControl(studentForm, 'ciclo')?.touched">
-          <div *ngIf="getControl(studentForm, 'ciclo')?.errors?.['required'] && getControl(studentForm, 'ciclo')?.touched" class="error-message">
-            El ciclo es obligatorio.
-          </div>
-          <div *ngIf="(getControl(studentForm, 'ciclo')?.errors?.['min'] || getControl(studentForm, 'ciclo')?.errors?.['max']) && getControl(studentForm, 'ciclo')?.touched" class="error-message">
-            El ciclo debe ser entre 1 y 12.
-          </div>
-        </div>
-
-        <div class="form-group full-width">
-          <label for="distritoId" class="label-text">Distrito preferencia</label>
-
-          <select id="distritoId"
-                  formControlName="distritoId"
-                  class="form-input"
-                  [class.ng-invalid]="getControl(studentForm, 'distritoId')?.invalid && getControl(studentForm, 'distritoId')?.touched">
-
-            <option [ngValue]="null" disabled>Selecciona tu distrito de preferencia</option>
-            <option *ngFor="let dist of distritos" [ngValue]="dist.id">
-              {{ dist.nombre }}
-            </option>
-          </select>
-
-          <div *ngIf="getControl(studentForm, 'distritoId')?.errors?.['required'] && getControl(studentForm, 'distritoId')?.touched" class="error-message">
-            El distrito es obligatorio.
-          </div>
-          <div *ngIf="getControl(studentForm, 'distritoId')?.errors?.['min'] && getControl(studentForm, 'distritoId')?.touched" class="error-message">
-            Debes seleccionar un distrito válido.
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Botón Registrarse (deshabilitado si el formulario es inválido) -->
-      <div class="form-actions">
-        <button type="submit"
-                class="btn btn-full btn-primary btn-shadow"
-                [disabled]="studentForm.invalid">
-          Registrarse
-        </button>
-      </div>
-
-    </form>
-
-    <!-- Formulario Propietario (REACTIVE FORMS) -->
-    <form *ngIf="userType === 'propietario'"
-          class="register-form"
-          [formGroup]="ownerForm"
-          (ngSubmit)="onRegister()">
-      <div class="form-grid">
-
-        <div class="form-group">
-          <label class="label-text">Nombres</label>
-          <input type="text"
-                 formControlName="nombre"
-                 class="form-input"
-                 [class.ng-invalid]="getControl(ownerForm, 'nombre')?.invalid && getControl(ownerForm, 'nombre')?.touched">
-          <div *ngIf="getControl(ownerForm, 'nombre')?.errors?.['required'] && getControl(ownerForm, 'nombre')?.touched" class="error-message">
-            El nombre es obligatorio.
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="label-text">Apellidos</label>
-          <input type="text"
-                 formControlName="apellidos"
-                 class="form-input"
-                 [class.ng-invalid]="getControl(ownerForm, 'apellidos')?.invalid && getControl(ownerForm, 'apellidos')?.touched">
-          <div *ngIf="getControl(ownerForm, 'apellidos')?.errors?.['required'] && getControl(ownerForm, 'apellidos')?.touched" class="error-message">
-            El apellido es obligatorio.
-          </div>
-        </div>
-
-        <div class="form-group full-width">
-          <label class="label-text">DNI</label>
-          <input type="text"
-                 formControlName="dni"
-                 class="form-input"
-                 placeholder="Solo 8 dígitos"
-                 [class.ng-invalid]="getControl(ownerForm, 'dni')?.invalid && getControl(ownerForm, 'dni')?.touched">
-          <!-- ERROR FEEDBACK: DNI Peruano -->
-          <div *ngIf="getControl(ownerForm, 'dni')?.errors?.['invalidPeruvianDNI'] && getControl(ownerForm, 'dni')?.touched" class="error-message">
-            El DNI debe ser exactamente 8 dígitos.
-          </div>
-          <div *ngIf="getControl(ownerForm, 'dni')?.errors?.['required'] && getControl(ownerForm, 'dni')?.touched" class="error-message">
-            El DNI es obligatorio.
-          </div>
-        </div>
 
         <div class="form-group full-width">
           <label class="label-text">Correo Electrónico</label>
-          <input type="email"
-                 formControlName="correo"
-                 class="form-input"
-                 [class.ng-invalid]="getControl(ownerForm, 'correo')?.invalid && getControl(ownerForm, 'correo')?.touched">
-          <div *ngIf="getControl(ownerForm, 'correo')?.errors?.['email'] && getControl(ownerForm, 'correo')?.touched" class="error-message">
+          <input type="email" formControlName="correo" class="form-input"
+            [class.ng-invalid]="getControl(ownerForm, 'correo')?.invalid && getControl(ownerForm, 'correo')?.touched">
+          <div *ngIf="getControl(ownerForm, 'correo')?.errors?.['email'] && getControl(ownerForm, 'correo')?.touched"
+            class="error-message">
             Debe ser un formato de correo válido.
           </div>
-          <div *ngIf="getControl(ownerForm, 'correo')?.errors?.['required'] && getControl(ownerForm, 'correo')?.touched" class="error-message">
+          <div *ngIf="getControl(ownerForm, 'correo')?.errors?.['required'] && getControl(ownerForm, 'correo')?.touched"
+            class="error-message">
             El correo es obligatorio.
           </div>
         </div>
 
         <div class="form-group full-width">
           <label class="label-text">Contraseña</label>
-          <input type="password"
-                 formControlName="contrasenia"
-                 class="form-input"
-                 [class.ng-invalid]="getControl(ownerForm, 'contrasenia')?.invalid && getControl(ownerForm, 'contrasenia')?.touched">
+          <input type="password" formControlName="contrasenia" class="form-input"
+            [class.ng-invalid]="getControl(ownerForm, 'contrasenia')?.invalid && getControl(ownerForm, 'contrasenia')?.touched">
           <!-- ERROR FEEDBACK: Strong Password (similar al formulario estudiante) -->
-          <div *ngIf="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword'] && getControl(ownerForm, 'contrasenia')?.touched" class="error-message">
+          <div
+            *ngIf="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword'] && getControl(ownerForm, 'contrasenia')?.touched"
+            class="error-message">
             La contraseña es débil y debe cumplir:
             <ul class="validation-list">
-              <li [class.validation-item-invalid]="!getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasMinLength"
-                  [class.validation-item-valid]="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasMinLength">
-                Mínimo {{ getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.requiredLength }} caracteres.
+              <li
+                [class.validation-item-invalid]="!getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasMinLength"
+                [class.validation-item-valid]="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasMinLength">
+                Mínimo {{ getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.requiredLength }}
+                caracteres.
               </li>
-              <li [class.validation-item-invalid]="!getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasUpperCase"
-                  [class.validation-item-valid]="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasUpperCase">
+              <li
+                [class.validation-item-invalid]="!getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasUpperCase"
+                [class.validation-item-valid]="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasUpperCase">
                 Al menos una letra mayúscula.
               </li>
-              <li [class.validation-item-invalid]="!getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasLowerCase"
-                  [class.validation-item-valid]="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasLowerCase">
+              <li
+                [class.validation-item-invalid]="!getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasLowerCase"
+                [class.validation-item-valid]="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasLowerCase">
                 Al menos una letra minúscula.
               </li>
-              <li [class.validation-item-invalid]="!getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasNumeric"
-                  [class.validation-item-valid]="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasNumeric">
+              <li
+                [class.validation-item-invalid]="!getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasNumeric"
+                [class.validation-item-valid]="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasNumeric">
                 Al menos un número.
               </li>
-              <li [class.validation-item-invalid]="!getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasSpecial"
-                  [class.validation-item-valid]="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasSpecial">
+              <li
+                [class.validation-item-invalid]="!getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasSpecial"
+                [class.validation-item-valid]="getControl(ownerForm, 'contrasenia')?.errors?.['weakPassword']?.hasSpecial">
                 Al menos un caracter especial.
               </li>
             </ul>
           </div>
-          <div *ngIf="getControl(ownerForm, 'contrasenia')?.errors?.['required'] && getControl(ownerForm, 'contrasenia')?.touched" class="error-message">
+          <div
+            *ngIf="getControl(ownerForm, 'contrasenia')?.errors?.['required'] && getControl(ownerForm, 'contrasenia')?.touched"
+            class="error-message">
             La contraseña es obligatoria.
           </div>
         </div>
@@ -473,44 +405,22 @@
         <!-- CAMPO DE CONFIRMACIÓN DE CONTRASEÑA -->
         <div class="form-group full-width">
           <label class="label-text">Confirmar Contraseña</label>
-          <input type="password"
-                 formControlName="confirmarContrasenia"
-                 class="form-input"
-                 [class.ng-invalid]="getControl(ownerForm, 'confirmarContrasenia')?.invalid && getControl(ownerForm, 'confirmarContrasenia')?.touched || (ownerForm.errors?.['passwordMismatch'] && getControl(ownerForm, 'confirmarContrasenia')?.touched)">
+          <input type="password" formControlName="confirmarContrasenia" class="form-input"
+            [class.ng-invalid]="getControl(ownerForm, 'confirmarContrasenia')?.invalid && getControl(ownerForm, 'confirmarContrasenia')?.touched || (ownerForm.errors?.['passwordMismatch'] && getControl(ownerForm, 'confirmarContrasenia')?.touched)">
           <!-- ERROR FEEDBACK: Password Match (se verifica en el FormGroup) -->
-          <div *ngIf="ownerForm.errors?.['passwordMismatch'] && getControl(ownerForm, 'confirmarContrasenia')?.touched" class="error-message">
+          <div *ngIf="ownerForm.errors?.['passwordMismatch'] && getControl(ownerForm, 'confirmarContrasenia')?.touched"
+            class="error-message">
             Las contraseñas no coinciden.
           </div>
-          <div *ngIf="getControl(ownerForm, 'confirmarContrasenia')?.errors?.['required'] && getControl(ownerForm, 'confirmarContrasenia')?.touched" class="error-message">
+          <div
+            *ngIf="getControl(ownerForm, 'confirmarContrasenia')?.errors?.['required'] && getControl(ownerForm, 'confirmarContrasenia')?.touched"
+            class="error-message">
             La confirmación de contraseña es obligatoria.
           </div>
         </div>
 
-        <div class="form-group full-width">
-          <label for="owner-telefono" class="label-text">Teléfono de Contacto</label>
-          <input type="tel"
-                 id="owner-telefono"
-                 formControlName="telefono"
-                 class="form-input"
-                 placeholder="Ej: 987654321"
-                 [class.ng-invalid]="getControl(ownerForm, 'telefono')?.invalid && getControl(ownerForm, 'telefono')?.touched">
-          <!-- ERROR FEEDBACK: Teléfono -->
-          <div *ngIf="getControl(ownerForm, 'telefono')?.errors?.['notNumeric'] && getControl(ownerForm, 'telefono')?.touched" class="error-message">
-            Solo se permiten números.
-          </div>
-          <div *ngIf="getControl(ownerForm, 'telefono')?.errors?.['invalidLength'] && getControl(ownerForm, 'telefono')?.touched" class="error-message">
-            Debe tener 9 dígitos.
-          </div>
-          <div *ngIf="getControl(ownerForm, 'telefono')?.errors?.['required'] && getControl(ownerForm, 'telefono')?.touched" class="error-message">
-            El teléfono es obligatorio.
-          </div>
-        </div>
-      </div>
-
         <div class="form-actions">
-          <button type="submit"
-                  class="btn btn-full btn-primary btn-shadow"
-                  [disabled]="ownerForm.invalid">
+          <button type="submit" class="btn btn-full btn-primary btn-shadow" [disabled]="ownerForm.invalid">
             Registrarse
           </button>
         </div>
