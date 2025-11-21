@@ -1,13 +1,13 @@
 :host {
-  --white: #ffffff;
-  --primary-gold: #B88E2F;
+    --white: #ffffff;
+    --primary-gold: #B88E2F;
 }
 
 .rental-card {
     background-color: var(--white);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: row;
 }
@@ -15,14 +15,16 @@
 .card-image-wrapper {
     width: 40%;
     flex-shrink: 0;
-    position: relative; /* Clave: para contener la imagen absoluta */
+    position: relative;
+    /* Clave: para contener la imagen absoluta */
 }
 
 .card-image-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    position: absolute; /* Clave: saca la imagen del flujo para que no defina la altura */
+    position: absolute;
+    /* Clave: saca la imagen del flujo para que no defina la altura */
     top: 0;
     left: 0;
 }
@@ -32,7 +34,8 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Alinea el contenido como en la referencia */
+    justify-content: space-between;
+    /* Alinea el contenido como en la referencia */
 }
 
 .price {
@@ -63,8 +66,16 @@
 
 .feature {
     font-weight: 700;
-    color: #D35400; /* Color rojizo/naranja de la imagen */
+    color: #D35400;
+    /* Color rojizo/naranja de la imagen */
     font-size: 0.85rem;
+}
+
+.card-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    align-items: center;
 }
 
 .btn-stats {
@@ -74,8 +85,24 @@
     padding: 0.7rem 1.5rem;
     border-radius: 6px;
     font-weight: 600;
-    align-self: flex-start;
     font-size: 0.9rem;
     cursor: pointer;
-    margin-top: 1rem; /* Añade un espacio por si el texto es muy corto */
+}
+
+.btn-preview {
+    background-color: transparent;
+    color: var(--primary-gold);
+    border: 2px solid var(--primary-gold);
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-preview:hover {
+    background-color: var(--primary-gold);
+    color: var(--white);
 }

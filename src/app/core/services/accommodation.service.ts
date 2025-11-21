@@ -8,13 +8,111 @@ import { Observable, of } from 'rxjs';
 export class AccommodationService {
 
     private allAccommodations: Accommodation[] = [
-        { id: 1, image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', price: 650, district: 'Monterrico', description: 'Amplio y cómodo departamento cerca a la UPC Monterrico y ESAN. Ideal para compartir.', area: 80, baths: 1, rooms: 1, isFavorite: false, universityNear: 'UPC Monterrico', isFeatured: true },
-        { id: 2, image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', price: 1200, district: 'Monterrico', description: 'Moderno loft con vista a parque, zona segura. Incluye vigilancia.', area: 92, baths: 1, rooms: 2, isFavorite: true, universityNear: 'UPC Monterrico', isFeatured: false },
-        { id: 3, image: 'https://images.unsplash.com/photo-1484154218962-a1c002085d2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', price: 950, district: 'Monterrico', description: 'Minidepartamento amoblado, incluye servicios de agua y luz.', area: 45, baths: 1, rooms: 1, isFavorite: false, universityNear: 'UPC Monterrico', isFeatured: false },
-        { id: 4, image: 'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', price: 800, district: 'San Borja', description: 'Habitación con baño propio, entrada independiente.', area: 30, baths: 1, rooms: 1, isFavorite: false, universityNear: 'Universidad de Lima', isFeatured: false },
-        { id: 5, image: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', price: 1200, district: 'Surco', description: 'Cerca a Caminos del Inca, fácil acceso a transporte público.', area: 70, baths: 2, rooms: 2, isFavorite: false, universityNear: 'Ricardo Palma', isFeatured: false },
-        { id: 6, image: 'https://images.unsplash.com/photo-1556912173-3db9963ee790?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', price: 650, district: 'Monterrico', description: 'Roommate buscado para departamento compartido.', area: 100, baths: 2, rooms: 3, isFavorite: false, universityNear: 'UPC Monterrico', isFeatured: false }
+        {
+            id: 1,
+            image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            price: 650,
+            district: 'Monterrico',
+            description: 'Amplio y cómodo departamento cerca a la UPC Monterrico y ESAN. Ideal para compartir.',
+            area: 80,
+            baths: 1,
+            rooms: 1,
+            isFavorite: false,
+            universityNear: 'UPC Monterrico',
+            isFeatured: true
+        },
+        {
+            id: 2,
+            image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            price: 1200,
+            district: 'Monterrico',
+            description: 'Moderno loft con vista a parque, zona segura. Incluye vigilancia.',
+            area: 92,
+            baths: 1,
+            rooms: 2,
+            isFavorite: true,
+            universityNear: 'UPC Monterrico',
+            isFeatured: false
+        },
+        {
+            id: 3,
+            image: 'https://images.unsplash.com/photo-1484154218962-a1c002085d2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            price: 950,
+            district: 'Monterrico',
+            description: 'Minidepartamento amoblado, incluye servicios de agua y luz.',
+            area: 45,
+            baths: 1,
+            rooms: 1,
+            isFavorite: false,
+            universityNear: 'UPC Monterrico',
+            isFeatured: false
+        },
+        {
+            id: 4,
+            image: 'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            price: 800,
+            district: 'San Borja',
+            description: 'Habitación con baño propio, entrada independiente.',
+            area: 30,
+            baths: 1,
+            rooms: 1,
+            isFavorite: false,
+            universityNear: 'Universidad de Lima',
+            isFeatured: false
+        },
+        {
+            id: 5,
+            image: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            price: 1200,
+            district: 'Surco',
+            description: 'Cerca a Caminos del Inca, fácil acceso a transporte público.',
+            area: 70,
+            baths: 2,
+            rooms: 2,
+            isFavorite: false,
+            universityNear: 'Ricardo Palma',
+            isFeatured: false
+        },
+        {
+            id: 6,
+            image: 'https://images.unsplash.com/photo-1556912173-3db9963ee790?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            price: 650,
+            district: 'Monterrico',
+            description: 'Roommate buscado para departamento compartido.',
+            area: 100,
+            baths: 2,
+            rooms: 3,
+            isFavorite: false,
+            universityNear: 'UPC Monterrico',
+            isFeatured: false
+        }
     ];
+
+    // Extended detail data for preview (maps accommodation IDs to additional fields)
+    private accommodationDetailExtras: { [id: number]: any } = {
+        1: {
+            title: 'Amplio y cómodo departamento',
+            images: [
+                'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1484154218962-a1c002085d2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+            ],
+            address: 'Jr. Alonso de Molina 1231 Monterrico',
+            nearbyUniversities: ['UPC MO', 'ESAN', 'UDEP'],
+            mobilityOptions: ['Bicicleta', 'A pie', 'Bus']
+        },
+        2: {
+            title: 'Moderno loft con vista a parque',
+            images: [
+                'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+            ],
+            address: 'Av. Primavera 567, San Borja',
+            nearbyUniversities: ['Universidad de Lima'],
+            mobilityOptions: ['Metropolitano', 'Corredor Rojo']
+        }
+    };
 
     constructor() { }
 
@@ -59,5 +157,29 @@ export class AccommodationService {
         }
 
         return of(filtered);
+    }
+
+    getAccommodationPreview(id: number): Observable<any> {
+        // Find base accommodation from existing data
+        const baseAccommodation = this.allAccommodations.find(acc => acc.id === id);
+
+        if (!baseAccommodation) {
+            return of(null);
+        }
+
+        // Merge with detail extras if they exist
+        const extras = this.accommodationDetailExtras[id] || {
+            title: baseAccommodation.description,
+            images: [baseAccommodation.image],
+            address: `${baseAccommodation.district}, Lima`,
+            nearbyUniversities: [baseAccommodation.universityNear],
+            mobilityOptions: ['Bus', 'Taxi']
+        };
+
+        // Return combined object
+        return of({
+            ...baseAccommodation,
+            ...extras
+        });
     }
 }

@@ -3,6 +3,7 @@ import { LandlordDashboardComponent } from './landlord-dashboard/landlord-dashbo
 import { UploadAccommodationPageComponent } from './upload-accommodation-page/upload-accommodation-page.component';
 import { LandlordProfilePageComponent } from './landlord-profile-page/landlord-profile-page.component';
 import { EditLandlordProfilePageComponent } from './edit-landlord-profile-page/edit-landlord-profile-page.component';
+import { LandlordAccommodationDetailComponent } from './landlord-accommodation-detail/landlord-accommodation-detail.component';
 
 export const landlordRoutes: Routes = [
   {
@@ -12,6 +13,10 @@ export const landlordRoutes: Routes = [
   {
     path: 'upload',
     component: UploadAccommodationPageComponent
+  },
+  {
+    path: 'accommodations/:id',
+    component: LandlordAccommodationDetailComponent
   },
   {
     path: 'profile',

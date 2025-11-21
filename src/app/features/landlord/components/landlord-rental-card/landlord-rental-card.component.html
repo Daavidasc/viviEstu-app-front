@@ -13,8 +13,12 @@
             <span class="feature">{{ rental.rooms }} dorm.</span>
         </div>
 
-        <button class="btn-stats">
-            {{ rental.clicks }} clicks, {{ rental.requestsCount }} Solicitud{{ rental.requestsCount !== 1 ? 'es' : '' }}
-        </button>
+        <div class="card-actions">
+            <button class="btn-stats">
+                {{ rental.clicks }} clicks, {{ rental.requestsCount }} Solicitud{{ rental.requestsCount !== 1 ? 'es' :
+                '' }}
+            </button>
+            <a [routerLink]="['/landlord/accommodations', rental.id]" class="btn-preview">Ver Publicación</a>
+        </div>
     </div>
 </div>
