@@ -9,12 +9,10 @@
 
   <!-- Background Decoration -->
   <div class="bg-decoration">
-      <img
-        src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-        alt="Fondo biblioteca estudio"
-        class="bg-image"
-      >
-      <div class="bg-overlay"></div>
+    <img
+      src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+      alt="Fondo biblioteca estudio" class="bg-image">
+    <div class="bg-overlay"></div>
   </div>
 
   <!-- Register Card -->
@@ -26,16 +24,10 @@
 
         <!-- Tabs de Tipo de Usuario -->
         <div class="user-type-tabs">
-          <button
-            class="tab-btn"
-            [class.active]="userType === 'estudiante'"
-            (click)="userType = 'estudiante'">
+          <button class="tab-btn" [class.active]="userType === 'estudiante'" (click)="userType = 'estudiante'">
             Estudiante
           </button>
-          <button
-            class="tab-btn"
-            [class.active]="userType === 'propietario'"
-            (click)="userType = 'propietario'">
+          <button class="tab-btn" [class.active]="userType === 'propietario'" (click)="userType = 'propietario'">
             Propietario
           </button>
         </div>
@@ -48,13 +40,15 @@
           <!-- Nombres -->
           <div class="form-group">
             <label for="nombres" class="label-text">Nombres</label>
-            <input type="text" id="nombres" name="nombres" [(ngModel)]="studentData.nombres" class="form-input" required>
+            <input type="text" id="nombres" name="nombres" [(ngModel)]="studentData.nombres" class="form-input"
+              required>
           </div>
 
           <!-- Apellidos -->
           <div class="form-group">
             <label for="apellidos" class="label-text">Apellidos</label>
-            <input type="text" id="apellidos" name="apellidos" [(ngModel)]="studentData.apellidos" class="form-input" required>
+            <input type="text" id="apellidos" name="apellidos" [(ngModel)]="studentData.apellidos" class="form-input"
+              required>
           </div>
 
           <!-- Correo Institucional -->
@@ -66,13 +60,15 @@
           <!-- Contraseña -->
           <div class="form-group full-width">
             <label for="password" class="label-text">Contraseña</label>
-            <input type="password" id="password" name="password" [(ngModel)]="studentData.password" class="form-input" required>
+            <input type="password" id="password" name="password" [(ngModel)]="studentData.password" class="form-input"
+              required>
           </div>
 
           <!-- Universidad -->
           <div class="form-group full-width">
             <label for="universidad" class="label-text">Universidad</label>
-            <input type="text" id="universidad" name="universidad" [(ngModel)]="studentData.universidad" class="form-input" required>
+            <input type="text" id="universidad" name="universidad" [(ngModel)]="studentData.universidad"
+              class="form-input" required>
           </div>
 
           <!-- Ciclo -->
@@ -81,10 +77,31 @@
             <input type="text" id="ciclo" name="ciclo" [(ngModel)]="studentData.ciclo" class="form-input" required>
           </div>
 
+          <!-- Teléfono -->
+          <div class="form-group full-width">
+            <label for="telefono" class="label-text">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" [(ngModel)]="studentData.telefono" class="form-input"
+              required>
+          </div>
+
+          <!-- Carrera -->
+          <div class="form-group full-width">
+            <label for="carrera" class="label-text">Carrera</label>
+            <input type="text" id="carrera" name="carrera" [(ngModel)]="studentData.carrera" class="form-input"
+              required>
+          </div>
+
+          <!-- DNI -->
+          <div class="form-group full-width">
+            <label for="dni" class="label-text">DNI</label>
+            <input type="text" id="dni" name="dni" [(ngModel)]="studentData.dni" class="form-input" required>
+          </div>
+
           <!-- Distrito Preferencia -->
           <div class="form-group full-width">
             <label for="distrito" class="label-text">Distrito preferencia</label>
-            <input type="text" id="distrito" name="distrito" [(ngModel)]="studentData.distrito" class="form-input" required>
+            <input type="text" id="distrito" name="distrito" [(ngModel)]="studentData.distrito" class="form-input"
+              required>
           </div>
         </div>
 
@@ -117,7 +134,8 @@
           </div>
           <div class="form-group full-width">
             <label for="owner-telefono" class="label-text">Teléfono de Contacto</label>
-            <input type="tel" id="owner-telefono" name="owner-telefono" [(ngModel)]="ownerData.telefono" class="form-input" required>
+            <input type="tel" id="owner-telefono" name="owner-telefono" [(ngModel)]="ownerData.telefono"
+              class="form-input" required>
           </div>
         </div>
         <div class="form-actions">

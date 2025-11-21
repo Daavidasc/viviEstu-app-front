@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { DistrictDetailViewModel } from '../models/ui-view.models';
+import { UniversidadResponse } from '../models/accommodation.models';
 
 @Injectable({
     providedIn: 'root'
@@ -99,6 +100,29 @@ export class LocationService {
         }
     ];
 
+    private universities: UniversidadResponse[] = [
+        {
+            id: 1,
+            nombre: 'Universidad de Lima',
+            distritoNombre: 'Surco',
+        },
+        {
+            id: 2,
+            nombre: 'Universidad de San Marcos',
+            distritoNombre: 'Surquillo',
+        },
+        {
+            id: 3,
+            nombre: 'Universidad Peruana de Ciencias Aplicadas',
+            distritoNombre: 'Surco',
+        },
+        {
+            id: 4,
+            nombre: 'Universidad de Piura',
+            distritoNombre: 'Miraflores',
+        }
+    ];
+
     constructor() { }
 
     getZones(): Observable<DistrictDetailViewModel[]> {
@@ -109,4 +133,13 @@ export class LocationService {
         const zone = this.zones.find(z => z.id === id);
         return of(zone);
     }
+    getZoneByName(name: string): Observable<DistrictDetailViewModel | undefined> {
+        const zone = this.zones.find(z => z.nombre.toLowerCase() === name.toLowerCase());
+        return of(zone);
+    }
+    getUniversityByName(name: string): Observable<UniversidadResponse | undefined> {
+        const university = this.universities.find(z => z.nombre.toLowerCase() === name.toLowerCase());
+        return of(university);
+    }
+
 }

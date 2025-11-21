@@ -1,0 +1,1594 @@
+{
+	"info": {
+		"_postman_id": "216542dd-f56e-441b-b048-85890cc8160b",
+		"name": "ViviEstu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44865766",
+		"_collection_link": "https://viviestu.postman.co/workspace/ViviEstu-Workspace~e264db2f-90f7-4d8f-8d4e-d0277000582c/collection/44865766-216542dd-f56e-441b-b048-85890cc8160b?action=share&source=collection_link&creator=44865766"
+	},
+	"item": [
+		{
+			"name": "Distrito-|",
+			"item": [
+				{
+					"name": "Obtener todos los distritos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{estudianteToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/distritos",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"distritos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener un distrito por su ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{render}}/distritos/1",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"distritos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un nuevo distrito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"El Agustino\",\r\n  \"precioProm\": 2500,\r\n  \"tipo\": \"departamento\",\r\n  \"descripcion\" : \"asdasdasdasdasd\",\r\n  \"seguridad\" : 4,\r\n  \"urlImg\" : \"www.imagen.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{render}}/distritos",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"distritos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar distritos por nombre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{render}}/distritos/search?nombre=mira",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"distritos",
+								"search"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "mira"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrar distritos por rango de precio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{render}}/distritos/filter/precio?precioMin=2000&precioMax=3000",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"distritos",
+								"filter",
+								"precio"
+							],
+							"query": [
+								{
+									"key": "precioMin",
+									"value": "2000"
+								},
+								{
+									"key": "precioMax",
+									"value": "3000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrar distritos por tipo de alojamiento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{render}}/distritos/filter/tipo?tipo=departamento",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"distritos",
+								"filter",
+								"tipo"
+							],
+							"query": [
+								{
+									"key": "tipo",
+									"value": "departamento"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar un distrito",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Miraflores 2\",\r\n  \"precioProm\": 2600.0,\r\n  \"tipo\": \"departamento\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{render}}/distritos/2",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"distritos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un distrito",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{render}}/distritos/1",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"distritos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Universidad-|",
+			"item": [
+				{
+					"name": "Todas las Universidades",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuLnBlQHVuaXYuZWR1IiwibmFtZSI6IkR2ZCIsIklkIjoyLCJyb2xlIjoiUk9MRV9FU1RVRElBTlRFIiwiaWF0IjoxNzYyNDgxNTMzLCJleHAiOjE3NjI1Njc5MzN9.aYAH6hWwoDq0b6cmFmsHQ9nd0E64lxrFtlh54XhDPJ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Miraflores Actualizado\",\r\n  \"precioProm\": 2600.0,\r\n  \"tipo\": \"departamento\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{local}}/universidades",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"universidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Universidad",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Udep\",\r\n    \"distritoId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{render}}/universidades",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"universidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener universidad por nombre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{render}}/universidades/buscar?nombre=Ud",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"universidades",
+								"buscar"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "Ud"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cambiar informacion por id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{render}}/universidades/2",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"universidades",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Universidad por Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{render}}/universidades/1",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"universidades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Universidad por Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{render}}/universidades/2",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"universidades",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Universidad",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Propietarios-|",
+			"item": [
+				{
+					"name": "Crear Propietario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"José Pérez\",\r\n  \"apellidos\": \"Sanchez San\",\r\n  \"correo\": \"SanchezS@univ.edu\",\r\n  \"contrasenia\": \"miContraseniaSegura\",\r\n  \"telefono\": \"987654321\",\r\n  \"dni\": 12345678\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/propietarios",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"propietarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Propietarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/propietarios",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"propietarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Propietarios por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/propietarios/8",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"propietarios",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Propietarios",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/propietarios/5",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"propietarios",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar datos propietario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{propietarioToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"SAnchez Pérez\",\r\n  \"apellidos\": \"Juan Lopez\",\r\n  \"correo\": \"juan.perez@email.com\",\r\n  \"contrasenia\": \"miContraseniaSegura\",\r\n  \"telefono\": \"987654321\",\r\n  \"dni\": 12345678\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/propietarios/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"propietarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estudiantes-|",
+			"item": [
+				{
+					"name": "Crear Estudiante",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Carlos Gomez\",\r\n    \"apellidos\" : \"Bartra Sandoval\",\r\n    \"ciclo\" : \"1\",\r\n    \"correo\": \"juan.perez@univ.edu\",\r\n    \"contrasenia\": \"claveSegura123\",\r\n    \"telefono\": \"987654321\",\r\n    \"universidad\": \"Universidad de Lima\",\r\n    \"carrera\": \"Ingeniería de Software\",\r\n    \"distritoPreferencia\": \"Surco\",\r\n    \"urlPerfil\": \"https://linkedin.com/in/carlosgomez\",\r\n    \"dni\": 76543210,\r\n    \"distritoId\": 1,\r\n    \"universidadId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{render}}/estudiantes",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"estudiantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Estudiantes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/estudiantes",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"estudiantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Estudiante por Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{render}}/estudiantes/1",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"estudiantes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Estudiante",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"pepepepe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{render}}/estudiantes/1",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"estudiantes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar estudiante",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"pepepepe\"\r\n}"
+						},
+						"url": {
+							"raw": "{{render}}/estudiantes/1",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"estudiantes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alojamientos-|",
+			"item": [
+				{
+					"name": "Todos los alojamientos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Miraflores Actualizado\",\r\n  \"precioProm\": 2600.0,\r\n  \"tipo\": \"departamento\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{render}}/alojamientos",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"alojamientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener un alojamiento por su ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/alojamientos/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"alojamientos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un nuevo alojamiento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{propietarioToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "titulo",
+									"value": "Departamento moderno en Miraflores",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Hermoso departamento cerca del parque Kennedy increbile depa para todas las estudiantes con todas las facilidades cerca de universidad de piura",
+									"type": "text"
+								},
+								{
+									"key": "direccion",
+									"value": "Calle Los Pinos 123, Miraflores",
+									"type": "text"
+								},
+								{
+									"key": "precioMensual",
+									"value": "1800",
+									"type": "text"
+								},
+								{
+									"key": "alquilado",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "propietarioId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "nroPartida",
+									"value": "33335555",
+									"type": "text"
+								},
+								{
+									"key": "distritoId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "imagenes",
+									"type": "file",
+									"src": "/C:/Users/User/Downloads/204_router.7b208c1133.jpg"
+								},
+								{
+									"key": "transportes",
+									"value": "carro",
+									"type": "text"
+								},
+								{
+									"key": "transportes",
+									"value": "jojo",
+									"type": "text"
+								},
+								{
+									"key": "universidadIds",
+									"value": "99999",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/alojamientos",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"alojamientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar Imagenes a alojamiento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imagenes",
+									"type": "file",
+									"src": "/C:/Users/dserr/Downloads/razones-vivir-mirafloress.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/alojamientos/4/imagenes",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"alojamientos",
+								"4",
+								"imagenes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un alojamiento por su ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/alojamientos/3",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"alojamientos",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar una imagen de un alojamiento",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/alojamientos/4/imagenes/5",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"alojamientos",
+								"4",
+								"imagenes",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Alojamiento",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/alojamientos/2",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"alojamientos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alquilar alojamiento",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/alojamientos/4/alquilar",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"alojamientos",
+								"4",
+								"alquilar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Datos de vendedor por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/alojamientos/4/vendedor",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"alojamientos",
+								"4",
+								"vendedor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista Alojamientos Por Universidad",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Lista Alojamientos Por Distrito",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Alojamientos por Ubicación",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{estudianteToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Udep\",\r\n    \"distritoId\": 1\r\n}"
+						},
+						"url": {
+							"raw": "{{render}}/alojamientos/buscar-por-ubicacion?latitud=-12.046&longitud=-77.042&radio=5",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"alojamientos",
+								"buscar-por-ubicacion"
+							],
+							"query": [
+								{
+									"key": "latitud",
+									"value": "-12.046"
+								},
+								{
+									"key": "longitud",
+									"value": "-77.042"
+								},
+								{
+									"key": "radio",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Solicitudes-|",
+			"item": [
+				{
+					"name": "Mostrar Todas las solicitudes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"pepepepe\"\r\n}"
+						},
+						"url": {
+							"raw": "{{local}}/solicitudes",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"solicitudes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar solicitudes por Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{render}}/solicitudes/1",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"solicitudes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Solicitud",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mesesAlquiler\": 12,\r\n  \"cantInquilinos\": 2,\r\n  \"mensaje\": \"Me interesa el alojamiento, ¿podemos coordinar una visita?\",\r\n  \"oferta\": 500.0,\r\n  \"estudiantesId\": 1,\r\n  \"alojamientoId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{render}}/solicitudes",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"solicitudes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Solicitudes",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mesesAlquiler\": 12,\r\n  \"cantInquilinos\": 2,\r\n  \"mensaje\": \"Me interesa el alojamiento, ¿podemos coordinar una visita?\",\r\n  \"oferta\": 500.0,\r\n  \"estudiantesId\": 1,\r\n  \"alojamientoId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/solicitudes/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"solicitudes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AceptarSolicitud",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/solicitudes/2/rechazar",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"solicitudes",
+								"2",
+								"rechazar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RechazarSolicitud",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/solicitudes/1/rechazar",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"solicitudes",
+								"1",
+								"rechazar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Solicitud por Estudiante",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Solicitud por Propietario",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favoritos-|",
+			"item": [
+				{
+					"name": "Obtener todos los favoritos de un estudiante",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/favoritos/estudiante/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"favoritos",
+								"estudiante",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un favorito por ID de estudiante y alojamiento",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{render}}/favoritos/estudiante/1/alojamiento/1",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"favoritos",
+								"estudiante",
+								"1",
+								"alojamiento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar un nuevo favorito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"estudianteId\": 1,\r\n    \"alojamientoId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{render}}/favoritos",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"favoritos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comentarios-|",
+			"item": [
+				{
+					"name": "Agregar Comentario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"estudianteId\": 1,\r\n    \"alojamientoId\": 21,\r\n    \"contenido\": \"ojojo\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/comentarios",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"comentarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comentarios por alojamiento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/comentarios/alojamiento/21",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"comentarios",
+								"alojamiento",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Comentario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"estudianteId\": 1,\r\n    \"alojamientoId\": 21,\r\n    \"contenido\": \"ojojo\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{local}}/comentarios/2",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"comentarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Interacciones-|",
+			"item": [
+				{
+					"name": "Obtener todas las interacciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/interacciones",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"interacciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Interaccion por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/interacciones/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"interacciones",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create interaccion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"estudianteId\": 1,\r\n    \"alojamientoId\": 4\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/interacciones",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"interacciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar interaccion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/interacciones/2",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"interacciones",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Interacciones por Alojamiento",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"estudianteId\": 1,\r\n    \"alojamientoId\": 21\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{local}}/interacciones/contar/5",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"interacciones",
+								"contar",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reporte Interacciones",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{local}}/interacciones/reporte/4",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"interacciones",
+								"reporte",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Geocoding",
+			"item": [
+				{
+					"name": "Obtener coordenadas de una dirección",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/api/v1/geocoding?address=Universidad Peruana de ciencias aplicadas moenterrico",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"api",
+								"v1",
+								"geocoding"
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "Universidad Peruana de ciencias aplicadas moenterrico"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "LoginEstudiante",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correo\": \"juan.pe@univ.edu\",\r\n  \"contrasenia\": \"david123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/auth/login",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginPropietario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correo\": \"david.serrudo@uni.edu\",\r\n  \"contrasenia\": \"MiClaveSegura123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/auth/login",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginAdmin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correo\": \"admin@fintech.com\",\r\n  \"contrasenia\": \"admin123\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{render}}/auth/login",
+							"host": [
+								"{{render}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Estudiante",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Dvd\",\r\n  \"apellidos\": \"Srydo\",\r\n  \"correo\": \"juan.pe@univ.edu\",\r\n  \"contrasenia\": \"david123\",\r\n  \"telefono\": \"945678901\",\r\n  \"carrera\": \"Arquitectura\",\r\n  \"ciclo\":3,\r\n  \"dni\": \"99887766\",\r\n  \"universidadId\": 1,\r\n  \"distritoId\": 1\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/auth/register/estudiante",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"auth",
+								"register",
+								"estudiante"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Propietario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/auth/register",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "local",
+			"value": ""
+		},
+		{
+			"key": "adminToken",
+			"value": ""
+		},
+		{
+			"key": "estudianteToken",
+			"value": ""
+		},
+		{
+			"key": "propietarioToken",
+			"value": ""
+		},
+		{
+			"key": "render",
+			"value": ""
+		}
+	]
+}

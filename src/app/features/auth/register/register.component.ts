@@ -6,6 +6,8 @@ import { NavbarLandingComponent } from '../../../shared/components/navbar-landin
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { RegisterEstudianteRequest, RegisterPropietarioRequest } from '../../../core/models/auth.models';
+import { LocationService } from '../../../core/services/location.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -17,6 +19,7 @@ import { RegisterEstudianteRequest, RegisterPropietarioRequest } from '../../../
 export class RegisterComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private locationService = inject(LocationService);
 
   // Estado para controlar las pestañas
   userType: 'estudiante' | 'propietario' = 'estudiante';
@@ -29,7 +32,10 @@ export class RegisterComponent {
     password: '',
     universidad: '',
     ciclo: '',
-    distrito: ''
+    distrito: '',
+    telefono: '',
+    carrera: '',
+    dni: ''
   };
 
   // Datos del formulario de propietario
@@ -45,31 +51,51 @@ export class RegisterComponent {
     if (this.userType === 'estudiante') {
       console.log('Registrando estudiante con datos:', this.studentData);
 
-      // Mapeo a RegisterEstudianteRequest
-      // TODO: Actualizar formulario para capturar DNI, Teléfono, Carrera y usar IDs reales para Distrito/Universidad
-      const request: RegisterEstudianteRequest = {
-        nombre: this.studentData.nombres,
-        apellidos: this.studentData.apellidos,
-        correo: this.studentData.correo,
-        contrasenia: this.studentData.password,
-        telefono: '999999999', // Mock
-        carrera: 'Ingeniería', // Mock
-        ciclo: Number(this.studentData.ciclo) || 1,
-        dni: '00000000', // Mock
-        distritoId: 1, // Mock
-        universidadId: 1 // Mock
-      };
+      // Look up the district zone first
+      this.locationService.getZoneByName(this.studentData.distrito)
+        .pipe(take(1))
+        .subscribe(distritoZone => {
+          if (!distritoZone) {
+            alert('Distrito no encontrado');
+            return;
+          }
 
-      this.authService.registerStudent(request).subscribe({
-        next: (response) => {
-          alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
-          this.router.navigate(['/auth/login']);
-        },
-        error: (err) => {
-          console.error('Error registro estudiante', err);
-          alert('Error en el registro.');
-        }
-      });
+          // Look up the university
+          this.locationService.getUniversityByName(this.studentData.universidad)
+            .pipe(take(1))
+            .subscribe(universidadZone => {
+              if (!universidadZone) {
+                alert('Universidad no encontrada');
+                return;
+              }
+
+              // Now we have both IDs, create the request
+              const request: RegisterEstudianteRequest = {
+                nombre: this.studentData.nombres,
+                apellidos: this.studentData.apellidos,
+                correo: this.studentData.correo,
+                contrasenia: this.studentData.password,
+                telefono: this.studentData.telefono,
+                carrera: this.studentData.carrera,
+                ciclo: Number(this.studentData.ciclo) || 1,
+                dni: this.studentData.dni,
+                distritoId: distritoZone.id,
+                universidadId: universidadZone.id
+              };
+
+              // Submit the registration
+              this.authService.registerStudent(request).subscribe({
+                next: (response) => {
+                  alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+                  this.router.navigate(['/auth/login']);
+                },
+                error: (err) => {
+                  console.error('Error registro estudiante', err);
+                  alert('Error en el registro.');
+                }
+              });
+            });
+        });
 
     } else {
       console.log('Registrando propietario...');

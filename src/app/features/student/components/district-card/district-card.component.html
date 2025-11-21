@@ -1,12 +1,12 @@
 <div class="zone-card">
   <div class="card-image-wrapper">
-    <img [src]="zone.image" [alt]="zone.name" class="card-image">
+    <img [src]="zone.urlImg" [alt]="zone.nombre" class="card-image">
   </div>
   <div class="card-body">
-    <h2 class="zone-name">{{ zone.name }}</h2>
+    <h2 class="zone-name">{{ zone.nombre }}</h2>
     <div class="card-actions">
       <a [routerLink]="['/student/districts', zone.id]" class="btn btn-outline btn-detail">Ver detalle</a>
-      <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: zone.name }"
+      <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: zone.nombre }"
         class="btn btn-primary btn-search">Buscar</a>
     </div>
   </div>

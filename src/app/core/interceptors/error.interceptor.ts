@@ -19,17 +19,20 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         // Error del servidor
         errorMessage = `Error ${error.status}: ${error.error?.message || error.message}`;
 
-/*
-        // Si el error es 401 (Unauthorized), hacer logout
-        if (error.status === 401) {
-          authService.logout();
-          router.navigate(['/login']);
-        }
-*/
-        // Si el error es 403 (Forbidden), redirigir
+        /*
+                // Si el error es 401 (Unauthorized), hacer logout
+                if (error.status === 401) {
+                  authService.logout();
+                  router.navigate(['/login']);
+                }
+        */
+        // COMENTADO: No redirigir automáticamente en errores de autenticación
+        // Dejar que cada componente maneje sus propios errores
+        /*
         if (error.status === 403) {
           router.navigate(['/']);
         }
+        */
       }
 
       console.error(errorMessage);

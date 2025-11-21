@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000',
+  apiUrl: 'https://viviestu-gn1y.onrender.com/api/v1',
   apiKey: 'your-api-key'
 };
