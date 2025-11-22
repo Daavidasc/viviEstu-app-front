@@ -14,7 +14,7 @@ export class AccommodationService {
     private apiUrl = `${environment.apiUrl}/alojamientos`;
     // Endpoint hipotético para subir imágenes si el backend lo provee, 
     // o URL directa de Cloudinary
-    private uploadUrl = `${environment.apiUrl}/media/upload`;
+    //private uploadUrl = `${environment.apiUrl}/media/upload`;
 
     constructor() { }
 
@@ -152,9 +152,11 @@ export class AccommodationService {
 
     // Método auxiliar para subir una imagen y obtener su URL
     // Nota: Si usas Cloudinary directo desde el front, cambia la URL y params
+    /*
     uploadImage(file: File): Observable<{ url: string }> {
         const formData = new FormData();
         formData.append('file', file);
         return this.http.post<{ url: string }>(this.uploadUrl, formData);
     }
+    */
 }

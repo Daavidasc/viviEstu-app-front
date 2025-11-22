@@ -270,7 +270,7 @@ export class AccommodationFormComponent implements OnInit {
       this.uploadingImages.set(true);
 
       // 1. Subir imágenes y obtener URLs
-      const imageUrls = await this.uploadImages();
+      //const imageUrls = await this.uploadImages();
 
       // 2. Obtener ID del propietario autenticado
       const currentUser = this.authService.currentUser();
@@ -316,7 +316,7 @@ export class AccommodationFormComponent implements OnInit {
    * Sube las imágenes seleccionadas y retorna un array de URLs
    * NOTA: Esto asume que tienes un endpoint para subir imágenes
    * Si usas Cloudinary u otro servicio, ajusta la lógica aquí
-   */
+   
   private async uploadImages(): Promise<string[]> {
     const uploadPromises = this.selectedFiles().map(file =>
       this.accommodationService.uploadImage(file).toPromise()
@@ -325,6 +325,7 @@ export class AccommodationFormComponent implements OnInit {
     const results = await Promise.all(uploadPromises);
     return results.map(result => result!.url);
   }
+  */
 
   /**
    * Desplaza la vista al primer campo con error
