@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { RouterModule, Router } from '@angular/router';
-import { NavbarLandingComponent } from '../../../shared/components/navbar-landing';
-import { FooterComponent } from '../../../shared/components/footer';
+import { NavbarLandingComponent } from '../../../shared/components/navbar-landing/navbar-landing.component';
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
 // Asegúrate de importar RoleType
 import { LoginRequest, RoleType } from '../../../core/models/user.model';
 
@@ -79,10 +79,7 @@ export class LoginComponent {
         console.error('Login error', err);
         this.errorMessage = err.error?.message || 'Error al intentar iniciar sesión. Verifica tus credenciales.';
         this.isLoading = false;
-<<<<<<< HEAD
-=======
 
->>>>>>> edae84523995463f8b43fe780981f4ff438db5ae
       },
       complete: () => {
       }
