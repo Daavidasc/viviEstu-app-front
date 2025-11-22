@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
@@ -13,12 +13,29 @@ import { LocationService } from '../../../core/services/location.service';
   templateUrl: './districts-page.component.html',
   styleUrls: ['./districts-page.component.css']
 })
-export class DistrictsPageComponent {
+export class DistrictsPageComponent implements OnInit {
   zones: DistritoResponse[] = [];
+  isLoading = true;
+  error: string | null = null;
 
-  constructor(private locationService: LocationService) {
-    this.locationService.getZones().subscribe(data => {
-      this.zones = data;
+  constructor(
+    private locationService: LocationService,
+    private cdr: ChangeDetectorRef
+  ) { }
+
+  ngOnInit(): void {
+    this.locationService.getAllDistricts().subscribe({
+      next: (data) => {
+        this.zones = data;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al cargar distritos:', err);
+        this.error = 'Error al cargar los distritos. Por favor, intenta nuevamente.';
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 }
