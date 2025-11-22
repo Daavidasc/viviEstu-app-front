@@ -4,9 +4,23 @@
   <main class="main-content">
     <div class="container">
       <h1 class="page-title">Zonas</h1>
-      <div class="zones-grid">
+
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="loading-container">
+        <p>Cargando distritos...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error" class="error-container">
+        <p>{{ error }}</p>
+      </div>
+
+      <!-- Zones Grid -->
+      <div *ngIf="!isLoading && !error" class="zones-grid">
         @for (zone of zones; track zone.id) {
-          <app-district-card [zone]="zone" />
+        <app-district-card [zone]="zone" />
+        } @empty {
+        <p class="no-data">No hay distritos disponibles en este momento.</p>
         }
       </div>
     </div>

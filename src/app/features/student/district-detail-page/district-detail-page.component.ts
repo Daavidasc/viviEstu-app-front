@@ -27,7 +27,7 @@ export class DistrictDetailPageComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id = +params['id'];
       if (id) {
-        this.locationService.getZoneById(id).subscribe(data => {
+        this.locationService.getDistrictById(id).subscribe(data => {
           this.zone = data;
         });
       }

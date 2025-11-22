@@ -2,6 +2,7 @@
   --bg-cream: #FFF8E7;
   --font-family: 'Poppins', sans-serif;
 }
+
 .app-container {
   font-family: var(--font-family);
   background-color: var(--bg-cream);
@@ -9,13 +10,103 @@
   display: flex;
   flex-direction: column;
 }
-.main-content { padding: 3rem 1rem; flex-grow: 1; }
-.container { width: 100%; max-width: 1200px; margin: 0 auto; }
-.page-title { font-size: 2.5rem; font-weight: 800; color: #000; margin-bottom: 2.5rem; }
+
+.main-content {
+  padding: 3rem 1rem;
+  flex-grow: 1;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 2.5rem;
+}
+
 .zones-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
 }
-@media(min-width: 640px) { .zones-grid { grid-template-columns: repeat(2, 1fr); } }
-@media(min-width: 1024px) { .zones-grid { grid-template-columns: repeat(3, 1fr); } }
+
+@media(min-width: 640px) {
+  .zones-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(min-width: 1024px) {
+  .zones-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  min-height: 400px;
+}
+
+.loading-container p {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Spinner Animation */
+.loading-container::before {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f4f6;
+  border-top-color: #B88E2F;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error State */
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  margin: 2rem 0;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  min-height: 200px;
+}
+
+.error-container p {
+  color: #dc2626;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* No Data State */
+.no-data {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #9ca3af;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
