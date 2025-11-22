@@ -21,7 +21,7 @@ import { environment } from '../../../environments/environment';
     providedIn: 'root'
 })
 export class AuthService {
-<<<<<<< HEAD
+
   getToken(): string | null {
     // Preferiblemente devuelve el valor reactivo
     return this.token();
@@ -31,14 +31,6 @@ export class AuthService {
   private http = inject(HttpClient);
   private storage = inject(StorageService); // Asumiendo que existe un StorageService
   private router = inject(Router);
-=======
-    getToken() {
-        throw new Error('Method not implemented.');
-    }
-    private http = inject(HttpClient);
-    private storage = inject(StorageService); // Asumiendo que existe un StorageService
-    private router = inject(Router);
->>>>>>> edae84523995463f8b43fe780981f4ff438db5ae
 
     // URL base, ajusta según tu configuración
     private apiUrl = `${environment.apiUrl}/auth`;
@@ -93,7 +85,6 @@ export class AuthService {
         this.storage.setItem('token', response.token);
         this._token.set(response.token);
 
-<<<<<<< HEAD
   const user: UserResponse = {
     id: response.id,
     // 🔥 CORRECCIÓN: Usar response.email y response.name 🔥
@@ -104,18 +95,7 @@ export class AuthService {
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
-=======
-        const user: UserResponse = {
-            id: '',
-            // 🔥 CORRECCIÓN: Usar response.email y response.name 🔥
-            email: response.email,
-            name: response.name,
-            role: response.role || RoleType.ROLE_ESTUDIANTE,
-            active: true,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-        };
->>>>>>> edae84523995463f8b43fe780981f4ff438db5ae
+
 
         this.storage.setItem('user', user);
         this._currentUser.set(user);
