@@ -1,7 +1,21 @@
 <div class="app-container">
   <app-student-navbar />
 
-  @if (accommodation) {
+  @if (isLoading) {
+  <main class="main-content">
+    <div class="container">
+      <app-loading-spinner message="Cargando detalles del alojamiento..."></app-loading-spinner>
+    </div>
+  </main>
+  } @else if (errorMessage) {
+  <main class="main-content">
+    <div class="container">
+      <div class="error-message">
+        <p>{{ errorMessage }}</p>
+      </div>
+    </div>
+  </main>
+  } @else if (accommodation) {
   <main class="main-content">
     <div class="container content-grid">
 
