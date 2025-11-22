@@ -22,8 +22,8 @@ export class EditLandlordProfilePageComponent {
     dni: '74325432',
     telefono: '987 654 321',
     age: 45,
-    address: 'Surco, Lima',
+    address: 'Surco, Lima', //district
     propertiesCount: 3
   };
 }
-//siq
+
