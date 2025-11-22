@@ -16,11 +16,14 @@
                     </button>
                 </div>
                 <p class="results-count">
-                    {{ accommodations.length }} resultados encontrados
+                    {{ isLoading ? 'Buscando...' : accommodations.length + ' resultados encontrados' }}
                 </p>
             </div>
 
-            @if (accommodations.length > 0) {
+            <!-- Accommodations List Area with Loading -->
+            @if (isLoading) {
+            <app-loading-spinner message="Buscando alojamientos..."></app-loading-spinner>
+            } @else if (accommodations.length > 0) {
             <div class="accommodations-list">
                 @for (item of accommodations; track item.id) {
                 <app-accommodation-card [accommodation]="item" (favoriteToggled)="handleFavoriteToggle($event)">
