@@ -60,7 +60,7 @@ export interface LandlordRequestViewModel {
     accommodationTitle: string;
     applicantName: string;
     studentName?: string; // Support both applicantName and studentName
-    status: 'reciente' | 'pendiente' | 'agendado';
+    status: 'reciente' | 'pendiente' | 'agendado'| 'rechazado';
     statusColor?: 'green' | 'yellow' | 'red' | 'gray';
     statusLabel?: string;
     requestDate?: Date;

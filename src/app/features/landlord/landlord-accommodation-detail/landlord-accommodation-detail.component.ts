@@ -8,7 +8,7 @@ import { AccommodationRequestsListComponent } from '../components/accommodation-
 import { AccommodationService } from '../../../core/services/accommodation.service';
 import { LandlordService } from '../../../core/services/landlord.service';
 import { AccommodationDetailViewModel, LandlordRequestViewModel } from '../../../core/models/ui-view.models';
-
+//import { EstadoSolicitud } from '../../../core/models/interaction.models.ts'
 @Component({
   selector: 'app-landlord-accommodation-detail',
   standalone: true,
@@ -45,6 +45,26 @@ export class LandlordAccommodationDetailComponent implements OnInit {
       this.requests = data;
     });
   }
+  acceptRequest(requestId: number) {
+  this.landlordService.updateRequestStatus(requestId, 'ACEPTADO')
+    .subscribe(() => {
+      const req = this.requests.find(r => r.id === requestId);
+      if (req) req.status = 'agendado';
+
+      alert('Solicitud aceptada exitosamente.');
+    });
+}
+
+rejectRequest(requestId: number) {
+  this.landlordService.updateRequestStatus(requestId, 'RECHAZADO')
+    .subscribe(() => {
+      const req = this.requests.find(r => r.id === requestId);
+      if (req) req.status = 'rechazado';
+
+      alert('Solicitud rechazada exitosamente.');
+    });
+}
+
 
   getImageUrls(): string[] {
     return this.accommodation?.imagenes?.map(img => img.url) || [];
