@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, forkJoin, of } from 'rxjs';
+import { Observable, forkJoin, of, throwError } from 'rxjs';
 import { AccommodationCardViewModel, StudentRequestViewModel, StudentProfileViewModel } from '../models/ui-view.models';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -28,31 +28,6 @@ export class StudentService {
         return this.http.put<EstudianteProfileResponse>(`${this.apiUrl}/estudiantes/me`, profile);
     }
 
-    getFavorites(): Observable<FavoritoResponse[]> {//SOLUCIONAR
-        return this.http.get<FavoritoResponse[]>(`${this.apiUrl}/favoritos/estudiante/${this.currentStudent?.id}`);
-    }
-
-    getAllFavoriteAccommodations(): Observable<AlojamientoResponse[]> {
-        return this.getFavorites().pipe(
-            switchMap(favorites => {
-                if (!favorites || favorites.length === 0) {
-                    return of([]);
-                }
-                const requests = favorites.map(fav =>
-                    this.accommodationService.getAccommodationDetail(fav.alojamientoId)
-                );
-                return forkJoin(requests).pipe(
-                    map(details => details.filter(d => d !== null) as AlojamientoResponse[])
-                );
-            })
-        );
-    }
-
-    isFavorite(id: number): Observable<boolean> {
-        return this.getFavorites().pipe(
-            map(favorites => favorites.some(fav => fav.alojamientoId === id))
-        );
-    }
 
     getAllAccommodationsWithFavoriteStatus(): Observable<AccommodationCardViewModel[]> {
         return forkJoin({
@@ -124,6 +99,60 @@ export class StudentService {
             preferredZone: profile.distrito,
             budget: 0
         };
+    }
+
+    private getEstudianteIdOrFail(): Observable<number> {
+        return this.getProfileId().pipe(
+            switchMap(id => {
+                if (!id) {
+                    return throwError(() => new Error('Estudiante no logueado.'));
+                }
+                return of(id);
+            })
+        );
+    }
+
+    // FIX: Corregido para usar getEstudianteIdOrFail() y así obtener el ID del usuario actual.
+    getFavorites(): Observable<FavoritoResponse[]> {
+        return this.getEstudianteIdOrFail().pipe(
+            switchMap(estudianteId => {
+                const url = `${this.apiUrl}/favoritos/estudiante/${estudianteId}`;
+                return this.http.get<FavoritoResponse[]>(url);
+            })
+        );
+    }
+
+    // NUEVO: Añadir un alojamiento a favoritos (POST)
+    addFavorite(alojamientoId: number): Observable<FavoritoResponse> {
+        return this.getEstudianteIdOrFail().pipe(
+            switchMap(estudianteId => {
+                const url = `${this.apiUrl}/favoritos/estudiante/${estudianteId}/alojamiento/${alojamientoId}`;
+                // El endpoint POST retorna FavoritosResponseDTO (mapeado a FavoritoResponse)
+                return this.http.post<FavoritoResponse>(url, {});
+            })
+        );
+    }
+
+    // NUEVO: Eliminar un alojamiento de favoritos (DELETE)
+    removeFavorite(alojamientoId: number): Observable<void> {
+        return this.getEstudianteIdOrFail().pipe(
+            switchMap(estudianteId => {
+                const url = `${this.apiUrl}/favoritos/estudiante/${estudianteId}/alojamiento/${alojamientoId}`;
+                // El endpoint DELETE retorna HttpStatus.NO_CONTENT (204)
+                return this.http.delete<void>(url);
+            })
+        );
+    }
+
+    // NUEVO: Función de conveniencia para añadir o eliminar
+    toggleFavoriteStatus(alojamientoId: number, isCurrentlyFavorite: boolean): Observable<any> {
+        if (isCurrentlyFavorite) {
+            // Si es favorito, lo elimina
+            return this.removeFavorite(alojamientoId);
+        } else {
+            // Si no es favorito, lo añade
+            return this.addFavorite(alojamientoId);
+        }
     }
 
 }

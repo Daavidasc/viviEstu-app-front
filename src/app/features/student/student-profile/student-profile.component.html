@@ -20,13 +20,16 @@
       <!-- INFORMACIÓN DETALLADA -->
       <app-profile-info-card [student]="student" />
 
-      <!-- SECCIÓN FAVORITOS -->
       <div class="section-spacer"></div>
       <h2 class="section-subtitle">Favoritos</h2>
 
       <div class="favorites-list">
-        <app-accommodation-card *ngFor="let fav of favorites" [accommodation]="fav" />
-      </div>
+        <app-accommodation-card
+          *ngFor="let fav of favorites"
+          [accommodation]="fav"
+          (favoriteToggled)="handleFavoriteToggle(fav)"
+        />
+        </div>
 
       <div class="see-more-container">
         <a href="#" class="see-more-link">Ver mas...</a>
