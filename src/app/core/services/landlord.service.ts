@@ -16,6 +16,7 @@ export class LandlordService {
             cantInquilinos: 1,
             mensaje: 'Hola, estoy interesado en este departamento para el próximo semestre. ¿Podríamos agendar una visita?',
             oferta: 650,
+
             estado: 'PENDIENTE',
             estudiantesId: 101,
             nombreEstudiante: 'Marcelo Hernandez',

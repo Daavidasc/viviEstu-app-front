@@ -7,7 +7,7 @@ export class StorageService {
 
   /**
    * Guarda un ítem en LocalStorage.
-   * Si el valor es un objeto, lo serializa a JSON.
+   * Si el valor]
    */
   setItem<T>(key: string, value: T): void {
     try {
@@ -20,7 +20,8 @@ export class StorageService {
 
   /**
    * Obtiene un ítem de LocalStorage y lo deserializa si es necesario.
-   * @returns El valor si existe, o null si no se encuentra o hay error de parsing.
+   * @returns El valor
+   *
    */
   getItem<T>(key: string): T | null {
     try {
