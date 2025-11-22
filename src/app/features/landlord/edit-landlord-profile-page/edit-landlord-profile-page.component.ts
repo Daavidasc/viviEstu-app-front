@@ -25,4 +25,4 @@ export class EditLandlordProfilePageComponent {
     address: 'Surco, Lima',
     propertiesCount: 3
   };
-}
+} //sy
