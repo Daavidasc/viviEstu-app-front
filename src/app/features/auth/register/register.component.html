@@ -171,7 +171,7 @@
             </div>
           </div>
 
-          <!-- CAMPO DE CONFIRMACIÓN DE CONTRASEÑA -->
+          <!--ESPACIO PARA CONFIRMACIÓN DE CONTRASEÑA -->
           <div class="form-group full-width">
             <label class="label-text">Confirmar Contraseña</label>
             <input type="password" formControlName="confirmarContrasenia" class="form-input"
@@ -267,7 +267,7 @@
 
         </div>
 
-        <!-- Botón Registrarse (deshabilitado si el formulario es inválido) -->
+        <!-- Botón Registrarse (deshabilitado en caso el proceso no este bien) -->
         <div class="form-actions">
           <button type="submit" class="btn btn-full btn-primary btn-shadow" [disabled]="studentForm.invalid">
             Registrarse
@@ -310,7 +310,7 @@
             <div
               *ngIf="getControl(ownerForm, 'dni')?.errors?.['invalidPeruvianDNI'] && getControl(ownerForm, 'dni')?.touched"
               class="error-message">
-              El DNI debe ser exactamente 8 dígitos.
+              El DNI obligatoriamente debe tener 8 dígitos.
             </div>
             <div *ngIf="getControl(ownerForm, 'dni')?.errors?.['required'] && getControl(ownerForm, 'dni')?.touched"
               class="error-message">
@@ -332,7 +332,7 @@
             <div
               *ngIf="getControl(ownerForm, 'telefono')?.errors?.['invalidLength'] && getControl(ownerForm, 'telefono')?.touched"
               class="error-message">
-              Debe tener 9 dígitos.
+              Se necesitan 9 dígitos obligatorios.
             </div>
             <div
               *ngIf="getControl(ownerForm, 'telefono')?.errors?.['required'] && getControl(ownerForm, 'telefono')?.touched"
