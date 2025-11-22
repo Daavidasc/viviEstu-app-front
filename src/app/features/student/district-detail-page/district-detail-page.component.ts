@@ -38,7 +38,9 @@ export class DistrictDetailPageComponent implements OnInit {
     if (this.commentText.trim()) {
       console.log('Comentario agregado:', this.commentText);
       this.commentText = '';
-      // Aquí se implementaría la lógica real para guardar el comentario
+
+
+
     }
   }
 }

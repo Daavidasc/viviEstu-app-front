@@ -16,7 +16,9 @@
         </div>
       </div>
 
-      <!-- Listado 1: Recomendados en tu zona -->
+
+
+
       @if (zoneRecommendations.length > 0) {
       <div class="accommodation-list">
         @for (item of zoneRecommendations; track item.id) {
@@ -37,7 +39,7 @@
       </div>
       }
 
-      <!-- Listado 2: Recomendados cerca a Universidad -->
+
       <div class="section-spacer"></div>
       <h2 class="section-subtitle secondary">Recomendados cerca a <span class="highlight">{{ currentUser.university
           }}</span></h2>
