@@ -33,8 +33,10 @@
             <div class="request-footer">
                 <span class="request-date">{{ request.date | date:'dd/MM/yyyy' }}</span>
                 <div class="request-actions">
-                    <button class="btn-action btn-accept">Aceptar</button>
-                    <button class="btn-action btn-reject">Rechazar</button>
+                    @if (request.status !== 'agendado' && request.status !== 'rechazado') {
+                    <button class="btn-action btn-accept" (click)="onAcceptRequest(request.id)">Aceptar</button>
+                    <button class="btn-action btn-reject" (click)="onRejectRequest(request.id)">Rechazar</button>
+                    }
                 </div>
             </div>
         </div>

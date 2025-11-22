@@ -1,6 +1,18 @@
 <div class="app-container">
     <app-landlord-navbar />
 
+    <!-- Notification Toast -->
+    @if (notification.show) {
+    <div class="notification-toast" [class]="'notification-' + notification.type">
+        <div class="notification-content">
+            <div class="notification-message">{{ notification.message }}</div>
+            <button class="notification-close" (click)="closeNotification()">
+                Entendido
+            </button>
+        </div>
+    </div>
+    }
+
     @if (accommodation) {
     <main class="main-content">
         <div class="container content-grid">
@@ -60,34 +72,11 @@
                         <span class="requests-count">{{ requests.length }}</span>
                     </div>
                     <div class="requests-content">
-    @for (req of requests; track req.id) {
-        <div class="request-card">
-
-            <div class="request-header">
-                <img class="avatar" [src]="req.studentPhotoUrl" alt="foto" />
-                <div>
-                    <h4>{{ req.studentName }}</h4>
-                    <span class="university">{{ req.studentUniversity }}</span>
-                </div>
-                <span class="status">{{ req.status }}</span>
-            </div>
-
-            <p class="message">{{ req.message }}</p>
-            <p class="date">{{ req.date  }}</p>
-
-            <div class="actions">
-                <button class="btn-accept" (click)="acceptRequest(req.id)">
-                    Aceptar
-                </button>
-
-                <button class="btn-reject" (click)="rejectRequest(req.id)">
-                    Rechazar
-                </button>
-            </div>
-
-        </div>
-    }
-</div>
+                        <app-accommodation-requests-list 
+                            [requests]="requests" 
+                            (acceptRequest)="acceptRequest($event)"
+                            (rejectRequest)="rejectRequest($event)" />
+                    </div>
                 </div>
             </div>
 

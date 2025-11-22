@@ -8,11 +8,12 @@ import { AccommodationRequestsListComponent } from '../components/accommodation-
 import { AccommodationService } from '../../../core/services/accommodation.service';
 import { LandlordService } from '../../../core/services/landlord.service';
 import { AccommodationDetailViewModel, LandlordRequestViewModel } from '../../../core/models/ui-view.models';
+import { CommonModule } from '@angular/common';
 //import { EstadoSolicitud } from '../../../core/models/interaction.models.ts'
 @Component({
   selector: 'app-landlord-accommodation-detail',
   standalone: true,
-  imports: [FormsModule, RouterModule, LandlordNavbarComponent, FooterComponent, GalleryComponent, AccommodationRequestsListComponent],
+  imports: [FormsModule, RouterModule, LandlordNavbarComponent, FooterComponent, GalleryComponent, AccommodationRequestsListComponent, CommonModule],
   templateUrl: './landlord-accommodation-detail.component.html',
   styleUrls: ['./landlord-accommodation-detail.component.css']
 })
@@ -21,6 +22,13 @@ import { AccommodationDetailViewModel, LandlordRequestViewModel } from '../../..
 export class LandlordAccommodationDetailComponent implements OnInit {
   accommodation: AccommodationDetailViewModel | null = null;
   requests: LandlordRequestViewModel[] = [];
+  
+  // Notification system
+  notification: { message: string; type: 'success' | 'error'; show: boolean } = {
+    message: '',
+    type: 'success',
+    show: false
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -46,18 +54,55 @@ export class LandlordAccommodationDetailComponent implements OnInit {
     });
   }
   acceptRequest(id: number) {
-  this.landlordService.updateRequestStatus(id, 'ACEPTADO').subscribe(() => {
-    const req = this.requests.find(r => r.id === id);
-    if (req) req.status = 'agendado';
-  });
-}
+    const request = this.requests.find(r => r.id === id);
+    const studentName = request?.studentName || request?.applicantName || 'el estudiante';
+    
+    this.landlordService.updateRequestStatus(id, 'ACEPTADO').subscribe({
+      next: () => {
+        // Remove request from the list
+        this.requests = this.requests.filter(r => r.id !== id);
+        
+        // Show success notification
+        this.showNotification(`Solicitud de ${studentName} aceptada exitosamente`, 'success');
+      },
+      error: (error) => {
+        console.error('Error accepting request:', error);
+        this.showNotification('Error al aceptar la solicitud. Intente nuevamente.', 'error');
+      }
+    });
+  }
 
-rejectRequest(id: number) {
-  this.landlordService.updateRequestStatus(id, 'RECHAZADO').subscribe(() => {
-    const req = this.requests.find(r => r.id === id);
-    if (req) req.status = 'rechazado';
-  });
-}
+  rejectRequest(id: number) {
+    const request = this.requests.find(r => r.id === id);
+    const studentName = request?.studentName || request?.applicantName || 'el estudiante';
+    
+    this.landlordService.updateRequestStatus(id, 'RECHAZADO').subscribe({
+      next: () => {
+        // Remove request from the list
+        this.requests = this.requests.filter(r => r.id !== id);
+        
+        // Show success notification
+        this.showNotification(`Solicitud de ${studentName} rechazada`, 'success');
+      },
+      error: (error) => {
+        console.error('Error rejecting request:', error);
+        this.showNotification('Error al rechazar la solicitud. Intente nuevamente.', 'error');
+      }
+    });
+  }
+
+  private showNotification(message: string, type: 'success' | 'error') {
+    this.notification = { message, type, show: true };
+    
+    // Auto-hide notification after 3 seconds
+    setTimeout(() => {
+      this.notification.show = false;
+    }, 3000);
+  }
+
+  closeNotification() {
+    this.notification.show = false;
+  }
 
 
   getImageUrls(): string[] {
