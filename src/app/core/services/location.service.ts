@@ -62,3 +62,4 @@ export class LocationService {
         return this.getAllDistricts();
     }
 }
+
