@@ -67,7 +67,7 @@ export class LandlordService {
         console.log(`Request ${requestId} status updated to ${newStatus}`);
         return of(void 0);
     }
-
+    
     private mapToViewModel(dto: SolicitudResponse): LandlordRequestViewModel {
         return {
             id: dto.id,

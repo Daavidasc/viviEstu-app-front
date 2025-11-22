@@ -1,6 +1,18 @@
 <div class="app-container">
     <app-landlord-navbar />
 
+    <!-- Notification Toast -->
+    @if (notification.show) {
+    <div class="notification-toast" [class]="'notification-' + notification.type">
+        <div class="notification-content">
+            <div class="notification-message">{{ notification.message }}</div>
+            <button class="notification-close" (click)="closeNotification()">
+                Entendido
+            </button>
+        </div>
+    </div>
+    }
+
     @if (accommodation) {
     <main class="main-content">
         <div class="container content-grid">
@@ -60,7 +72,10 @@
                         <span class="requests-count">{{ requests.length }}</span>
                     </div>
                     <div class="requests-content">
-                        <app-accommodation-requests-list [requests]="requests" />
+                        <app-accommodation-requests-list 
+                            [requests]="requests" 
+                            (acceptRequest)="acceptRequest($event)"
+                            (rejectRequest)="rejectRequest($event)" />
                     </div>
                 </div>
             </div>
