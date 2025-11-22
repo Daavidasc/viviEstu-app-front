@@ -5,7 +5,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
  */
 export class AuthValidators {
 
-    // Validador para contraseñas que coinciden
+    // Validador para contraseñas que se repiten
     static passwordMatch(passwordField: string, confirmPasswordField: string): ValidatorFn {
         return (formGroup: AbstractControl): ValidationErrors | null => {
             const password = formGroup.get(passwordField)?.value;
@@ -15,7 +15,7 @@ export class AuthValidators {
                 return null;
             }
 
-            // Asegurarse de que ambos campos se hayan tocado (touched) antes de mostrar el error
+            // Asegurarse de que ambos campos hayan sido ingresados antes de validar
             if (formGroup.get(confirmPasswordField)?.pristine) {
                 return null;
             }
@@ -24,7 +24,7 @@ export class AuthValidators {
         };
     }
 
-    // Validador para contraseña fuerte (requisitos de seguridad)
+    // Validador para la estructura de una contraseña fuerte
     static strongPassword(minLength: number = 8): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             if (!control.value) {
@@ -87,7 +87,7 @@ export class AuthValidators {
         };
     }
 
-    // Validador para nombres y apellidos (mínimo 2 palabras en total)
+    // Validador para nombres y apellidos (comprobar solo dos palabras)
     static fullName(): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             if (!control.value) {
