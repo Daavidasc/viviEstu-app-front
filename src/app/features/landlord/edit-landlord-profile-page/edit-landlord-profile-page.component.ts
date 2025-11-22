@@ -26,3 +26,4 @@ export class EditLandlordProfilePageComponent {
     propertiesCount: 3
   };
 }
+//siq
