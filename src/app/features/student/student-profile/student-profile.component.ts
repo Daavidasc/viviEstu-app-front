@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
@@ -20,19 +20,25 @@ export class StudentProfileComponent implements OnInit {
   favorites: AccommodationCardViewModel[] = [];
   requests: StudentRequestViewModel[] = [];
 
-  constructor(private studentService: StudentService) { }
+  constructor(
+    private studentService: StudentService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
-    this.studentService.getProfile().subscribe(data => {
+    this.studentService.getViewProfile().subscribe(data => {
       this.student = data;
+      this.cdr.detectChanges();
     });
 
-    this.studentService.getFavorites().subscribe(data => {
+    this.studentService.getAllAccommodationsWithFavoriteStatus().subscribe(data => {
       this.favorites = data;
+      this.cdr.detectChanges();
     });
 
     this.studentService.getRequests().subscribe(data => {
       this.requests = data;
+      this.cdr.detectChanges();
     });
   }
 }

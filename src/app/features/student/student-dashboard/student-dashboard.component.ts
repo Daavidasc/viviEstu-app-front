@@ -38,28 +38,40 @@ export class StudentDashboardComponent implements OnInit {
   }
 
   loadDashboardData() {
-    this.studentService.getProfile().subscribe(profile => {
-      this.currentUser = profile;
+    this.studentService.getViewProfile().subscribe({
+      next: (profile) => {
+        this.currentUser = profile;
+        this.accommodationService.getAllCards().subscribe({
+          next: (data) => {
+            this.allAccommodations = data;
+            if (this.currentUser) {
+              this.zoneRecommendations = this.allAccommodations
+                .filter(item => item.district === this.currentUser!.district)
+                .slice(0, 3);
 
-      this.accommodationService.getAllCards().subscribe(data => {
-        this.allAccommodations = data;
-
-        if (this.currentUser) {
-          this.zoneRecommendations = this.allAccommodations
-            .filter(item => item.district === this.currentUser!.district)
-            .slice(0, 3);
-
-          // Filter by universityNear field if available
-          this.uniRecommendations = this.allAccommodations
-            .filter(item => item.universityNear === this.currentUser!.university)
-            .slice(0, 3);
-        }
+              // Filter by universityNear field if available
+              this.uniRecommendations = this.allAccommodations
+                .filter(item => item.universityNear === this.currentUser!.university)
+                .slice(0, 3);
+            }
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.error('Error loading accommodations:', err);
+            this.error = 'No se pudieron cargar los alojamientos.';
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          }
+        });
+      },
+      error: (err) => {
+        console.error('Error loading profile:', err);
+        this.error = 'No se pudo cargar la información del usuario.';
         this.isLoading = false;
         this.cdr.detectChanges();
-      },
-      );
-    }
-    );
+      }
+    });
   }
 
   handleFavoriteToggle(item: AccommodationCardViewModel) {

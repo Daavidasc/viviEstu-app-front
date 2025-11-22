@@ -27,7 +27,7 @@ export class AccommodationService {
                 price: dto.precioMensual,
                 district: dto.distrito,
                 thumbnailUrl: dto.imagenes?.[0]?.url || 'assets/placeholder.jpg',
-                isFavorite: false, // Mock logic
+                isFavorite: false, // Logic handled in StudentService or Component
                 score: 4.5, // Mock
                 description: dto.descripcion,
                 isFeatured: false, // Mock

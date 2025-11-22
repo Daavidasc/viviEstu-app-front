@@ -31,7 +31,7 @@ export class EditStudentProfilePageComponent implements OnInit {
   ngOnInit(): void {
     // Si el estudiante no fue pasado por el state (ej. recarga de página)
     if (!this.student) {
-      this.studentService.getProfile().subscribe(data => {
+      this.studentService.getViewProfile().subscribe(data => {
         this.student = data;
       });
     }

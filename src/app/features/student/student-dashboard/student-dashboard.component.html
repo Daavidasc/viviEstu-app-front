@@ -10,8 +10,15 @@
     </div>
     }
 
+    <!-- Loading State -->
+    @if (isLoading) {
+    <div class="container">
+      <app-loading-spinner message="Cargando tu perfil..."></app-loading-spinner>
+    </div>
+    }
+
     <!-- Content -->
-    @if (currentUser) {
+    @else if (currentUser) {
     <div class="container">
 
       <!-- Header Section -->
@@ -25,9 +32,7 @@
       </div>
 
       <!-- Listado 1: Recomendados en tu zona -->
-      @if (isLoading) {
-      <app-loading-spinner message="Cargando alojamientos..."></app-loading-spinner>
-      } @else if (zoneRecommendations.length > 0) {
+      @if (zoneRecommendations.length > 0) {
       <div class="accommodation-list">
         @for (item of zoneRecommendations; track item.id) {
         <app-accommodation-card [accommodation]="item" (favoriteToggled)="handleFavoriteToggle($event)">
@@ -40,7 +45,7 @@
       </div>
       }
 
-      @if (zoneRecommendations.length > 0 && !isLoading) {
+      @if (zoneRecommendations.length > 0) {
       <div class="see-more-container">
         <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: currentUser.district }"
           class="see-more-link">Ver más en {{ currentUser.district }}...</a>
@@ -52,9 +57,7 @@
       <h2 class="section-subtitle secondary">Recomendados cerca a <span class="highlight">{{ currentUser.university
           }}</span></h2>
 
-      @if (isLoading) {
-      <app-loading-spinner message="Cargando recomendaciones..."></app-loading-spinner>
-      } @else if (uniRecommendations.length > 0) {
+      @if (uniRecommendations.length > 0) {
       <div class="accommodation-list">
         @for (item of uniRecommendations; track item.id) {
         <app-accommodation-card [accommodation]="item" (favoriteToggled)="handleFavoriteToggle($event)">
@@ -67,7 +70,7 @@
       </div>
       }
 
-      @if (uniRecommendations.length > 0 && !isLoading) {
+      @if (uniRecommendations.length > 0) {
       <div class="see-more-container">
         <a [routerLink]="['/student/accommodations']" [queryParams]="{ university: currentUser.university }"
           class="see-more-link">Ver más cerca a la U...</a>
