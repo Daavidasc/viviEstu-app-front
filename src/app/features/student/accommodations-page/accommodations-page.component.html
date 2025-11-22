@@ -35,7 +35,7 @@
         </div>
     </main>
 
-    <!-- Filter Modal -->
+    <!-- Filtro -->
     @if (showFilterModal) {
     <div class="modal-overlay" (click)="toggleFilterModal()">
         <div class="modal-content" (click)="$event.stopPropagation()">
@@ -70,8 +70,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn-secondary" (click)="toggleFilterModal()">Cancelar</button>
-                <button class="btn-primary" (click)="applyFilters()">Aplicar Filtros</button>
+                <button class="btn-secondary" (click)="toggleFilterModal()">Cancelar busqueda</button>
+                <button class="btn-primary" (click)="applyFilters()">Aplicar los Filtros</button>
             </div>
         </div>
     </div>
