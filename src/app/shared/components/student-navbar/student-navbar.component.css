@@ -51,6 +51,24 @@
   font-size: 1.8rem;
   color: #333;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.logout-button {
+background-color: var(--primary-color);
+ color: var(--white);
+ border: none;
+ padding: 0.5rem 1rem;
+ border-radius: 4px;
+ cursor: pointer;
+ font-size: 0.85rem;
+ font-weight: 600;
+ transition: background-color 0.2s ease;
+
+}
+
+.logout-button:hover {
+ background-color: #a07826; /* Un tono ligeramente más oscuro */
 }
 .desktop-only { display: none; }
 @media (min-width: 768px) {

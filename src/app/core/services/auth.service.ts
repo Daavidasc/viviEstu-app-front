@@ -21,9 +21,12 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  getToken() {
-    throw new Error('Method not implemented.');
-  }
+  getToken(): string | null {
+    // Preferiblemente devuelve el valor reactivo
+    return this.token();
+    // O el valor almacenado si el signal aún no se ha inicializado
+    // return this.storage.getItem('token');
+  }
   private http = inject(HttpClient);
   private storage = inject(StorageService); // Asumiendo que existe un StorageService
   private router = inject(Router);
@@ -82,7 +85,7 @@ private saveAuthData(response: AuthResponse): void {
   this._token.set(response.token);
 
   const user: UserResponse = {
-    id: '',
+    id: response.id,
     // 🔥 CORRECCIÓN: Usar response.email y response.name 🔥
     email: response.email,
     name: response.name,

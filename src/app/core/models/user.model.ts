@@ -69,14 +69,15 @@ export interface AuthResponse {
     email: string; // 👈 CORREGIDO: De correo a email
     name: string;  // 👈 CORREGIDO: De nombre a name
     role?: RoleType;
-}
+    id: number;
+  }
 
 /**
  * Modelo completo del Usuario para el estado compartido y almacenamiento local
  * (UserResponse).
  */
 export interface UserResponse {
-    id: string; // ID del usuario (puede ser null/string/number, ajusta si el BE lo devuelve)
+    id: number; // ID del usuario (puede ser null/string/number, ajusta si el BE lo devuelve)
     email: string;
     name: string;
     role: RoleType;

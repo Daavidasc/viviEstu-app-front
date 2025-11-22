@@ -12,18 +12,16 @@
       <a routerLink="/student/accommodations" routerLinkActive="active" class="nav-link">Departamentos</a>
       <a routerLink="/student/compare" routerLinkActive="active" class="nav-link">Comparar</a>
     </div>
+    <div class="user-actions">
     <a routerLink="/student/profile" class="user-actions">
       <div class="user-avatar">
-        @if (currentUser && currentUser.avatarUrl && !imageLoadError) {
-          <img
-            [src]="currentUser.avatarUrl"
-            alt="Avatar de {{currentUser.name}}"
-            class="avatar-image"
-            (error)="handleImageError()">
-        } @else {
           <i class="far fa-user-circle"></i>
-        }
       </div>
+
     </a>
+        <button (click)="logout()" class="logout-button desktop-only">
+      Cerrar Sesión
+ </button>
+ </div>
   </div>
 </nav>

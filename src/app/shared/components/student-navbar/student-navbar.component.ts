@@ -1,3 +1,4 @@
+import { AuthService } from './../../../core/services/auth.service';
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -14,7 +15,16 @@ export class StudentNavbarComponent {
   @Input() currentUser: StudentProfileViewModel | null = null;
   imageLoadError = false;
 
+  constructor(private authService: AuthService) {}
+
   handleImageError() {
     this.imageLoadError = true;
   }
+  logout() {
+    // Llama al método de tu servicio para cerrar sesión
+    this.authService.logout();
+    // La lógica de redirección y limpieza debe estar dentro de authService.logout()
+  }
+  // ---------------------------------------
 }
+

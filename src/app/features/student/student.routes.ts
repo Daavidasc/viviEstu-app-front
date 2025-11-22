@@ -7,39 +7,59 @@ import { ComparePageComponent } from './compare-page/compare-page.component';
 import { EditStudentProfilePageComponent } from './edit-student-profile-page/edit-student-profile-page.component';
 import { AccommodationsPageComponent } from './accommodations-page/accommodations-page.component';
 import { DistrictDetailPageComponent } from './district-detail-page/district-detail-page.component';
+import { authGuard } from '../../core/guards/auth.guard'; // 👈 IMPORTAR GUARD
+import { RoleType } from '../../core/models/user.model'; // 👈 IMPORTAR ROLES
+
+const STUDENT_ROLE = [RoleType.ROLE_ESTUDIANTE];
 
 export const studentRoutes: Routes = [
   {
     path: 'dashboard',
-    component: StudentDashboardComponent
+    component: StudentDashboardComponent,
+    canActivate: [authGuard], // 👈 APLICAR GUARD
+    data: { roles: STUDENT_ROLE } // 👈 REQUERIR ROL
   },
   {
     path: 'accommodations',
-    component: AccommodationsPageComponent
+    component: AccommodationsPageComponent,
+    canActivate: [authGuard],
+    data: { roles: STUDENT_ROLE }
   },
   {
     path: 'accommodations/:id',
-    component: AccommodationDetailComponent
+    component: AccommodationDetailComponent,
+    canActivate: [authGuard],
+    data: { roles: STUDENT_ROLE }
   },
   {
     path: 'profile',
-    component: StudentProfileComponent
+    component: StudentProfileComponent,
+    canActivate: [authGuard],
+    data: { roles: STUDENT_ROLE }
   },
   {
     path: 'profile/edit',
-    component: EditStudentProfilePageComponent
+    component: EditStudentProfilePageComponent,
+    canActivate: [authGuard],
+    data: { roles: STUDENT_ROLE }
   },
   {
     path: 'districts',
-    component: DistrictsPageComponent
+    component: DistrictsPageComponent,
+    canActivate: [authGuard],
+    data: { roles: STUDENT_ROLE }
   },
   {
     path: 'districts/:id',
-    component: DistrictDetailPageComponent
+    component: DistrictDetailPageComponent,
+    canActivate: [authGuard],
+    data: { roles: STUDENT_ROLE }
   },
   {
     path: 'compare',
-    component: ComparePageComponent
+    component: ComparePageComponent,
+    canActivate: [authGuard],
+    data: { roles: STUDENT_ROLE }
   },
   {
     path: '',
