@@ -60,8 +60,34 @@
                         <span class="requests-count">{{ requests.length }}</span>
                     </div>
                     <div class="requests-content">
-                        <app-accommodation-requests-list [requests]="requests" />
-                    </div>
+    @for (req of requests; track req.id) {
+        <div class="request-card">
+
+            <div class="request-header">
+                <img class="avatar" [src]="req.studentPhotoUrl" alt="foto" />
+                <div>
+                    <h4>{{ req.studentName }}</h4>
+                    <span class="university">{{ req.studentUniversity }}</span>
+                </div>
+                <span class="status">{{ req.status }}</span>
+            </div>
+
+            <p class="message">{{ req.message }}</p>
+            <p class="date">{{ req.date  }}</p>
+
+            <div class="actions">
+                <button class="btn-accept" (click)="acceptRequest(req.id)">
+                    Aceptar
+                </button>
+
+                <button class="btn-reject" (click)="rejectRequest(req.id)">
+                    Rechazar
+                </button>
+            </div>
+
+        </div>
+    }
+</div>
                 </div>
             </div>
 

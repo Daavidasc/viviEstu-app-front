@@ -45,24 +45,18 @@ export class LandlordAccommodationDetailComponent implements OnInit {
       this.requests = data;
     });
   }
-  acceptRequest(requestId: number) {
-  this.landlordService.updateRequestStatus(requestId, 'ACEPTADO')
-    .subscribe(() => {
-      const req = this.requests.find(r => r.id === requestId);
-      if (req) req.status = 'agendado';
-
-      alert('Solicitud aceptada exitosamente.');
-    });
+  acceptRequest(id: number) {
+  this.landlordService.updateRequestStatus(id, 'ACEPTADO').subscribe(() => {
+    const req = this.requests.find(r => r.id === id);
+    if (req) req.status = 'agendado';
+  });
 }
 
-rejectRequest(requestId: number) {
-  this.landlordService.updateRequestStatus(requestId, 'RECHAZADO')
-    .subscribe(() => {
-      const req = this.requests.find(r => r.id === requestId);
-      if (req) req.status = 'rechazado';
-
-      alert('Solicitud rechazada exitosamente.');
-    });
+rejectRequest(id: number) {
+  this.landlordService.updateRequestStatus(id, 'RECHAZADO').subscribe(() => {
+    const req = this.requests.find(r => r.id === id);
+    if (req) req.status = 'rechazado';
+  });
 }
 
 
