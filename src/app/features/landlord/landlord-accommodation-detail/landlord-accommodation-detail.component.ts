@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { LandlordNavbarComponent } from '../../../shared/components/landlord-navbar/landlord-navbar.component';
@@ -8,11 +8,12 @@ import { AccommodationRequestsListComponent } from '../components/accommodation-
 import { AccommodationService } from '../../../core/services/accommodation.service';
 import { LandlordService } from '../../../core/services/landlord.service';
 import { AccommodationDetailViewModel, LandlordRequestViewModel } from '../../../core/models/ui-view.models';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-landlord-accommodation-detail',
   standalone: true,
-  imports: [FormsModule, RouterModule, LandlordNavbarComponent, FooterComponent, GalleryComponent, AccommodationRequestsListComponent],
+  imports: [FormsModule, RouterModule, LandlordNavbarComponent, FooterComponent, GalleryComponent, AccommodationRequestsListComponent, LoadingSpinnerComponent],
   templateUrl: './landlord-accommodation-detail.component.html',
   styleUrls: ['./landlord-accommodation-detail.component.css']
 })
@@ -21,29 +22,53 @@ import { AccommodationDetailViewModel, LandlordRequestViewModel } from '../../..
 export class LandlordAccommodationDetailComponent implements OnInit {
   accommodation: AccommodationDetailViewModel | null = null;
   requests: LandlordRequestViewModel[] = [];
+  isLoading = true;
 
   constructor(
     private route: ActivatedRoute,
     private accommodationService: AccommodationService,
-    private landlordService: LandlordService
+    private landlordService: LandlordService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     const accommodationId = Number(this.route.snapshot.paramMap.get('id'));
-    this.loadAccommodationData(accommodationId);
-    this.loadRequests(accommodationId);
+    this.loadData(accommodationId);
   }
 
-  loadAccommodationData(id: number) {
-    this.accommodationService.getAccommodationDetail(id).subscribe(data => {
-      this.accommodation = data;
+  loadData(id: number) {
+    this.isLoading = true;
+    // Usamos forkJoin si quisiéramos esperar a ambos, pero por ahora lo manejamos simple
+    // Cargamos datos del alojamiento
+    this.accommodationService.getAccommodationDetail(id).subscribe({
+      next: (data) => {
+        this.accommodation = data;
+        this.checkLoadingComplete();
+      },
+      error: () => {
+        this.checkLoadingComplete();
+      }
+    });
+
+    // Cargamos solicitudes
+    this.landlordService.getRequestsByAccommodationId(id).subscribe({
+      next: (data) => {
+        this.requests = data;
+        this.checkLoadingComplete();
+      },
+      error: () => {
+        this.checkLoadingComplete();
+      }
     });
   }
 
-  loadRequests(id: number) {
-    this.landlordService.getRequestsByAccommodationId(id).subscribe(data => {
-      this.requests = data;
-    });
+  private loadedCount = 0;
+  private checkLoadingComplete() {
+    this.loadedCount++;
+    if (this.loadedCount >= 2) {
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    }
   }
 
   getImageUrls(): string[] {

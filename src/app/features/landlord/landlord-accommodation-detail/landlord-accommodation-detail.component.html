@@ -1,6 +1,9 @@
 <div class="app-container">
     <app-landlord-navbar />
 
+    @if (isLoading) {
+    <app-loading-spinner message="Cargando detalles del alojamiento..." />
+    } @else {
     @if (accommodation) {
     <main class="main-content">
         <div class="container content-grid">
@@ -67,6 +70,7 @@
 
         </div>
     </main>
+    }
     }
 
     <app-footer />
