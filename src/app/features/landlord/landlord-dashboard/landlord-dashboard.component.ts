@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
@@ -6,25 +6,78 @@ import { LandlordNavbarComponent } from '../../../shared/components/landlord-nav
 import { RequestsSectionComponent } from '../components/requests-section/requests-section.component';
 import { LandlordRentalCardComponent } from '../components/landlord-rental-card/landlord-rental-card.component';
 import { LandlordRequestViewModel, MyRentalViewModel } from '../../../core/models/ui-view.models';
+import { LandlordService } from '../../../core/services/landlord.service';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-landlord-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, FooterComponent, LandlordNavbarComponent, RequestsSectionComponent, LandlordRentalCardComponent],
+  imports: [CommonModule, RouterModule, FooterComponent, LandlordNavbarComponent, RequestsSectionComponent, LandlordRentalCardComponent, LoadingSpinnerComponent],
   templateUrl: './landlord-dashboard.component.html',
   styleUrls: ['./landlord-dashboard.component.css']
 })
-export class LandlordDashboardComponent {
-  userName: string = 'Henry';
+export class LandlordDashboardComponent implements OnInit {
+  userName: string = '';
+  requests: LandlordRequestViewModel[] = [];
+  myRentals: MyRentalViewModel[] = [];
+  isLoading = true;
+  requestsError: string | null = null;
 
-  requests: LandlordRequestViewModel[] = [
-    { id: 1, accommodationTitle: 'Amplio y comodo departamento cerca a la UPC monterrico y ESAN.', applicantName: 'Marcelo Hernandez', status: 'reciente' },
-    { id: 2, accommodationTitle: 'Amplio y comodo departamento cerca a la UPC monterrico y ESAN.', applicantName: 'Marcelo Hernandez', status: 'reciente' },
-    { id: 3, accommodationTitle: 'Amplio y comodo departamento cerca a la UPC monterrico y ESAN.', applicantName: 'Marcelo Hernandez', status: 'reciente' },
-  ];
+  constructor(
+    private landlordService: LandlordService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
-  myRentals: MyRentalViewModel[] = [
-    { id: 1, image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', price: 650, district: 'Monterrico', description: 'Amplio y comodo departamento cerca a la UPC monterrico y ESAN.', area: 80, baths: 1, rooms: 1, clicks: 5, requestsCount: 1 },
-    { id: 2, image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', price: 650, district: 'Monterrico', description: 'Amplio y comodo departamento cerca a la UPC monterrico y ESAN.', area: 80, baths: 1, rooms: 1, clicks: 20, requestsCount: 15 }
-  ];
+  ngOnInit() {
+    this.loadDashboardData();
+  }
+
+  loadDashboardData() {
+    this.isLoading = true;
+
+    // Cargar perfil
+    this.landlordService.getProfile().subscribe({
+      next: (profile) => {
+        this.userName = profile.nombre;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error loading profile', err)
+    });
+
+    // Cargar alojamientos
+    this.landlordService.getMyAccommodations().subscribe({
+      next: (rentals) => {
+        this.myRentals = rentals;
+        this.checkLoading();
+      },
+      error: (err) => {
+        console.error('Error loading rentals', err);
+        this.checkLoading();
+      }
+    });
+
+    // Cargar solicitudes recientes
+    this.landlordService.getAllRequests().subscribe({
+      next: (reqs) => {
+        // Mostrar solo las 3 más recientes
+        this.requests = reqs.slice(0, 3);
+        this.requestsError = null;
+        this.checkLoading();
+      },
+      error: (err) => {
+        console.error('Error loading requests', err);
+        this.requestsError = 'No se encontraron solicitudes o hubo un error al cargarlas.';
+        this.checkLoading();
+      }
+    });
+  }
+
+  private loadedCount = 0;
+  private checkLoading() {
+    this.loadedCount++;
+    if (this.loadedCount >= 2) { // Esperamos a rentals y requests
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    }
+  }
 }

@@ -169,4 +169,8 @@ export class StudentService {
         }
     }
 
+    cancelRequest(requestId: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/solicitudes/${requestId}`);
+    }
+
 }

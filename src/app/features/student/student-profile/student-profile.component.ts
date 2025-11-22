@@ -83,16 +83,10 @@ export class StudentProfileComponent implements OnInit {
       return;
     }
 
-    this.requestService.deleteRequest(requestId).subscribe({
+    this.studentService.cancelRequest(requestId).subscribe({
       next: () => {
-        alert('Solicitud cancelada exitosamente.');
-        console.log(`Solicitud ${requestId} eliminada.`);
-
-        // 1. Quitar la solicitud de la lista local para actualizar la vista
         this.requests = this.requests.filter(req => req.requestId !== requestId);
-
-        // 2. (Opcional) Forzar una recarga completa de la lista de solicitudes
-        // this.loadRequests();
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error al cancelar la solicitud:', err);

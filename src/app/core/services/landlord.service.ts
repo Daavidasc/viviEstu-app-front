@@ -1,88 +1,85 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of, forkJoin } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { SolicitudResponse, EstadoSolicitud } from '../models/interaction.models';
-import { LandlordRequestViewModel } from '../models/ui-view.models';
+import { LandlordRequestViewModel, MyRentalViewModel } from '../models/ui-view.models';
+import { environment } from '../../../environments/environment';
+import { PropietarioProfileResponse } from '../models/auth.models';
+import { AlojamientoResponse } from '../models/accommodation.models';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LandlordService {
-
-    private mockRequests: SolicitudResponse[] = [
-        {
-            id: 1,
-            mesesAlquiler: 6,
-            cantInquilinos: 1,
-            mensaje: 'Hola, estoy interesado en este departamento para el próximo semestre. ¿Podríamos agendar una visita?',
-            oferta: 650,
-            estado: 'PENDIENTE',
-            estudiantesId: 101,
-            nombreEstudiante: 'Marcelo Hernandez',
-            alojamientoId: 1,
-            tituloAlojamiento: 'Amplio y comodo departamento cerca a la UPC monterrico y ESAN.'
-        },
-        {
-            id: 2,
-            mesesAlquiler: 12,
-            cantInquilinos: 2,
-            mensaje: '¿El precio incluye servicios?',
-            oferta: 1200,
-            estado: 'PENDIENTE',
-            estudiantesId: 102,
-            nombreEstudiante: 'Ana García',
-            alojamientoId: 1,
-            tituloAlojamiento: 'Amplio y comodo departamento cerca a la UPC monterrico y ESAN.'
-        },
-        {
-            id: 3,
-            mesesAlquiler: 4,
-            cantInquilinos: 1,
-            mensaje: 'Me gustaría visitarlo este fin de semana.',
-            oferta: 650,
-            estado: 'AGENDADO',
-            estudiantesId: 103,
-            nombreEstudiante: 'Carlos Mendoza',
-            alojamientoId: 1,
-            tituloAlojamiento: 'Amplio y comodo departamento cerca a la UPC monterrico y ESAN.'
-        }
-    ];
+    private http = inject(HttpClient);
+    private apiUrl = `${environment.apiUrl}`;
 
     constructor() { }
 
-    getRequestsByAccommodationId(accommodationId: number): Observable<LandlordRequestViewModel[]> {
-        // Simular filtrado por accommodationId
-        const requests = this.mockRequests.filter(r => r.alojamientoId === accommodationId || true); // Mock: return all for now or filter
+    getProfile(): Observable<PropietarioProfileResponse> {
+        return this.http.get<PropietarioProfileResponse>(`${this.apiUrl}/propietarios/me`);
+    }
 
-        return of(requests).pipe(
+    getProfileId(): Observable<number> {
+        return this.getProfile().pipe(map(p => p.id));
+    }
+
+    getMyAccommodations(): Observable<MyRentalViewModel[]> {
+        return this.getProfileId().pipe(
+            switchMap(id => this.http.get<AlojamientoResponse[]>(`${this.apiUrl}/alojamientos/propietario/${id}`)),
+            map(dtos => dtos.map(dto => ({
+                id: dto.id,
+                image: dto.imagenes?.[0]?.url || 'assets/placeholder.jpg',
+                price: dto.precioMensual,
+                district: dto.distrito,
+                description: dto.descripcion,
+                area: dto.area,
+                baths: dto.banios,
+                rooms: dto.habitaciones,
+                clicks: 0, // Mock as backend doesn't provide this yet
+                requestsCount: 0 // This should ideally come from backend or be calculated
+            })))
+        );
+    }
+
+    getAllRequests(): Observable<LandlordRequestViewModel[]> {
+        return this.getProfileId().pipe(
+            switchMap(id => this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/propietario/${id}`)),
             map(dtos => dtos.map(dto => this.mapToViewModel(dto)))
         );
     }
 
+    getRequestsByAccommodationId(accommodationId: number): Observable<LandlordRequestViewModel[]> {
+        return this.getProfileId().pipe(
+            switchMap(id => this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/propietario/${id}`)),
+            map(dtos => dtos
+                .filter(r => r.alojamientoId === accommodationId)
+                .map(dto => this.mapToViewModel(dto))
+            )
+        );
+    }
+
     updateRequestStatus(requestId: number, newStatus: EstadoSolicitud): Observable<void> {
-        const request = this.mockRequests.find(r => r.id === requestId);
-        if (request) {
-            request.estado = newStatus;
-        }
-        console.log(`Request ${requestId} status updated to ${newStatus}`);
-        return of(void 0);
+        // Assuming endpoint like PUT /solicitudes/{id}/estado
+        return this.http.put<void>(`${this.apiUrl}/solicitudes/${requestId}/estado`, { estado: newStatus });
     }
 
     private mapToViewModel(dto: SolicitudResponse): LandlordRequestViewModel {
         return {
             id: dto.id,
             requestId: dto.id,
-            accommodationTitle: 'Departamento', // Mock as not in DTO
+            accommodationTitle: dto.tituloAlojamiento || 'Alojamiento',
             applicantName: dto.nombreEstudiante,
             studentName: dto.nombreEstudiante,
-            studentPhotoUrl: `https://i.pravatar.cc/150?img=${dto.estudiantesId % 70}`,
-            studentUniversity: 'UPC',
+            studentPhotoUrl: `https://ui-avatars.com/api/?name=${dto.nombreEstudiante}`, // Placeholder
+            studentUniversity: 'Universidad', // Placeholder
             message: dto.mensaje,
             studentMessage: dto.mensaje,
             status: this.mapStatus(dto.estado),
             statusColor: this.getStatusColor(dto.estado),
             statusLabel: this.getStatusLabel(dto.estado),
-            date: new Date(),
+            date: new Date(), // Date not in response
             requestDate: new Date()
         };
     }
@@ -101,7 +98,7 @@ export class LandlordService {
             case 'ACEPTADO': return 'green';
             case 'PENDIENTE': return 'yellow';
             case 'RECHAZADO': return 'red';
-            case 'AGENDADO': return 'gray'; // Or blue if available, defaulting to gray
+            case 'AGENDADO': return 'gray';
             default: return 'gray';
         }
     }
