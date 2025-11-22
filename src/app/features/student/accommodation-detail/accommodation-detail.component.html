@@ -19,7 +19,7 @@
   <main class="main-content">
     <div class="container content-grid">
 
-      <!-- COLUMNA IZQUIERDA: Detalles del Alojamiento -->
+      <!--COLUMNA IZQUIERDA: Detalles del Alojamiento -->
       <div class="details-column">
         <div class="card main-card">
           <app-gallery [images]="getImageUrls()" />
@@ -72,23 +72,54 @@
                 }
               </div>
             </div>
-
-            <!-- Sección de Comentarios -->
-            <div class="comments-section">
-              <h3 class="section-label">Comentarios:</h3>
-              <textarea class="comment-input" rows="4" placeholder="Escribe tu duda o comentario aquí..."
-                [(ngModel)]="newComment"></textarea>
-              <div class="comment-actions">
-                <button class="btn btn-primary btn-comment" (click)="postComment()">Comentar</button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
-      <!-- COLUMNA DERECHA: Formulario de Contacto (Sticky) -->
+      <!-- COLUMNA DERECHA: Formulario de Contacto + Comentarios -->
       <div class="sidebar-column">
         <app-contact-form [accommodationId]="accommodation.id" />
+
+        <!-- Sección de Comentarios -->
+        <div class="comments-card">
+          <h3 class="comments-title">💬 Comentarios</h3>
+
+          <!-- Lista de comentarios existentes (scrolleable) -->
+          <div class="comments-scroll-container">
+            @if (comments.length > 0) {
+            <div class="comments-list">
+              @for (comment of comments; track comment.id) {
+              <div class="comment-item">
+                <div class="comment-header">
+                  <i class="fas fa-user-circle"></i>
+                  <span class="comment-author">{{ comment.estudianteNombre }}</span>
+                </div>
+                <p class="comment-content">{{ comment.contenido }}</p>
+              </div>
+              }
+            </div>
+            } @else {
+            <p class="no-comments">
+              <i class="fas fa-comments"></i>
+              No hay comentarios aún. ¡Sé el primero en comentar!
+            </p>
+            }
+          </div>
+
+          <!-- Formulario para nuevo comentario -->
+          <div class="new-comment-form">
+            <textarea class="comment-input" rows="3" placeholder="Escribe tu comentario aquí..."
+              [(ngModel)]="newComment"></textarea>
+            <button class="btn btn-primary btn-comment" (click)="postComment()"
+              [disabled]="isPostingComment || !newComment.trim()">
+              @if (isPostingComment) {
+              <span><i class="fas fa-spinner fa-spin"></i> Enviando...</span>
+              } @else {
+              <span><i class="fas fa-paper-plane"></i> Comentar</span>
+              }
+            </button>
+          </div>
+        </div>
       </div>
 
     </div>
