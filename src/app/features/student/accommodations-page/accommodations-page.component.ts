@@ -82,6 +82,7 @@ export class AccommodationsPageComponent implements OnInit {
         this.showFilterModal = !this.showFilterModal;
     }
 
+
     applyFilters(): void {
         const filters = {
             ...this.filterCriteria,
