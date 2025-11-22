@@ -12,12 +12,16 @@
         <input type="text" class="form-input" formControlName="titulo"
           placeholder="Ej: Habitación amplia cerca a la UPC"
           [class.error]="hasError('titulo', 'required') || hasError('titulo', 'minlength')">
-        <div class="error-message" *ngIf="hasError('titulo', 'required')">
+        @if (hasError('titulo', 'required')) {
+        <div class="error-message">
           El título es obligatorio
         </div>
-        <div class="error-message" *ngIf="hasError('titulo', 'minlength')">
+        }
+        @if (hasError('titulo', 'minlength')) {
+        <div class="error-message">
           El título debe tener al menos 10 caracteres
         </div>
+        }
       </div>
 
       <div class="form-group">
@@ -29,33 +33,43 @@
         <div class="char-counter">
           {{ getControl('descripcion')?.value?.length || 0 }} / 50 caracteres
         </div>
-        <div class="error-message" *ngIf="hasError('descripcion', 'required')">
+        @if (hasError('descripcion', 'required')) {
+        <div class="error-message">
           La descripción es obligatoria
         </div>
-        <div class="error-message" *ngIf="hasError('descripcion', 'minlength')">
+        }
+        @if (hasError('descripcion', 'minlength')) {
+        <div class="error-message">
           La descripción debe tener al menos 50 caracteres
         </div>
+        }
       </div>
 
       <div class="form-group">
         <label class="label-text">Dirección Completa *</label>
         <input type="text" class="form-input" formControlName="direccion" placeholder="Calle, número, referencia"
           [class.error]="hasError('direccion', 'required')">
-        <div class="error-message" *ngIf="hasError('direccion', 'required')">
+        @if (hasError('direccion', 'required')) {
+        <div class="error-message">
           La dirección es obligatoria
         </div>
+        }
       </div>
 
       <div class="form-group">
         <label class="label-text">Número de Partida Registral *</label>
         <input type="text" class="form-input" formControlName="nroPartida" placeholder="Solo números"
           [class.error]="hasError('nroPartida', 'required') || hasError('nroPartida', 'pattern')">
-        <div class="error-message" *ngIf="hasError('nroPartida', 'required')">
+        @if (hasError('nroPartida', 'required')) {
+        <div class="error-message">
           El número de partida es obligatorio
         </div>
-        <div class="error-message" *ngIf="hasError('nroPartida', 'pattern')">
+        }
+        @if (hasError('nroPartida', 'pattern')) {
+        <div class="error-message">
           El número de partida debe contener solo dígitos
         </div>
+        }
       </div>
     </div>
 
@@ -68,28 +82,38 @@
           <label class="label-text">Precio Mensual * (S/200 - S/5000)</label>
           <input type="number" class="form-input" formControlName="precioMensual" placeholder="S/."
             [class.error]="hasError('precioMensual', 'required') || hasError('precioMensual', 'min') || hasError('precioMensual', 'max')">
-          <div class="error-message" *ngIf="hasError('precioMensual', 'required')">
+          @if (hasError('precioMensual', 'required')) {
+          <div class="error-message">
             El precio es obligatorio
           </div>
-          <div class="error-message" *ngIf="hasError('precioMensual', 'min')">
+          }
+          @if (hasError('precioMensual', 'min')) {
+          <div class="error-message">
             El precio mínimo es S/ 200
           </div>
-          <div class="error-message" *ngIf="hasError('precioMensual', 'max')">
+          }
+          @if (hasError('precioMensual', 'max')) {
+          <div class="error-message">
             El precio máximo es S/ 5,000
           </div>
+          }
         </div>
 
         <div class="form-group">
           <label class="label-text">Distrito *</label>
           <select class="form-input" formControlName="distritoId" [class.error]="hasError('distritoId', 'required')">
             <option [ngValue]="null">Selecciona un distrito</option>
-            <option *ngFor="let district of districts()" [ngValue]="district.id">
+            @for (district of districts(); track district.id) {
+            <option [ngValue]="district.id">
               {{ district.nombre }}
             </option>
+            }
           </select>
-          <div class="error-message" *ngIf="hasError('distritoId', 'required')">
+          @if (hasError('distritoId', 'required')) {
+          <div class="error-message">
             Debes seleccionar un distrito
           </div>
+          }
         </div>
       </div>
     </div>
@@ -127,16 +151,19 @@
       <p class="section-description">Selecciona las universidades cercanas al alojamiento</p>
 
       <div class="checkbox-grid">
-        <label *ngFor="let university of universities()" class="checkbox-label"
-          [class.selected]="isUniversitySelected(university.id)">
+        @for (university of universities(); track university.id) {
+        <label class="checkbox-label" [class.selected]="isUniversitySelected(university.id)">
           <input type="checkbox" [checked]="isUniversitySelected(university.id)"
             (change)="toggleUniversity(university.id)">
           <span>{{ university.nombre }}</span>
         </label>
+        }
       </div>
-      <div class="error-message" *ngIf="hasError('universidadesIds', 'minArrayLength')">
+      @if (hasError('universidadesIds', 'minArrayLength')) {
+      <div class="error-message">
         Debes seleccionar al menos una universidad cercana
       </div>
+      }
     </div>
 
     <!-- Transportes -->
@@ -144,15 +171,18 @@
       <h2 class="section-title">Medios de Transporte Cercanos *</h2>
 
       <div class="checkbox-grid">
-        <label *ngFor="let transport of transportOptions" class="checkbox-label"
-          [class.selected]="isTransportSelected(transport)">
+        @for (transport of transportOptions; track transport) {
+        <label class="checkbox-label" [class.selected]="isTransportSelected(transport)">
           <input type="checkbox" [checked]="isTransportSelected(transport)" (change)="toggleTransport(transport)">
           <span>{{ transport }}</span>
         </label>
+        }
       </div>
-      <div class="error-message" *ngIf="hasError('transportes', 'minArrayLength')">
+      @if (hasError('transportes', 'minArrayLength')) {
+      <div class="error-message">
         Debes seleccionar al menos un medio de transporte
       </div>
+      }
     </div>
 
     <!-- Imágenes (RN-014: Máximo 10) -->
@@ -174,26 +204,34 @@
         </label>
 
         <!-- Galería de Previsualizaciones -->
-        <div class="image-preview-grid" *ngIf="imageUrls().length > 0">
-          <div *ngFor="let url of imageUrls(); let i = index" class="image-preview-item">
+        @if (imageUrls().length > 0) {
+        <div class="image-preview-grid">
+          @for (url of imageUrls(); track url; let i = $index) {
+          <div class="image-preview-item">
             <img [src]="url" alt="Preview {{ i + 1 }}">
             <button type="button" class="remove-image-btn" (click)="removeImage(i)" title="Eliminar imagen">
               <i class="fas fa-times"></i>
             </button>
           </div>
+          }
         </div>
+        }
 
-        <div class="error-message" *ngIf="selectedFiles().length === 0 && accommodationForm.touched">
+        @if (selectedFiles().length === 0 && accommodationForm.touched) {
+        <div class="error-message">
           Debes subir al menos una imagen del alojamiento
         </div>
+        }
       </div>
     </div>
 
     <!-- Loading Indicator -->
-    <div class="loading-overlay" *ngIf="submitting() || uploadingImages()">
+    @if (submitting() || uploadingImages()) {
+    <div class="loading-overlay">
       <div class="spinner"></div>
       <p>{{ uploadingImages() ? 'Subiendo imágenes...' : 'Publicando alojamiento...' }}</p>
     </div>
+    }
 
     <!-- Botones de Acción -->
     <div class="form-actions">
@@ -201,10 +239,14 @@
         Cancelar
       </a>
       <button type="submit" class="btn btn-primary btn-publish" [disabled]="submitting() || uploadingImages()">
-        <span *ngIf="!submitting()">Publicar Alojamiento</span>
-        <span *ngIf="submitting()">
+        @if (!submitting()) {
+        <span>Publicar Alojamiento</span>
+        }
+        @if (submitting()) {
+        <span>
           <i class="fas fa-spinner fa-spin"></i> Publicando...
         </span>
+        }
       </button>
     </div>
   </form>
