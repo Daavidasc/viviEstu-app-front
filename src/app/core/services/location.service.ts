@@ -5,6 +5,7 @@ import { timeout, retry, catchError } from 'rxjs/operators';
 import { DistritoResponse } from '../models/accommodation.models';
 import { UniversidadResponse } from '../models/accommodation.models';
 import { environment } from '../../../environments/environment';
+import { DistrictDetailViewModel } from '../models/ui-view.models';
 
 @Injectable({
     providedIn: 'root'
@@ -60,5 +61,11 @@ export class LocationService {
     // Método alias para compatibilidad
     getAllZones(): Observable<DistritoResponse[]> {
         return this.getAllDistricts();
+    }
+    getDetailedDistrictById(id: number): Observable<DistrictDetailViewModel> {
+        return this.http.get<DistrictDetailViewModel>(`${this.apiUrl}/distritos/${id}`).pipe(
+            timeout(this.TIMEOUT_MS),
+            retry(this.MAX_RETRIES)
+        );
     }
 }

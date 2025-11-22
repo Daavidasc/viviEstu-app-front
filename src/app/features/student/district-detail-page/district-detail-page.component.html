@@ -2,51 +2,114 @@
     <app-student-navbar />
 
     <main class="main-content">
-        @if (zone) {
+        <!-- Loading State -->
+        <app-loading-spinner *ngIf="isLoading" message="Cargando detalles del distrito..."></app-loading-spinner>
+
+        <!-- Error State -->
+        @if (error && !isLoading) {
+        <div class="error-container">
+            <p>{{ error }}</p>
+        </div>
+        }
+
+        <!-- Content -->
+        @if (zone && !isLoading) {
         <div class="container">
+            <!-- Hero Section with Image -->
             <section class="hero-section">
-                <h1 class="zone-title">{{ zone.nombre }}</h1>
-                <p class="zone-description">{{ zone.descripcion }}</p>
+                <div class="hero-image-container">
+                    @if (!imageLoadError && zone.urlImg) {
+                    <img [src]="zone.urlImg" [alt]="zone.nombre" class="hero-image" (error)="onImageError($event)">
+                    } @else {
+                    <div class="image-placeholder">
+                        <i class="icon-image"></i>
+                        <p>No se pudo cargar la imagen</p>
+                    </div>
+                    }
+                </div>
+
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="zone-title">{{ zone.nombre }}</h1>
+                        <p class="zone-description">{{ zone.descripcion ||'No se encontró información sobre este
+                            distrito.' }}</p>
+                    </div>
+
+                    <!-- Action Buttons - Columna derecha -->
+                    <div class="action-buttons">
+                        <button class="btn-back" (click)="goBack()">
+                            <span class="btn-icon">←</span>
+                            Volver
+                        </button>
+                        <button class="btn-search" (click)="searchInDistrict()">
+                            <span class="btn-icon">🔍</span>
+                            Buscar alojamientos aquí
+                        </button>
+                    </div>
+                </div>
             </section>
 
             <section class="info-section">
                 <div class="info-grid">
+                    <!-- Ubicación -->
                     <div class="info-card">
                         <h3 class="info-title">Ubicación</h3>
                         <p class="info-text">{{ zone.nombre }}</p>
                     </div>
 
+                    <!-- Universidades Cercanas -->
                     <div class="info-card">
                         <h3 class="info-title">Universidades Cercanas</h3>
+                        @if (zone.universidades && zone.universidades.length > 0) {
                         <div class="tags-list">
                             @for (universidad of zone.universidades; track universidad) {
                             <span class="tag">{{ universidad }}</span>
                             }
                         </div>
+                        } @else {
+                        <p class="no-info">No se encontró información</p>
+                        }
                     </div>
 
+                    <!-- Opciones de Movilidad -->
                     <div class="info-card">
                         <h3 class="info-title">Opciones de Movilidad</h3>
+                        @if (zone.transportes && zone.transportes.length > 0) {
                         <div class="tags-list">
                             @for (transporte of zone.transportes; track transporte) {
                             <span class="tag">{{ transporte }}</span>
                             }
                         </div>
+                        } @else {
+                        <p class="no-info">No se encontró información</p>
+                        }
                     </div>
 
+                    <!-- Nivel de Seguridad -->
                     <div class="info-card">
                         <h3 class="info-title">Nivel de Seguridad</h3>
-                        <p class="info-text">{{ zone.nivelSeguridad }}</p>
+                        @if (zone.seguridad) {
+                        <p class="info-text">{{ zone.seguridad }} / 5</p>
+                        } @else {
+                        <p class="no-info">No se encontró información</p>
+                        }
                     </div>
-                </div>
-            </section>
 
-            <section class="comments-section">
-                <h2 class="section-title">Comentarios</h2>
-                <div class="comment-form">
-                    <textarea [(ngModel)]="commentText" class="comment-textarea"
-                        placeholder="Escribe tu comentario aquí..." rows="4"></textarea>
-                    <button class="btn-comment" (click)="addComment()">Comentar</button>
+                    <!-- Precio Promedio -->
+                    <div class="info-card">
+                        <h3 class="info-title">Precio Promedio</h3>
+                        @if (zone.precioProm) {
+                        <p class="info-text">S/ {{ zone.precioProm }}</p>
+                        } @else {
+                        <p class="no-info">No se encontró información</p>
+                        }
+                    </div>
+
+                    <!-- Tipo de Distrito -->
+                    <div class="info-card">
+                        <h3 class="info-title">Tipo</h3>
+                        <p class="info-text">{{ zone.tipo || 'No se encontró información' }}</p>
+                    </div>
                 </div>
             </section>
         </div>

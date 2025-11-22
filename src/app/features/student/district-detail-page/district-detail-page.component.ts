@@ -1,44 +1,72 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { LocationService } from '../../../core/services/location.service';
-import { DistrictDetailViewModel } from '../../../core/models/ui-view.models';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
-import { FormsModule } from '@angular/forms';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
+import { DistrictDetailViewModel } from '../../../core/models/ui-view.models';
+import { LocationService } from '../../../core/services/location.service';
 
 @Component({
   selector: 'app-district-detail-page',
   standalone: true,
-  imports: [CommonModule, StudentNavbarComponent, FooterComponent, RouterModule, FormsModule],
+  imports: [CommonModule, StudentNavbarComponent, FooterComponent, RouterModule, LoadingSpinnerComponent],
   templateUrl: './district-detail-page.component.html',
   styleUrls: ['./district-detail-page.component.css']
 })
 export class DistrictDetailPageComponent implements OnInit {
-  zone: DistrictDetailViewModel | undefined;
-  commentText: string = '';
+  zone?: DistrictDetailViewModel;
+  isLoading = true;
+  error: string | null = null;
+  imageLoadError = false;
 
   constructor(
     private route: ActivatedRoute,
-    private locationService: LocationService
+    private router: Router,
+    private location: Location,
+    private locationService: LocationService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = +params['id'];
       if (id) {
-        this.locationService.getDistrictById(id).subscribe(data => {
-          this.zone = data;
+        this.isLoading = true;
+        this.imageLoadError = false; // Resetear error de imagen
+        this.locationService.getDetailedDistrictById(id).subscribe({
+          next: (data) => {
+            this.zone = data;
+            this.isLoading = false;
+            // Forzar detección de cambios
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.error('Error al cargar detalles del distrito:', err);
+            this.error = 'No se pudieron cargar los detalles del distrito.';
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          }
         });
       }
     });
   }
 
-  addComment(): void {
-    if (this.commentText.trim()) {
-      console.log('Comentario agregado:', this.commentText);
-      this.commentText = '';
-      // Aquí se implementaría la lógica real para guardar el comentario
+  onImageError(event: Event): void {
+    this.imageLoadError = true;
+    console.warn('Error al cargar imagen del distrito');
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  searchInDistrict(): void {
+    if (this.zone) {
+      // Navegar a la página de búsqueda con el distrito como filtro
+      this.router.navigate(['student/accommodations'], {
+        queryParams: { district: this.zone.nombre }
+      });
     }
   }
 }
