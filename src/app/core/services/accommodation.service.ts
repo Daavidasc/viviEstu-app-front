@@ -159,4 +159,10 @@ export class AccommodationService {
         return this.http.post<{ url: string }>(this.uploadUrl, formData);
     }
     */
+
+    getThumbnailUrl(id: number): Observable<string> {
+        return this.getAccommodationDetail(id).pipe(
+            map(dto => dto?.imagenes?.[0]?.url || 'assets/placeholder.jpg')
+        );
+    }
 }

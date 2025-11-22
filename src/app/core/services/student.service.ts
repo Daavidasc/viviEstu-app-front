@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { EstudianteProfileResponse } from '../models/auth.models';
 import { FavoritoResponse, SolicitudResponse } from '../models/interaction.models';
 import { AlojamientoResponse } from '../models/accommodation.models';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { AccommodationService } from './accommodation.service';
 
 @Injectable({
@@ -41,13 +41,26 @@ export class StudentService {
         );
     }
 
-    getRequests(): Observable<StudentRequestViewModel[]> {//SOLUCIONAR
-        return this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/estudiante/${this.currentStudent?.id}`).pipe(
-            map(requests => requests.map(req => this.mapToRequestViewModel(req)))
+    getRequests(): Observable<StudentRequestViewModel[]> {
+        return this.getEstudianteIdOrFail().pipe(
+            switchMap(id => this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/estudiante/${id}`)),
+            switchMap(requests => {
+                if (requests.length === 0) {
+                    return of([]);
+                }
+                const tasks = requests.map(req =>
+                    this.accommodationService.getThumbnailUrl(req.alojamientoId).pipe(
+                        map(url => this.mapToRequestViewModel(req, url)),
+                        // En caso de error al obtener la imagen, usamos placeholder
+                        catchError(() => of(this.mapToRequestViewModel(req, 'assets/placeholder.jpg')))
+                    )
+                );
+                return forkJoin(tasks);
+            })
         );
     }
 
-    private mapToRequestViewModel(request: SolicitudResponse): StudentRequestViewModel {
+    private mapToRequestViewModel(request: SolicitudResponse, thumbnailUrl: string): StudentRequestViewModel {
         let statusColor: 'green' | 'yellow' | 'red' | 'gray' = 'gray';
 
         switch (request.estado) {
@@ -67,7 +80,7 @@ export class StudentService {
 
         return {
             requestId: request.id,
-            thumbnailUrl: 'assets/placeholder.jpg', // Placeholder as image is not in response
+            thumbnailUrl: thumbnailUrl,
             price: request.oferta, // Using offer as price
             district: request.tituloAlojamiento, // Using title as district/location placeholder
             status: request.estado,
@@ -112,15 +125,15 @@ export class StudentService {
         );
     }
 
-    // FIX: Corregido para usar getEstudianteIdOrFail() y así obtener el ID del usuario actual.
-    getFavorites(): Observable<FavoritoResponse[]> {
-        return this.getEstudianteIdOrFail().pipe(
+    // FIX: Corregido para usar getEstudianteIdOrFail() y así obtener el ID del usuario actual.
+    getFavorites(): Observable<FavoritoResponse[]> {
+        return this.getEstudianteIdOrFail().pipe(
             switchMap(estudianteId => {
                 const url = `${this.apiUrl}/favoritos/estudiante/${estudianteId}`;
                 return this.http.get<FavoritoResponse[]>(url);
             })
         );
-    }
+    }
 
     // NUEVO: Añadir un alojamiento a favoritos (POST)
     addFavorite(alojamientoId: number): Observable<FavoritoResponse> {

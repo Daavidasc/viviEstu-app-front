@@ -1,9 +1,9 @@
 <div class="request-card">
   <div class="req-image">
     <img [src]="request.thumbnailUrl" [alt]="request.district">
-    <span class="status-badge" [ngClass]="request.statusColor">{{ request.status }}</span>
   </div>
   <div class="req-content">
+    <span class="status-badge" [ngClass]="request.statusColor">{{ request.status }}</span>
     <h3 class="req-price">S/.{{ request.price }} /mes</h3>
     <p class="req-district">{{ request.district }}</p>
   </div>
