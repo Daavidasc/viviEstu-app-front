@@ -17,6 +17,7 @@ export interface ComentarioRequest {
     alojamientoId: number;
     estudianteId: number;
     contenido: string;
+    puntuacion: number; // 1-5 estrellas
 }
 
 export interface InteraccionRequest {
@@ -47,7 +48,11 @@ export interface SolicitudResponse {
 export interface ComentarioResponse {
     id: number;
     contenido: string;
+    puntuacion: number; // 1-5 estrellas
+    fecha: string; // ISO format
+    estudianteId: number;
     estudianteNombre: string;
+    alojamientoId: number;
     alojamientoTitulo: string;
 }
 
