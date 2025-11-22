@@ -3,6 +3,14 @@
   <app-student-navbar [currentUser]="currentUser" />
 
   <main class="main-content">
+    <!-- Error State -->
+    @if (error) {
+    <div class="error-container">
+      <p>{{ error }}</p>
+    </div>
+    }
+
+    <!-- Content -->
     @if (currentUser) {
     <div class="container">
 
@@ -17,7 +25,9 @@
       </div>
 
       <!-- Listado 1: Recomendados en tu zona -->
-      @if (zoneRecommendations.length > 0) {
+      @if (isLoading) {
+      <app-loading-spinner message="Cargando alojamientos..."></app-loading-spinner>
+      } @else if (zoneRecommendations.length > 0) {
       <div class="accommodation-list">
         @for (item of zoneRecommendations; track item.id) {
         <app-accommodation-card [accommodation]="item" (favoriteToggled)="handleFavoriteToggle($event)">
@@ -30,7 +40,7 @@
       </div>
       }
 
-      @if (zoneRecommendations.length > 0) {
+      @if (zoneRecommendations.length > 0 && !isLoading) {
       <div class="see-more-container">
         <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: currentUser.district }"
           class="see-more-link">Ver más en {{ currentUser.district }}...</a>
@@ -42,7 +52,9 @@
       <h2 class="section-subtitle secondary">Recomendados cerca a <span class="highlight">{{ currentUser.university
           }}</span></h2>
 
-      @if (uniRecommendations.length > 0) {
+      @if (isLoading) {
+      <app-loading-spinner message="Cargando recomendaciones..."></app-loading-spinner>
+      } @else if (uniRecommendations.length > 0) {
       <div class="accommodation-list">
         @for (item of uniRecommendations; track item.id) {
         <app-accommodation-card [accommodation]="item" (favoriteToggled)="handleFavoriteToggle($event)">
@@ -55,7 +67,7 @@
       </div>
       }
 
-      @if (uniRecommendations.length > 0) {
+      @if (uniRecommendations.length > 0 && !isLoading) {
       <div class="see-more-container">
         <a [routerLink]="['/student/accommodations']" [queryParams]="{ university: currentUser.university }"
           class="see-more-link">Ver más cerca a la U...</a>

@@ -4,14 +4,16 @@ import { RouterModule } from '@angular/router';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { AccommodationCardComponent } from '../components/accommodation-card/accommodation-card.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { StudentProfileViewModel, AccommodationCardViewModel } from '../../../core/models/ui-view.models';
 import { AccommodationService } from '../../../core/services/accommodation.service';
 import { StudentService } from '../../../core/services/student.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-student-dashboard',
   standalone: true,
-  imports: [CommonModule, StudentNavbarComponent, AccommodationCardComponent, FooterComponent, RouterModule],
+  imports: [CommonModule, StudentNavbarComponent, AccommodationCardComponent, FooterComponent, RouterModule, LoadingSpinnerComponent],
   templateUrl: './student-dashboard.component.html',
   styleUrls: ['./student-dashboard.component.css']
 })
@@ -22,9 +24,13 @@ export class StudentDashboardComponent implements OnInit {
   zoneRecommendations: AccommodationCardViewModel[] = [];
   uniRecommendations: AccommodationCardViewModel[] = [];
 
+  isLoading = true;
+  error: string | null = null;
+
   constructor(
     private accommodationService: AccommodationService,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -48,8 +54,12 @@ export class StudentDashboardComponent implements OnInit {
             .filter(item => item.universityNear === this.currentUser!.university)
             .slice(0, 3);
         }
-      });
-    });
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      );
+    }
+    );
   }
 
   handleFavoriteToggle(item: AccommodationCardViewModel) {
