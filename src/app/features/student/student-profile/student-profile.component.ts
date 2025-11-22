@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
@@ -8,6 +8,8 @@ import { RequestCardComponent } from '../components/request-card/request-card.co
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { AccommodationCardViewModel, StudentRequestViewModel, StudentProfileViewModel } from '../../../core/models/ui-view.models';
 import { StudentService } from '../../../core/services/student.service';
+import { RequestService } from '../../../core/services/request.service'; // 👈 Importar RequestService
+
 
 @Component({
   selector: 'app-student-profile',
@@ -24,6 +26,8 @@ export class StudentProfileComponent implements OnInit {
   isLoadingProfile = true;
   isLoadingFavorites = true;
   isLoadingRequests = true;
+  private requestService = inject(RequestService);
+
 
   constructor(
     private studentService: StudentService,
@@ -70,6 +74,29 @@ export class StudentProfileComponent implements OnInit {
         console.error('Error al cargar favoritos:', error);
         this.isLoadingFavorites = false;
         this.cdr.detectChanges();
+      }
+    });
+  }
+
+  handleCancelRequest(requestId: number) {
+    if (!confirm('¿Estás seguro de que deseas cancelar esta solicitud?')) {
+      return;
+    }
+
+    this.requestService.deleteRequest(requestId).subscribe({
+      next: () => {
+        alert('Solicitud cancelada exitosamente.');
+        console.log(`Solicitud ${requestId} eliminada.`);
+
+        // 1. Quitar la solicitud de la lista local para actualizar la vista
+        this.requests = this.requests.filter(req => req.requestId !== requestId);
+
+        // 2. (Opcional) Forzar una recarga completa de la lista de solicitudes
+        // this.loadRequests();
+      },
+      error: (err) => {
+        console.error('Error al cancelar la solicitud:', err);
+        alert('No se pudo cancelar la solicitud. Por favor, intenta de nuevo.');
       }
     });
   }

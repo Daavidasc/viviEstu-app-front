@@ -104,12 +104,14 @@ export interface AccommodationStatsViewModel {
 
 // Student ViewModels
 export interface StudentRequestViewModel {
-    requestId: number;
-    thumbnailUrl: string;
-    price: number;
-    district: string;
-    status: string;
-    statusColor: 'green' | 'yellow' | 'red' | 'gray';
+  requestId: number;
+  alojamientoId: number; // 👈 ¡Añade esta línea!
+  thumbnailUrl: string;
+  price: number;
+  district: string;
+  status: string;
+  statusColor: 'green' | 'yellow' | 'red' | 'gray';
+  // ... otras propiedades si las tienes
 }
 
 export interface DistrictComparisonViewModel {

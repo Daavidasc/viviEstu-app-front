@@ -8,7 +8,8 @@
     <p class="req-district">{{ request.district }}</p>
   </div>
   <div class="req-actions">
-    <button class="btn btn-primary btn-action">Ver</button>
-    <button class="btn btn-primary btn-action">Cancelar</button>
+   <a [routerLink]="['/student/accommodations', request.alojamientoId]" class="btn btn-primary btn-action">Ver</a>
+
+   <button class="btn btn-primary btn-action" (click)="cancelRequest()">Cancelar</button>
   </div>
 </div>

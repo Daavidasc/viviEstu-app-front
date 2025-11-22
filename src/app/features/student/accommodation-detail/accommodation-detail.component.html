@@ -77,10 +77,9 @@
       </div>
 
       <!-- COLUMNA DERECHA: Formulario de Contacto + Comentarios -->
-      <div class="sidebar-column">
-        <app-contact-form [accommodationId]="accommodation.id" />
-
-        <!-- Sección de Comentarios -->
+    <div class="sidebar-column">
+     <app-contact-form [accommodationId]="accommodation.id" [studentId]="currentStudentId" />
+            <!-- Sección de Comentarios -->
         <div class="comments-card">
           <h3 class="comments-title">💬 Comentarios</h3>
 

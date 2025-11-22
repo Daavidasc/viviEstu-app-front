@@ -81,6 +81,7 @@ export class StudentService {
         return {
             requestId: request.id,
             thumbnailUrl: thumbnailUrl,
+            alojamientoId: request.alojamientoId,
             price: request.oferta, // Using offer as price
             district: request.tituloAlojamiento, // Using title as district/location placeholder
             status: request.estado,
