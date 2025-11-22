@@ -7,6 +7,7 @@ export enum RoleType {
     ROLE_ESTUDIANTE = 'ROLE_ESTUDIANTE',
     ROLE_PROPIETARIO = 'ROLE_PROPIETARIO',
     ROLE_ADMIN = 'ROLE_ADMIN',
+    ROLE_ERROR = 'ROLE_ERROR'
 }
 
 // ====================================================================
@@ -70,7 +71,7 @@ export interface AuthResponse {
     name: string;  // 👈 CORREGIDO: De nombre a name
     role?: RoleType;
     id: number;
-  }
+}
 
 /**
  * Modelo completo del Usuario para el estado compartido y almacenamiento local

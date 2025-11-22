@@ -21,12 +21,6 @@ export const routes: Routes = [
     loadChildren: () => import('./features/landing/home.routes').then(m => m.homeRoutes)
   },
   {
-    path: 'dashboard',
-    // Componente privado, por ejemplo
-    loadComponent: () => import('./features/student/student-dashboard/student-dashboard.component').then(m => m.StudentDashboardComponent),
-    canActivate: [authGuard] // AÑADIDO: Protege la ruta, requiere token/sesión
-  },
-  {
     path: '**', // Ruta comodín para cualquier URL no encontrada
     redirectTo: '' // Redirige a la landing page
   }

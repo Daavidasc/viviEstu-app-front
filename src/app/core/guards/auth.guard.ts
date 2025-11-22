@@ -53,8 +53,30 @@ export const publicGuard: CanActivateFn = (route, state) => {
     return true; // Permitir acceso a login/register
   }
 
-  // Redirigir si ya está autenticado
-  console.log('Redireccionando: Usuario ya autenticado.');
-  router.navigate(['/dashboard']); // <-- AJUSTA ESTA RUTA
-  return false;
+  // Usuario ya autenticado - redirigir según su rol
+  const userRole = authService.currentUser()?.role;
+
+  console.log('Usuario autenticado intentando acceder a ruta pública, redirigiendo:', userRole);
+
+  switch (userRole) {
+    case RoleType.ROLE_ESTUDIANTE:
+      router.navigate(['/student/dashboard']);
+      break;
+
+    case RoleType.ROLE_PROPIETARIO:
+      router.navigate(['/landlord/dashboard']);
+      break;
+
+    case RoleType.ROLE_ADMIN:
+      router.navigate(['/admin/dashboard']);
+      break;
+
+    default:
+      // Si no tiene rol válido, cerrar sesión y permitir acceso
+      console.warn('Rol no válido, cerrando sesión');
+      authService.logout();
+      return true;
+  }
+
+  return false; // Bloquear acceso porque ya redirigió
 };
