@@ -118,7 +118,7 @@ export class AccommodationFormComponent implements OnInit {
    * Carga la lista de distritos disponibles
    */
   private loadDistricts(): void {
-    this.locationService.getZones().subscribe({
+    this.locationService.getAllZones().subscribe({
       next: (zones) => {
         this.districts.set(zones);
       },
