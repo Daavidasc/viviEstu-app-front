@@ -8,12 +8,12 @@ export const authRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [publicGuard] // AÑADIDO: Si ya está logeado, no lo deja entrar
+    canActivate: [publicGuard] // Si ya está logeado, no lo deja entrar
   },
     {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [publicGuard] // AÑADIDO: Si ya está logeado, no lo deja entrar
+    canActivate: [publicGuard] // Si ya está logeado, no lo deja entrar
   },
   {
     path: '',
