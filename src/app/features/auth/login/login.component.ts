@@ -47,7 +47,6 @@ export class LoginComponent {
     this.authService.login(this.loginData).subscribe({
       next: (response) => {
         console.log('Login exitoso', response);
-        alert('¡Bienvenido ' + response.name + '!' + response.role);
         this.isLoading = false;
 
         // 💡 LÓGICA DE REDIRECCIÓN POR ROL 💡
@@ -68,9 +67,9 @@ export class LoginComponent {
             break;
 
           default:
-                    alert('Quefue');
             console.warn('Rol desconocido o no asignado, redirigiendo a la ruta por defecto.');
             this.router.navigate(['/']); // Redirigir a la landing page o acceso denegado
+            this.authService.logout();
             break;
         }
 
@@ -79,7 +78,6 @@ export class LoginComponent {
         console.error('Login error', err);
         this.errorMessage = err.error?.message || 'Error al intentar iniciar sesión. Verifica tus credenciales.';
         this.isLoading = false;
-
       },
       complete: () => {
       }

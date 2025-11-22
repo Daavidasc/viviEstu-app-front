@@ -22,15 +22,15 @@ import { environment } from '../../../environments/environment';
 })
 export class AuthService {
 
-  getToken(): string | null {
-    // Preferiblemente devuelve el valor reactivo
-    return this.token();
-    // O el valor almacenado si el signal aún no se ha inicializado
-    // return this.storage.getItem('token');
-  }
-  private http = inject(HttpClient);
-  private storage = inject(StorageService); // Asumiendo que existe un StorageService
-  private router = inject(Router);
+    getToken(): string | null {
+        // Preferiblemente devuelve el valor reactivo
+        return this.token();
+        // O el valor almacenado si el signal aún no se ha inicializado
+        // return this.storage.getItem('token');
+    }
+    private http = inject(HttpClient);
+    private storage = inject(StorageService); // Asumiendo que existe un StorageService
+    private router = inject(Router);
 
     // URL base, ajusta según tu configuración
     private apiUrl = `${environment.apiUrl}/auth`;
@@ -85,16 +85,16 @@ export class AuthService {
         this.storage.setItem('token', response.token);
         this._token.set(response.token);
 
-  const user: UserResponse = {
-    id: response.id,
-    // 🔥 CORRECCIÓN: Usar response.email y response.name 🔥
-    email: response.email,
-    name: response.name,
-    role: response.role || RoleType.ROLE_ESTUDIANTE,
-    active: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  };
+        const user: UserResponse = {
+            id: response.id,
+            // 🔥 CORRECCIÓN: Usar response.email y response.name 🔥
+            email: response.email,
+            name: response.name,
+            role: response.role || RoleType.ROLE_ERROR,
+            active: true,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
 
 
         this.storage.setItem('user', user);
