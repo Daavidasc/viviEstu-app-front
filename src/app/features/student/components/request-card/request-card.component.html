@@ -1,14 +1,14 @@
 <div class="request-card">
   <div class="req-image">
-    <img [src]="request.thumbnailUrl" [alt]="request.district">
+    <img [src]="request.image" [alt]="request.title">
   </div>
   <div class="req-content">
     <span class="status-badge" [ngClass]="request.statusColor">{{ request.status }}</span>
     <h3 class="req-price">S/.{{ request.price }} /mes</h3>
-    <p class="req-district">{{ request.district }}</p>
+    <p class="req-district">{{ request.title }}</p>
   </div>
   <div class="req-actions">
-   <a [routerLink]="['/student/accommodations', request.alojamientoId]" class="btn btn-primary btn-action">Ver</a>
+   <a [routerLink]="['/student/accommodations', request.accommodationId]" class="btn btn-primary btn-action">Ver</a>
 
    <button class="btn btn-primary btn-action" (click)="cancelRequest()">Cancelar</button>
   </div>

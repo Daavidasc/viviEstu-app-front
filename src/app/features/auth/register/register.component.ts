@@ -9,13 +9,13 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
 
 
-import { RegisterEstudianteRequest, RegisterPropietarioRequest } from '../../../core/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 ; // Asegúrate de que la ruta sea correcta
 
 import { NavbarLandingComponent } from '../../../shared/components/navbar-landing/navbar-landing.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { DISTRITOS, SelectOption, UNIVERSIDADES } from '../../../core/constants/constants';
+import { RegisterEstudianteRequest, RegisterPropietarioRequest } from '../../../core/models/auth.models';
 
 @Component({
   selector: 'app-register',

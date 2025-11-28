@@ -2,7 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { LandlordProfileViewModel } from '../../../../core/models/ui-view.models';
+import { LandlordProfileViewModel } from '../../../../core/models/landlord.models';
+
 
 @Component({
   selector: 'app-edit-profile-form',

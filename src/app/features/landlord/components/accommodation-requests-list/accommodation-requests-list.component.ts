@@ -1,6 +1,8 @@
+
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LandlordRequestViewModel } from '../../../../core/models/ui-view.models';
+import { RequestViewModel } from '../../../../core/models/request.models';
+
 
 @Component({
   selector: 'app-accommodation-requests-list',
@@ -10,5 +12,5 @@ import { LandlordRequestViewModel } from '../../../../core/models/ui-view.models
   styleUrls: ['./accommodation-requests-list.component.css']
 })
 export class AccommodationRequestsListComponent {
-  @Input() requests: LandlordRequestViewModel[] = [];
+  @Input() requests: RequestViewModel[] = [];
 }

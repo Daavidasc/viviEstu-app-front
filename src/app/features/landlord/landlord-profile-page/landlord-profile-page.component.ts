@@ -4,7 +4,8 @@ import { LandlordNavbarComponent } from '../../../shared/components/landlord-nav
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { ProfileHeaderCardComponent } from '../components/profile-header-card/profile-header-card.component';
 import { ProfileInfoCardComponent } from '../components/profile-info-card/profile-info-card.component';
-import { LandlordProfileViewModel } from '../../../core/models/ui-view.models';
+import { LandlordProfileViewModel } from '../../../core/models/landlord.models';
+
 
 @Component({
   selector: 'app-landlord-profile-page',

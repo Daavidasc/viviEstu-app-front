@@ -2,7 +2,7 @@
 import { CanActivateFn, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { RoleType } from '../models/user.model'; // Asegúrate de importar RoleType
+import { RoleType } from '../models/auth.models'; // Asegúrate de importar RoleType
 
 /**
  * Guard para proteger rutas y verificar roles.

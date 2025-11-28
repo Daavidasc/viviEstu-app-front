@@ -7,8 +7,7 @@ import { RouterModule, Router } from '@angular/router';
 import { NavbarLandingComponent } from '../../../shared/components/navbar-landing/navbar-landing.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 // Asegúrate de importar RoleType
-import { LoginRequest, RoleType } from '../../../core/models/user.model';
-
+import { LoginRequest, RoleType } from '../../../core/models/auth.models';
 
 
 export interface LoginRequestDTO {

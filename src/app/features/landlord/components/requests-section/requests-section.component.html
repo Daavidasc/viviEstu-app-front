@@ -11,11 +11,11 @@
                 (click)="activeTab = 'agendados'">Agendados</button>
         </div>
         <div class="requests-list">
-            @for(req of requests; track req.id) {
+            @for(req of requests; track req.requestId) {
             <div class="request-row">
                 <div class="req-info">
-                    <span class="req-text">{{ req.accommodationTitle }}</span>
-                    <span class="req-applicant">{{ req.applicantName }}</span>
+                    <span class="req-text">{{ req.subtitle }}</span>
+                    <span class="req-applicant">{{ req.title }}</span>
                 </div>
                 <button class="btn-view">ver</button>
             </div>

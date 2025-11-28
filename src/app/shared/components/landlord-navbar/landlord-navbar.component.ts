@@ -2,7 +2,8 @@ import { Component, Input } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LandlordProfileViewModel } from '../../../core/models/ui-view.models';
+import { LandlordProfileViewModel } from '../../../core/models/landlord.models';
+
 
 @Component({
   selector: 'app-landlord-navbar',

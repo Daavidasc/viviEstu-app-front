@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { EditStudentProfileFormComponent } from '../components/edit-student-profile-form/edit-student-profile-form.component';
-import { StudentProfileViewModel } from '../../../core/models/ui-view.models';
 import { StudentService } from '../../../core/services/student.service';
+import { StudentProfileViewModel } from '../../../core/models/student.models';
 
 @Component({
   selector: 'app-edit-student-profile-page',

@@ -1,115 +1,93 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, forkJoin } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
-import { SolicitudResponse, EstadoSolicitud } from '../models/interaction.models';
-import { LandlordRequestViewModel, MyRentalViewModel } from '../models/ui-view.models';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { PropietarioProfileResponse } from '../models/auth.models';
+
+import { PropietarioProfileResponse, LandlordProfileViewModel, MyRentalViewModel } from '../models/landlord.models';
 import { AlojamientoResponse } from '../models/accommodation.models';
+import { SolicitudResponse, RequestViewModel } from '../models/request.models';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class LandlordService {
-    private http = inject(HttpClient);
-    private apiUrl = `${environment.apiUrl}`;
+  private http = inject(HttpClient);
+  private apiUrl = `${environment.apiUrl}`;
 
-    constructor() { }
+  // === PERFIL ===
+  getProfile(): Observable<PropietarioProfileResponse> {
+    return this.http.get<PropietarioProfileResponse>(`${this.apiUrl}/propietarios/me`);
+  }
 
-    getProfile(): Observable<PropietarioProfileResponse> {
-        return this.http.get<PropietarioProfileResponse>(`${this.apiUrl}/propietarios/me`);
-    }
+  getViewProfile(): Observable<LandlordProfileViewModel> {
+    return this.getProfile().pipe(
+      map(p => ({
+        ...p,
+        fullName: `${p.nombre} ${p.apellidos}`,
+        age: 40, // Mock: Dato no disponible en backend aún
+        address: 'Lima, Perú', // Mock
+        propertiesCount: 0
+      }))
+    );
+  }
 
-    getProfileId(): Observable<number> {
-        return this.getProfile().pipe(map(p => p.id));
-    }
+  // === MIS ALQUILERES ===
+  getMyAccommodations(): Observable<MyRentalViewModel[]> {
+    return this.getProfile().pipe(
+      switchMap(p => this.http.get<AlojamientoResponse[]>(`${this.apiUrl}/alojamientos/propietario/${p.id}`)),
+      map(dtos => dtos.map(dto => ({
+        id: dto.id,
+        image: dto.imagenes?.[0]?.url || 'assets/placeholder.jpg',
+        price: dto.precioMensual,
+        district: dto.distrito,
+        description: dto.descripcion,
+        area: dto.area,
+        baths: dto.banios,
+        rooms: dto.habitaciones,
+        clicks: 0,
+        requestsCount: 0
+      })))
+    );
+  }
 
-    getMyAccommodations(): Observable<MyRentalViewModel[]> {
-        return this.getProfileId().pipe(
-            switchMap(id => this.http.get<AlojamientoResponse[]>(`${this.apiUrl}/alojamientos/propietario/${id}`)),
-            map(dtos => dtos.map(dto => ({
-                id: dto.id,
-                image: dto.imagenes?.[0]?.url || 'assets/placeholder.jpg',
-                price: dto.precioMensual,
-                district: dto.distrito,
-                description: dto.descripcion,
-                area: dto.area,
-                baths: dto.banios,
-                rooms: dto.habitaciones,
-                clicks: 0, // Mock as backend doesn't provide this yet
-                requestsCount: 0 // This should ideally come from backend or be calculated
-            })))
-        );
-    }
+  // === SOLICITUDES RECIBIDAS (Todas) ===
+  getIncomingRequests(): Observable<RequestViewModel[]> {
+    return this.getProfile().pipe(
+      switchMap(p => this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/propietario/${p.id}`)),
+      map(dtos => dtos.map(dto => this.mapToRequestViewModel(dto)))
+    );
+  }
 
-    getAllRequests(): Observable<LandlordRequestViewModel[]> {
-        return this.getProfileId().pipe(
-            switchMap(id => this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/propietario/${id}`)),
-            map(dtos => dtos.map(dto => this.mapToViewModel(dto)))
-        );
-    }
+  // 👇 MÉTODO CORREGIDO: Ahora se llama como lo espera tu componente
+  getRequestsByAccommodationId(accommodationId: number): Observable<RequestViewModel[]> {
+    return this.getProfile().pipe(
+      switchMap(p => this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/propietario/${p.id}`)),
+      map(dtos => dtos
+        .filter(r => r.alojamientoId === accommodationId)
+        .map(dto => this.mapToRequestViewModel(dto))
+      )
+    );
+  }
 
-    getRequestsByAccommodationId(accommodationId: number): Observable<LandlordRequestViewModel[]> {
-        return this.getProfileId().pipe(
-            switchMap(id => this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/propietario/${id}`)),
-            map(dtos => dtos
-                .filter(r => r.alojamientoId === accommodationId)
-                .map(dto => this.mapToViewModel(dto))
-            )
-        );
-    }
+  // Helper privado para mapear
+  private mapToRequestViewModel(dto: SolicitudResponse): RequestViewModel {
+    let color: 'green' | 'yellow' | 'red' | 'gray' = 'gray';
+    if (dto.estado === 'ACEPTADO') color = 'green';
+    else if (dto.estado === 'PENDIENTE') color = 'yellow';
+    else if (dto.estado === 'RECHAZADO') color = 'red';
 
-    updateRequestStatus(requestId: number, newStatus: EstadoSolicitud): Observable<void> {
-        // Assuming endpoint like PUT /solicitudes/{id}/estado
-        return this.http.put<void>(`${this.apiUrl}/solicitudes/${requestId}/estado`, { estado: newStatus });
-    }
-
-    private mapToViewModel(dto: SolicitudResponse): LandlordRequestViewModel {
-        return {
-            id: dto.id,
-            requestId: dto.id,
-            accommodationTitle: dto.tituloAlojamiento || 'Alojamiento',
-            applicantName: dto.nombreEstudiante,
-            studentName: dto.nombreEstudiante,
-            studentPhotoUrl: `https://ui-avatars.com/api/?name=${dto.nombreEstudiante}`, // Placeholder
-            studentUniversity: 'Universidad', // Placeholder
-            message: dto.mensaje,
-            studentMessage: dto.mensaje,
-            status: this.mapStatus(dto.estado),
-            statusColor: this.getStatusColor(dto.estado),
-            statusLabel: this.getStatusLabel(dto.estado),
-            date: new Date(), // Date not in response
-            requestDate: new Date()
-        };
-    }
-
-    private mapStatus(estado: EstadoSolicitud): 'reciente' | 'pendiente' | 'agendado' {
-        switch (estado) {
-            case 'PENDIENTE': return 'pendiente';
-            case 'ACEPTADO': return 'agendado';
-            case 'RECHAZADO': return 'pendiente';
-            default: return 'reciente';
-        }
-    }
-
-    private getStatusColor(status: EstadoSolicitud): 'green' | 'yellow' | 'red' | 'gray' {
-        switch (status) {
-            case 'ACEPTADO': return 'green';
-            case 'PENDIENTE': return 'yellow';
-            case 'RECHAZADO': return 'red';
-            case 'AGENDADO': return 'gray';
-            default: return 'gray';
-        }
-    }
-
-    private getStatusLabel(status: EstadoSolicitud): string {
-        switch (status) {
-            case 'ACEPTADO': return 'Aceptado';
-            case 'PENDIENTE': return 'Pendiente';
-            case 'RECHAZADO': return 'Rechazado';
-            case 'AGENDADO': return 'Agendado';
-            default: return status;
-        }
-    }
+    return {
+      requestId: dto.id,
+      accommodationId: dto.alojamientoId,
+      // Para el landlord: Title = Nombre Estudiante, Subtitle = Título Alojamiento
+      title: dto.nombreEstudiante,
+      subtitle: dto.tituloAlojamiento,
+      image: `https://ui-avatars.com/api/?name=${dto.nombreEstudiante}`, // Avatar simple basado en nombre
+      status: dto.estado,
+      statusColor: color,
+      message: dto.mensaje,
+      price: dto.oferta
+    };
+  }
 }

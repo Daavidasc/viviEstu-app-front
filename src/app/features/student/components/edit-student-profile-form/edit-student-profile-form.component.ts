@@ -2,7 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { StudentProfileViewModel } from '../../../../core/models/ui-view.models';
+import { StudentProfileViewModel } from '../../../../core/models/student.models';
+
 
 @Component({
   selector: 'app-edit-student-profile-form',

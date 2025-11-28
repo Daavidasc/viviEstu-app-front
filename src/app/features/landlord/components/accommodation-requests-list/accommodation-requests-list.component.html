@@ -9,18 +9,18 @@
         <div class="request-card">
             <div class="request-header">
                 <div class="student-info">
-                    @if (request.studentPhotoUrl) {
-                    <img [src]="request.studentPhotoUrl" [alt]="request.studentName" class="student-photo">
+                    @if (request.image) {
+                    <img [src]="request.image" [alt]="request.title" class="student-photo">
                     }
                     <div class="student-details">
-                        <h4 class="student-name">{{ request.studentName }}</h4>
-                        @if (request.studentUniversity) {
-                        <span class="student-university">{{ request.studentUniversity }}</span>
+                        <h4 class="student-name">{{ request.title }}</h4>
+                        @if (request.subtitle) {
+                        <span class="student-university">{{ request.subtitle }}</span>
                         }
                     </div>
                 </div>
                 <span class="request-status" [class]="'status-' + request.statusColor">
-                    {{ request.statusLabel }}
+                    {{ request.status }}
                 </span>
             </div>
 

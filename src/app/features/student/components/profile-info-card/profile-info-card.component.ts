@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { StudentProfileViewModel } from '../../../../core/models/ui-view.models';
+import { StudentProfileViewModel } from '../../../../core/models/student.models';
+
 
 @Component({
   selector: 'app-profile-info-card',

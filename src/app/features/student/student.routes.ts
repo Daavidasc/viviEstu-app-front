@@ -8,7 +8,7 @@ import { EditStudentProfilePageComponent } from './edit-student-profile-page/edi
 import { AccommodationsPageComponent } from './accommodations-page/accommodations-page.component';
 import { DistrictDetailPageComponent } from './district-detail-page/district-detail-page.component';
 import { authGuard } from '../../core/guards/auth.guard'; // 👈 IMPORTAR GUARD
-import { RoleType } from '../../core/models/user.model'; // 👈 IMPORTAR ROLES
+import { RoleType } from '../../core/models/auth.models'; // 👈 IMPORTAR ROLES
 
 const STUDENT_ROLE = [RoleType.ROLE_ESTUDIANTE];
 

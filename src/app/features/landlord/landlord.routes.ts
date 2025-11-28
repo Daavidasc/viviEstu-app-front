@@ -4,8 +4,8 @@ import { UploadAccommodationPageComponent } from './upload-accommodation-page/up
 import { LandlordProfilePageComponent } from './landlord-profile-page/landlord-profile-page.component';
 import { EditLandlordProfilePageComponent } from './edit-landlord-profile-page/edit-landlord-profile-page.component';
 import { LandlordAccommodationDetailComponent } from './landlord-accommodation-detail/landlord-accommodation-detail.component';
-import { authGuard } from '../../core/guards/auth.guard'; // 👈 IMPORTAR GUARD
-import { RoleType } from '../../core/models/user.model'; // 👈 IMPORTAR ROLES
+import { RoleType } from '../../core/models/auth.models';
+import { authGuard } from '../../core/guards/auth.guard';
 
 const LANDLORD_ROLE = [RoleType.ROLE_PROPIETARIO];
 

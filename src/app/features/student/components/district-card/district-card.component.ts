@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { DistritoResponse } from '../../../../core/models/accommodation.models';
+
+// 👇 CAMBIO: Importar desde location.models.ts
+import { DistritoResponse } from '../../../../core/models/location.models';
 
 @Component({
   selector: 'app-district-card',

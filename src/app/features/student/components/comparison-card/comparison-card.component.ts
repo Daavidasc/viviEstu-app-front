@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccommodationCardViewModel } from '../../../../core/models/ui-view.models';
+import { AccommodationCardViewModel } from '../../../../core/models/accommodation.models';
+
 
 @Component({
   selector: 'app-comparison-card',

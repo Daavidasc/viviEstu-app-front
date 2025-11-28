@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LandlordNavbarComponent } from '../../../shared/components/landlord-navbar/landlord-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { EditProfileFormComponent } from '../components/edit-profile-form/edit-profile-form.component';
-import { LandlordProfileViewModel } from '../../../core/models/ui-view.models';
+import { LandlordProfileViewModel } from '../../../core/models/landlord.models';
 
 @Component({
   selector: 'app-edit-landlord-profile-page',

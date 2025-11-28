@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccommodationCardViewModel } from '../../../../core/models/ui-view.models';
+
 import { RouterModule } from '@angular/router';
+import { AccommodationCardViewModel } from '../../../../core/models/accommodation.models';
 
 @Component({
   selector: 'app-accommodation-card',

@@ -5,9 +5,11 @@ import { FooterComponent } from '../../../shared/components/footer/footer.compon
 import { LandlordNavbarComponent } from '../../../shared/components/landlord-navbar/landlord-navbar.component';
 import { RequestsSectionComponent } from '../components/requests-section/requests-section.component';
 import { LandlordRentalCardComponent } from '../components/landlord-rental-card/landlord-rental-card.component';
-import { LandlordRequestViewModel, MyRentalViewModel } from '../../../core/models/ui-view.models';
+
 import { LandlordService } from '../../../core/services/landlord.service';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
+import { MyRentalViewModel } from '../../../core/models/landlord.models';
+import { RequestViewModel } from '../../../core/models/request.models';
 
 @Component({
   selector: 'app-landlord-dashboard',
@@ -18,7 +20,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 })
 export class LandlordDashboardComponent implements OnInit {
   userName: string = '';
-  requests: LandlordRequestViewModel[] = [];
+  requests: RequestViewModel[] = [];
   myRentals: MyRentalViewModel[] = [];
   isLoading = true;
   requestsError: string | null = null;
@@ -57,7 +59,7 @@ export class LandlordDashboardComponent implements OnInit {
     });
 
     // Cargar solicitudes recientes
-    this.landlordService.getAllRequests().subscribe({
+    this.landlordService.getIncomingRequests().subscribe({
       next: (reqs) => {
         // Mostrar solo las 3 más recientes
         this.requests = reqs.slice(0, 3);

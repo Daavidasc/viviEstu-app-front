@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LandlordProfileViewModel } from '../../../../core/models/ui-view.models';
+import { LandlordProfileViewModel } from '../../../../core/models/landlord.models';
+
 
 @Component({
   selector: 'app-profile-header-card',

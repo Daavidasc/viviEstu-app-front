@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { ComparisonCardComponent } from '../components/comparison-card/comparison-card.component';
-import { AccommodationCardViewModel } from '../../../core/models/ui-view.models';
+import { AccommodationCardViewModel } from '../../../core/models/accommodation.models';
+
 
 @Component({
   selector: 'app-compare-page',

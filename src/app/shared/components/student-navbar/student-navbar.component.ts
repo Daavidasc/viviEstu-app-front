@@ -2,7 +2,8 @@ import { AuthService } from './../../../core/services/auth.service';
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { StudentProfileViewModel } from '../../../core/models/ui-view.models';
+import { StudentProfileViewModel } from '../../../core/models/student.models';
+
 
 @Component({
   selector: 'app-student-navbar',
@@ -21,10 +22,10 @@ export class StudentNavbarComponent {
     this.imageLoadError = true;
   }
   logout() {
-    // Llama al método de tu servicio para cerrar sesión
-    this.authService.logout();
-    // La lógica de redirección y limpieza debe estar dentro de authService.logout()
-  }
-  // ---------------------------------------
+ // Llama al método de tu servicio para cerrar sesión
+ this.authService.logout();
+ // La lógica de redirección y limpieza debe estar dentro de authService.logout()
+ }
+ // ---------------------------------------
 }
 

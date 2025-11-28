@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { DistrictCardComponent } from '../components/district-card/district-card.component';
-import { DistritoResponse } from '../../../core/models/accommodation.models';
+
 import { LocationService } from '../../../core/services/location.service';
+import { DistritoResponse } from '../../../core/models/location.models';
 
 @Component({
   selector: 'app-districts-page',

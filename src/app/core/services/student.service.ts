@@ -1,176 +1,115 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, forkJoin, of, throwError } from 'rxjs';
-import { AccommodationCardViewModel, StudentRequestViewModel, StudentProfileViewModel } from '../models/ui-view.models';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { EstudianteProfileResponse } from '../models/auth.models';
-import { FavoritoResponse, SolicitudResponse } from '../models/interaction.models';
-import { AlojamientoResponse } from '../models/accommodation.models';
+import { Observable, forkJoin, of, throwError } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+
+// Modelos nuevos
+import { EstudianteProfileResponse, StudentProfileViewModel } from '../models/student.models';
+import { AccommodationCardViewModel } from '../models/accommodation.models';
+import { SolicitudResponse, RequestViewModel } from '../models/request.models';
+import { FavoritoResponse } from '../models/interaction.models';
+
 import { AccommodationService } from './accommodation.service';
+import { InteractionService } from './interaction.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class StudentService {
-    private http = inject(HttpClient);
-    private accommodationService = inject(AccommodationService);
-    private apiUrl = `${environment.apiUrl}`;
-    private currentStudent: EstudianteProfileResponse | null = null;
-    constructor() { }
+  private http = inject(HttpClient);
+  private accommodationService = inject(AccommodationService);
+  private interactionService = inject(InteractionService); // Usamos el nuevo servicio de interacción
+  private apiUrl = `${environment.apiUrl}`;
 
-    getProfile(): Observable<EstudianteProfileResponse> {
-        return this.http.get<EstudianteProfileResponse>(`${this.apiUrl}/estudiantes/me`);
-    }
+  // === PERFIL ===
+  getProfile(): Observable<EstudianteProfileResponse> {
+    return this.http.get<EstudianteProfileResponse>(`${this.apiUrl}/estudiantes/me`);
+  }
 
-    updateProfile(profile: EstudianteProfileResponse): Observable<EstudianteProfileResponse> {
-        this.currentStudent = { ...this.currentStudent, ...profile };
-        return this.http.put<EstudianteProfileResponse>(`${this.apiUrl}/estudiantes/me`, profile);
-    }
+  getViewProfile(): Observable<StudentProfileViewModel> {
+    return this.getProfile().pipe(
+      map(profile => ({
+        ...profile,
+        fullName: `${profile.nombre} ${profile.apellidos}`,
+        university: profile.universidad,
+        district: profile.distrito,
+        avatarUrl: profile.urlFotoPerfil || 'assets/images/avatar-placeholder.png',
+        // Mock data para campos no existentes aun
+        age: 20,
+        preferredZone: profile.distrito,
+        budget: 0
+      }))
+    );
+  }
 
+  updateProfile(profile: EstudianteProfileResponse): Observable<EstudianteProfileResponse> {
+    return this.http.put<EstudianteProfileResponse>(`${this.apiUrl}/estudiantes/me`, profile);
+  }
 
-    getAllAccommodationsWithFavoriteStatus(): Observable<AccommodationCardViewModel[]> {
-        return forkJoin({
-            cards: this.accommodationService.getAllCards(),
-            favorites: this.getFavorites()
-        }).pipe(
-            map(({ cards, favorites }) => {
-                const favIds = new Set(favorites.map(f => f.alojamientoId));
-                return cards.map(c => ({ ...c, isFavorite: favIds.has(c.id) }));
-            })
+  // === DASHBOARD & ALOJAMIENTOS ===
+  /**
+   * Obtiene todos los alojamientos y marca los que son favoritos del usuario actual.
+   */
+  getAllAccommodationsWithFavoriteStatus(): Observable<AccommodationCardViewModel[]> {
+    return forkJoin({
+      cards: this.accommodationService.getAllCards(),
+      favorites: this.getFavorites()
+    }).pipe(
+      map(({ cards, favorites }) => {
+        const favIds = new Set(favorites.map(f => f.alojamientoId));
+        return cards.map(c => ({ ...c, isFavorite: favIds.has(c.id) }));
+      })
+    );
+  }
+
+  // === FAVORITOS (Delegación) ===
+  getFavorites(): Observable<FavoritoResponse[]> {
+    return this.getProfile().pipe(
+      switchMap(profile => this.http.get<FavoritoResponse[]>(`${this.apiUrl}/favoritos/estudiante/${profile.id}`))
+    );
+  }
+
+  // === SOLICITUDES (Mis postulaciones) ===
+  getMyRequests(): Observable<RequestViewModel[]> {
+    return this.getProfile().pipe(
+      switchMap(profile => this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/estudiante/${profile.id}`)),
+      switchMap(requests => {
+        if (requests.length === 0) return of([]);
+
+        // Mapeamos cada solicitud para obtener la imagen del alojamiento
+        const tasks = requests.map(req =>
+          this.accommodationService.getThumbnailUrl(req.alojamientoId).pipe(
+            map(url => this.mapToRequestViewModel(req, url)),
+            catchError(() => of(this.mapToRequestViewModel(req, 'assets/placeholder.jpg')))
+          )
         );
-    }
+        return forkJoin(tasks);
+      })
+    );
+  }
 
-    getRequests(): Observable<StudentRequestViewModel[]> {
-        return this.getEstudianteIdOrFail().pipe(
-            switchMap(id => this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/estudiante/${id}`)),
-            switchMap(requests => {
-                if (requests.length === 0) {
-                    return of([]);
-                }
-                const tasks = requests.map(req =>
-                    this.accommodationService.getThumbnailUrl(req.alojamientoId).pipe(
-                        map(url => this.mapToRequestViewModel(req, url)),
-                        // En caso de error al obtener la imagen, usamos placeholder
-                        catchError(() => of(this.mapToRequestViewModel(req, 'assets/placeholder.jpg')))
-                    )
-                );
-                return forkJoin(tasks);
-            })
-        );
-    }
+  getProfileId(): Observable<number> {
+    return this.getProfile().pipe(
+      map(profile => profile.id)
+    );
+  }
 
-    private mapToRequestViewModel(request: SolicitudResponse, thumbnailUrl: string): StudentRequestViewModel {
-        let statusColor: 'green' | 'yellow' | 'red' | 'gray' = 'gray';
+  private mapToRequestViewModel(req: SolicitudResponse, imgUrl: string): RequestViewModel {
+    let color: 'green' | 'yellow' | 'red' | 'gray' = 'gray';
+    if (req.estado === 'ACEPTADO') color = 'green';
+    else if (req.estado === 'PENDIENTE') color = 'yellow';
+    else if (req.estado === 'RECHAZADO') color = 'red';
 
-        switch (request.estado) {
-            case 'ACEPTADO':
-            case 'AGENDADO':
-                statusColor = 'green';
-                break;
-            case 'PENDIENTE':
-                statusColor = 'yellow';
-                break;
-            case 'RECHAZADO':
-                statusColor = 'red';
-                break;
-            default:
-                statusColor = 'gray';
-        }
-
-        return {
-            requestId: request.id,
-            thumbnailUrl: thumbnailUrl,
-            alojamientoId: request.alojamientoId,
-            price: request.oferta, // Using offer as price
-            district: request.tituloAlojamiento, // Using title as district/location placeholder
-            status: request.estado,
-            statusColor: statusColor
-        };
-    }
-
-    getProfileId(): Observable<number> {
-        return this.http.get<EstudianteProfileResponse>(`${this.apiUrl}/estudiantes/me`).pipe(map(response => response.id));
-    }
-
-    getViewProfile(): Observable<StudentProfileViewModel> {
-        return this.http.get<EstudianteProfileResponse>(`${this.apiUrl}/estudiantes/me`).pipe(
-            map(profile => this.mapToViewModel(profile))
-        );
-    }
-
-    private mapToViewModel(profile: EstudianteProfileResponse): StudentProfileViewModel {
-        return {
-            ...profile,
-            name: `${profile.nombre} ${profile.apellidos}`,
-            university: profile.universidad,
-            district: profile.distrito,
-            career: profile.carrera,
-            currentCycle: profile.ciclo,
-            avatarUrl: profile.urlFotoPerfil || 'assets/images/avatar-placeholder.png',
-            // Campos adicionales que no vienen del backend por ahora
-            age: 20,
-            preferredZone: profile.distrito,
-            budget: 0
-        };
-    }
-
-    private getEstudianteIdOrFail(): Observable<number> {
-        return this.getProfileId().pipe(
-            switchMap(id => {
-                if (!id) {
-                    return throwError(() => new Error('Estudiante no logueado.'));
-                }
-                return of(id);
-            })
-        );
-    }
-
-    // FIX: Corregido para usar getEstudianteIdOrFail() y así obtener el ID del usuario actual.
-    getFavorites(): Observable<FavoritoResponse[]> {
-        return this.getEstudianteIdOrFail().pipe(
-            switchMap(estudianteId => {
-                const url = `${this.apiUrl}/favoritos/estudiante/${estudianteId}`;
-                return this.http.get<FavoritoResponse[]>(url);
-            })
-        );
-    }
-
-    // NUEVO: Añadir un alojamiento a favoritos (POST)
-    addFavorite(alojamientoId: number): Observable<FavoritoResponse> {
-        return this.getEstudianteIdOrFail().pipe(
-            switchMap(estudianteId => {
-                const url = `${this.apiUrl}/favoritos/estudiante/${estudianteId}/alojamiento/${alojamientoId}`;
-                // El endpoint POST retorna FavoritosResponseDTO (mapeado a FavoritoResponse)
-                return this.http.post<FavoritoResponse>(url, {});
-            })
-        );
-    }
-
-    // NUEVO: Eliminar un alojamiento de favoritos (DELETE)
-    removeFavorite(alojamientoId: number): Observable<void> {
-        return this.getEstudianteIdOrFail().pipe(
-            switchMap(estudianteId => {
-                const url = `${this.apiUrl}/favoritos/estudiante/${estudianteId}/alojamiento/${alojamientoId}`;
-                // El endpoint DELETE retorna HttpStatus.NO_CONTENT (204)
-                return this.http.delete<void>(url);
-            })
-        );
-    }
-
-    // NUEVO: Función de conveniencia para añadir o eliminar
-    toggleFavoriteStatus(alojamientoId: number, isCurrentlyFavorite: boolean): Observable<any> {
-        if (isCurrentlyFavorite) {
-            // Si es favorito, lo elimina
-            return this.removeFavorite(alojamientoId);
-        } else {
-            // Si no es favorito, lo añade
-            return this.addFavorite(alojamientoId);
-        }
-    }
-
-    cancelRequest(requestId: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/solicitudes/${requestId}`);
-    }
-
+    return {
+      requestId: req.id,
+      accommodationId: req.alojamientoId,
+      title: req.tituloAlojamiento || 'Alojamiento',
+      subtitle: req.tituloAlojamiento, // Podrías mapear el distrito si el backend lo enviara en el DTO de solicitud
+      image: imgUrl,
+      status: req.estado,
+      statusColor: color,
+      price: req.oferta
+    };
+  }
 }

@@ -1,6 +1,4 @@
-// src/app/core/models/accommodation.models.ts
-
-// --- SUB-MODELOS ---
+// Sub-modelos
 export interface ImagenDto {
     id: number;
     url: string;
@@ -11,11 +9,7 @@ export interface CoordenadasDto {
     longitude: number;
 }
 
-// --- REQUESTS ---
-// Nota: Este modelo representa la estructura del formulario.
-// IMPORTANTE: Al enviarlo al backend, el servicio DEBE convertirlo a FormData manualmente
-// para manejar los archivos binarios (List<MultipartFile>) y los datos complejos.
-// No se puede enviar como JSON directo.
+// Request para crear (Formulario)
 export interface AlojamientoRequestForm {
     titulo: string;
     descripcion: string;
@@ -27,29 +21,14 @@ export interface AlojamientoRequestForm {
     distritoId: number;
     transportes: string[];
     universidadesIds: number[];
-    imagenes: File[];
+    habitaciones?: number;
+    banios?: number;
+    area?: number;
+    piso?: number;
+    imagenes: File[]; // Para el FormData
 }
 
-export interface DistritoRequest {
-    nombre: string;
-    descripcion: string;
-    precioProm: number;
-    tipo: string;
-    urlImg: string;
-    seguridad: number;
-}
-
-export interface UniversidadRequest {
-    nombre: string;
-    distritoId: number;
-}
-
-export interface TransporteRequest {
-    zonaId: number;
-    nombre: string;
-}
-
-// --- RESPONSES ---
+// Response del Backend (Detalle completo)
 export interface AlojamientoResponse {
     id: number;
     titulo: string;
@@ -57,10 +36,10 @@ export interface AlojamientoResponse {
     direccion: string;
     precioMensual: number;
     alquilado: boolean;
-    propietario: string;
+    propietario: string; // Nombre del propietario
     distrito: string;
     nroPartida: string;
-    fecha: string;
+    fecha: string; // Timestamp
     imagenes: ImagenDto[];
     transportes: string[];
     universidades: string[];
@@ -69,22 +48,28 @@ export interface AlojamientoResponse {
     area: number;
     banios: number;
     habitaciones: number;
-    servicios: string[];
 }
 
-export interface DistritoResponse {
+// ViewModel para Tarjetas (Búsqueda/Favoritos)
+export interface AccommodationCardViewModel {
     id: number;
-    nombre: string;
-    descripcion: string;
-    precioProm: number;
-    tipo: string;
-    urlImg: string;
-    seguridad: number;
-    lastUpdate?: string;
+    thumbnailUrl: string;
+    title: string;
+    price: number;
+    district: string;
+    isFavorite: boolean;
+    description?: string;
+    universityNear?: string;
+    area?: number;
+    baths?: number;
+    rooms?: number;
+    isFeatured?: boolean;
 }
 
-export interface UniversidadResponse {
-    id: number;
-    nombre: string;
-    distritoNombre: string;
+// ViewModel para Detalle (Página de detalle)
+export interface AccommodationDetailViewModel extends AlojamientoResponse {
+    securityLevelLabel?: string;
+    googleMapsUrl?: string;
+    formattedDate: string;
+    isFavorite?: boolean;
 }

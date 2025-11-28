@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MyRentalViewModel } from '../../../../core/models/ui-view.models';
+import { MyRentalViewModel } from '../../../../core/models/landlord.models';
+
 
 @Component({
   selector: 'app-landlord-rental-card',

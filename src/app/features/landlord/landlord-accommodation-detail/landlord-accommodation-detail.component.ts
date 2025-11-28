@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -7,8 +8,10 @@ import { GalleryComponent } from '../../student/components/gallery/gallery.compo
 import { AccommodationRequestsListComponent } from '../components/accommodation-requests-list/accommodation-requests-list.component';
 import { AccommodationService } from '../../../core/services/accommodation.service';
 import { LandlordService } from '../../../core/services/landlord.service';
-import { AccommodationDetailViewModel, LandlordRequestViewModel } from '../../../core/models/ui-view.models';
+
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
+import { AccommodationDetailViewModel } from '../../../core/models/accommodation.models';
+import { RequestViewModel } from '../../../core/models/request.models';
 
 @Component({
   selector: 'app-landlord-accommodation-detail',
@@ -21,7 +24,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 
 export class LandlordAccommodationDetailComponent implements OnInit {
   accommodation: AccommodationDetailViewModel | null = null;
-  requests: LandlordRequestViewModel[] = [];
+  requests: RequestViewModel[] = [];
   isLoading = true;
 
   constructor(

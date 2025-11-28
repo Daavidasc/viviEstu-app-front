@@ -2,7 +2,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'; // Añadir Output y EventEmitter
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router'; //  Importar Router
-import { StudentRequestViewModel } from '../../../../core/models/ui-view.models';
+import { RequestViewModel } from '../../../../core/models/request.models';
 
 @Component({
   selector: 'app-request-card',
@@ -12,7 +12,7 @@ import { StudentRequestViewModel } from '../../../../core/models/ui-view.models'
   styleUrls: ['./request-card.component.css']
 })
 export class RequestCardComponent {
-  @Input() request!: StudentRequestViewModel;
+  @Input() request!: RequestViewModel;
 
   // Evento para notificar al padre cuando se cancele la solicitud
   @Output() requestCancelled = new EventEmitter<number>();
