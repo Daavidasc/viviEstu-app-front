@@ -15,7 +15,7 @@ import { LandlordProfileViewModel } from '../../../core/models/landlord.models';
 export class EditLandlordProfilePageComponent {
   landlord: LandlordProfileViewModel = {
     id: 1,
-    nombre: 'Henry Antonio',
+    nombre: 'Henry Antonio',    //name
     apellidos: 'Mendoza',
     fullName: 'Henry Antonio Mendoza',
     correo: 'hmendoza@propiedades.com',
