@@ -1,21 +1,266 @@
 :host {
+  --primary-color: #B88E2F;
+  --text-dark: #2C3E50;
+  --text-gray: #6B7280;
   --bg-cream: #FFF8E7;
   --font-family: 'Poppins', sans-serif;
 }
+
 .app-container {
   font-family: var(--font-family);
+  color: var(--text-dark);
   background-color: var(--bg-cream);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-.main-content { padding: 3rem 1rem; flex-grow: 1; }
-.container { width: 100%; max-width: 1200px; margin: 0 auto; }
-.page-title { font-size: 2.5rem; font-weight: 800; color: #000; margin-bottom: 2.5rem; }
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.main-content {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+  flex-grow: 1;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 2rem;
+}
+
+/* --- Layout de Comparación --- */
 .comparison-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Cambiado para mostrar siempre 2 columnas */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+  align-items: start;
 }
-/* La media query ya no es necesaria para este grid y puede ser eliminada */
-/* @media(min-width: 768px) { .comparison-grid { grid-template-columns: repeat(2, 1fr); } } */
+
+/* --- Estado Vacío / Espacio disponible en la grilla --- */
+.empty-slot {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: var(--text-gray);
+  padding: 2rem;
+  text-align: center;
+}
+
+.no-data {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-gray);
+}
+
+/* --- Modal Styles (Estilo Solicitado) --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 500px;
+  /* Altura máxima para que sea scrolleable si hay muchos favoritos */
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+      transform: translateY(-20px);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text-dark);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-gray);
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: var(--text-dark);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto; /* Permite scroll si la lista es larga */
+}
+
+/* --- Estilos de la Lista de Favoritos dentro del Modal --- */
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.favorite-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #fff;
+}
+
+.favorite-item:hover {
+  background-color: #f9fafb;
+  border-color: var(--primary-color);
+  transform: translateX(4px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.fav-thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #eee;
+}
+
+.fav-info {
+  flex-grow: 1;
+}
+
+.fav-info h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.fav-price {
+  margin: 0;
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
+.fav-district {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-gray);
+}
+
+.btn-select {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-select:hover {
+  opacity: 0.9;
+}
+
+.empty-modal {
+  text-align: center;
+  color: var(--text-gray);
+  padding: 1rem;
+}
+
+/* Botones Generales */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-secondary {
+  background-color: white;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  background-color: #fee2e2;
+  border-radius: 8px;
+  color: #991b1b;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .page-title {
+      font-size: 1.5rem;
+  }
+}

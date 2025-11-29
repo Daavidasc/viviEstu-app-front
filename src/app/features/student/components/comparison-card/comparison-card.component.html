@@ -5,11 +5,9 @@
   <div class="card-body">
     <div class="header-row">
       <h2 class="price">S/.{{ item.price }} /mes</h2>
-      <button class="btn-favorite" (click)="toggleFavorite()">
-        <i class="fa-heart" [class.fas]="item.isFavorite" [class.far]="!item.isFavorite"></i>
-      </button>
+
     </div>
-    <p class="description">{{ item.title }}</p>
+    <p class="description">{{ item.description }}</p>
     <div class="info-block">
       <h3 class="info-label">Incluye:</h3>
       <div class="features-row">
@@ -23,7 +21,7 @@
       <p class="info-text">{{ item.district }}</p>
     </div>
     <div class="action-row">
-      <button class="btn btn-primary btn-change">Cambiar</button>
+      <button class="btn btn-primary btn-change" (click)="onRequestChange()">Cambiar</button>
     </div>
   </div>
 </div>

@@ -3,20 +3,74 @@
 
   <main class="main-content">
     <div class="container">
-      <h1 class="page-title">Comparar</h1>
-      <div class="comparison-grid">
-        <!-- Columna 1 -->
-        @if (itemsToCompare.length > 0) {
-          <app-comparison-card [item]="itemsToCompare[0]" />
-        }
+      <h1 class="page-title">Comparar Favoritos</h1>
 
-        <!-- Columna 2 -->
-        @if (itemsToCompare.length > 1) {
-          <app-comparison-card [item]="itemsToCompare[1]" />
+      @if (isLoading) {
+        <app-loading-spinner message="Cargando tus favoritos..." />
+      }
+      @else if (error) {
+        <div class="error-message">
+          <p>{{ error }}</p>
+          <button class="btn btn-secondary" (click)="loadFavorites()">Reintentar</button>
+        </div>
+      }
+      @else {
+        @if (itemsToCompare.length > 0) {
+          <div class="comparison-grid">
+            <app-comparison-card
+              [item]="itemsToCompare[0]"
+              (changeRequested)="openChangeModal(0)" />
+
+            @if (itemsToCompare.length > 1) {
+              <app-comparison-card
+                [item]="itemsToCompare[1]"
+                (changeRequested)="openChangeModal(1)" />
+            }
+            @else {
+              <div class="empty-slot">
+                <p>Agrega otro favorito para comparar.</p>
+              </div>
+            }
+          </div>
         }
-      </div>
+        @else {
+          <div class="no-data">
+            <p>No tienes suficientes alojamientos favoritos para comparar.</p>
+          </div>
+        }
+      }
     </div>
   </main>
+
+  @if (showChangeModal) {
+    <div class="modal-overlay" (click)="closeModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3>Selecciona un alojamiento</h3>
+          <button class="close-btn" (click)="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          @if (availableReplacements.length > 0) {
+            <div class="favorites-list">
+              @for (fav of availableReplacements; track fav.id) {
+                <div class="favorite-item" (click)="selectReplacement(fav)">
+                  <img [src]="fav.thumbnailUrl" class="fav-thumb">
+                  <div class="fav-info">
+                    <h4>{{ fav.title }}</h4>
+                    <p class="fav-price">S/. {{ fav.price }}</p>
+                    <p class="fav-district">{{ fav.district }}</p>
+                  </div>
+                  <button class="btn-select">Elegir</button>
+                </div>
+              }
+            </div>
+          } @else {
+            <p class="empty-modal">No tienes otros favoritos disponibles para cambiar.</p>
+          }
+        </div>
+      </div>
+    </div>
+  }
 
   <app-footer />
 </div>
