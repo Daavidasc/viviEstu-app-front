@@ -42,9 +42,15 @@
               </div>
             </div>
 
+            <!-- CAMBIO 1: UNIVERSIDAD COMO SELECT -->
             <div class="form-group">
               <label class="label-text">Universidad</label>
-              <input type="number" class="form-input" [(ngModel)]="studentData.universidadId" name="universidad" required>
+              <select class="form-input" [(ngModel)]="studentData.universidadId" name="universidad" required>
+                <option [ngValue]="null" disabled>Selecciona tu universidad</option>
+                <option *ngFor="let uni of universidades" [ngValue]="uni.id">
+                  {{ uni.nombre }}
+                </option>
+              </select>
             </div>
 
             <div class="form-grid">
@@ -59,9 +65,15 @@
               </div>
             </div>
 
+            <!-- CAMBIO 2: DISTRITO COMO SELECT -->
             <div class="form-group">
               <label class="label-text">Distrito / Zona Preferida</label>
-              <input type="number" class="form-input" [(ngModel)]="studentData.distritoId" name="distrito" required>
+              <select class="form-input" [(ngModel)]="studentData.distritoId" name="distrito" required>
+                <option [ngValue]="null" disabled>Selecciona tu distrito</option>
+                <option *ngFor="let dist of distritos" [ngValue]="dist.id">
+                  {{ dist.nombre }}
+                </option>
+              </select>
             </div>
 
             <div class="form-actions">
@@ -81,7 +93,7 @@
       @else {
         <div class="error-message">
           <p>No se pudieron cargar los datos del perfil.</p>
-          <button class="btn btn-secondary" (click)="loadProfile()">Reintentar</button>
+          <button class="btn btn-secondary" (click)="loadData()">Reintentar</button>
         </div>
       }
 

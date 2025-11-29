@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { forkJoin, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, catchError } from 'rxjs/operators'; // Importamos operadores necesarios
 
 // Componentes
 import { AccommodationCardComponent } from '../components/accommodation-card/accommodation-card.component';
@@ -15,10 +15,10 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 import { AccommodationService } from '../../../core/services/accommodation.service';
 import { LocationService } from '../../../core/services/location.service';
 import { StudentService } from '../../../core/services/student.service';
-import { InteractionService } from '../../../core/services/interaction.service'; // 👈 1. IMPORTAR
+import { InteractionService } from '../../../core/services/interaction.service';
 
 // Modelos
-import { AccommodationCardViewModel } from '../../../core/models/accommodation.models'; // 👈 2. RUTA CORRECTA
+import { AccommodationCardViewModel } from '../../../core/models/accommodation.models';
 
 @Component({
     selector: 'app-accommodations-page',
@@ -41,13 +41,13 @@ export class AccommodationsPageComponent implements OnInit {
     private accommodationService = inject(AccommodationService);
     private locationService = inject(LocationService);
     private studentService = inject(StudentService);
-    private interactionService = inject(InteractionService); // 👈 3. INYECTAR
+    private interactionService = inject(InteractionService);
     private cdr = inject(ChangeDetectorRef);
 
     accommodations: AccommodationCardViewModel[] = [];
     district: string | null = null;
     isLoading = true;
-    currentStudentId: number | null = null; // Para gestionar favoritos
+    currentStudentId: number | null = null;
 
     showFilterModal = false;
     filterCriteria = {
@@ -61,34 +61,74 @@ export class AccommodationsPageComponent implements OnInit {
     universities: string[] = ['Todas'];
 
     ngOnInit(): void {
-        // Cargar opciones de filtro
+        // 1. Cargar opciones para los selects (filtros)
         this.loadFilterOptions();
 
-        // Obtener ID del estudiante (necesario para favoritos)
-        this.studentService.getProfile().subscribe({
-            next: (p) => this.currentStudentId = p.id,
-            error: () => console.warn('Usuario no logueado o error al cargar perfil')
-        });
+        // 2. Lógica principal: URL vs Perfil
+        // Usamos switchMap para manejar la asincronía secuencialmente
+        this.route.queryParams.pipe(
+            switchMap(params => {
+                this.isLoading = true;
+                this.district = params['district'];
+                const university = params['university'];
 
-        // Suscribirse a cambios en la URL (Query Params)
-        this.route.queryParams.subscribe(params => {
-            this.isLoading = true;
-            this.district = params['district'];
-            const university = params['university'];
+                // CASO A: La URL tiene filtros explícitos (ej: viene del dashboard "Ver más")
+                if (this.district) {
+                    this.filterCriteria.district = this.district;
+                    console.log('Filtrando por URL (Distrito):', this.district);
+                    return of({ filters: { district: this.district } });
+                }
 
-            // Configurar filtros iniciales según URL
-            if (this.district) {
-                this.filterCriteria.district = this.district;
-                this.loadAccommodationsByFilter({ district: this.district });
-            } else if (university) {
-                this.filterCriteria.university = university;
-                this.loadAccommodationsByFilter({ university });
-            } else {
-                this.district = null;
-                this.filterCriteria.district = 'Todos';
-                this.loadAccommodationsByFilter({});
+                if (university) {
+                    this.filterCriteria.university = university;
+                    console.log('Filtrando por URL (Universidad):', university);
+                    return of({ filters: { university: university } });
+                }
+
+                // CASO B: La URL está limpia (ej: clic en Navbar "Alojamientos")
+                // Aquí es donde ocurría tu error. Antes poníamos "Todos" por defecto.
+                // AHORA: Consultamos el perfil actualizado para ver su preferencia.
+                return this.studentService.getProfile().pipe(
+                    map(profile => {
+                        this.currentStudentId = profile.id; // Guardamos ID para favoritos
+
+                        if (profile && profile.distrito) {
+                            // Si el usuario tiene distrito, lo usamos por defecto
+                            console.log('URL vacía. Usando preferencia de perfil:', profile.distrito);
+                            this.district = profile.distrito;
+                            this.filterCriteria.district = profile.distrito;
+                            return { filters: { district: profile.distrito } };
+                        } else {
+                            // Si no tiene preferencia, mostramos todo
+                            console.log('Sin preferencia de perfil. Mostrando todos.');
+                            this.filterCriteria.district = 'Todos';
+                            return { filters: {} };
+                        }
+                    }),
+                    catchError((err) => {
+                        console.warn('Error cargando perfil en fallback', err);
+                        return of({ filters: {} }); // En caso de error, mostramos todo
+                    })
+                );
+            })
+        ).subscribe({
+            next: (result) => {
+                // Finalmente cargamos los alojamientos con el filtro decidido (URL o Perfil)
+                this.loadAccommodationsByFilter(result.filters);
+            },
+            error: (err) => {
+                console.error('Error crítico en inicialización', err);
+                this.isLoading = false;
             }
         });
+
+        // Carga auxiliar del ID (por si entramos por el Caso A, asegurarnos de tener el ID para favoritos)
+        if (!this.currentStudentId) {
+             this.studentService.getProfile().subscribe({
+                next: (p) => this.currentStudentId = p.id,
+                error: () => {} // Error silencioso, ya se maneja en otros lados
+            });
+        }
     }
 
     loadFilterOptions(): void {
@@ -121,7 +161,6 @@ export class AccommodationsPageComponent implements OnInit {
                 switchMap(filteredCards => {
                     if (filteredCards.length === 0) return of([]);
 
-                    // Si hay resultados filtrados, cruzamos con favoritos
                     return this.studentService.getFavorites().pipe(
                         map(favorites => {
                             const favIds = new Set(favorites.map(f => f.alojamientoId));
@@ -129,7 +168,8 @@ export class AccommodationsPageComponent implements OnInit {
                                 ...c,
                                 isFavorite: favIds.has(c.id)
                             }));
-                        })
+                        }),
+                        catchError(() => of(filteredCards)) // Si falla favoritos, devuelve las cartas igual
                     );
                 })
             );
@@ -149,7 +189,6 @@ export class AccommodationsPageComponent implements OnInit {
         });
     }
 
-    // 👈 4. LÓGICA CORREGIDA DE FAVORITOS
     handleFavoriteToggle(item: AccommodationCardViewModel): void {
         if (!this.currentStudentId) {
             alert('Debes iniciar sesión para gestionar tus favoritos.');
@@ -157,19 +196,14 @@ export class AccommodationsPageComponent implements OnInit {
         }
 
         const originalStatus = item.isFavorite;
-
-        // Optimistic UI Update
         item.isFavorite = !item.isFavorite;
 
         this.interactionService.toggleFavorite(this.currentStudentId, item.id, originalStatus).subscribe({
-            next: () => {
-                console.log(`Favorito actualizado para: ${item.id}`);
-            },
+            next: () => console.log(`Favorito actualizado para: ${item.id}`),
             error: (err) => {
                 console.error('Error al cambiar favorito:', err);
-                // Revertir en caso de error
                 item.isFavorite = originalStatus;
-                alert('No se pudo actualizar el favorito. Intenta de nuevo.');
+                alert('No se pudo actualizar el favorito.');
                 this.cdr.detectChanges();
             }
         });
@@ -193,6 +227,7 @@ export class AccommodationsPageComponent implements OnInit {
         }
 
         this.loadAccommodationsByFilter(filters);
+        // Actualizamos visualmente el distrito actual si se usó el filtro
         this.district = this.filterCriteria.district !== 'Todos' ? this.filterCriteria.district : null;
         this.toggleFilterModal();
     }

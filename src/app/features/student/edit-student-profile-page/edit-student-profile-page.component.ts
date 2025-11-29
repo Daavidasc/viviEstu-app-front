@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Necesario para ngModel
+import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { forkJoin } from 'rxjs'; // Necesario para cargar múltiples peticiones
 
 // Componentes Compartidos
 import { StudentNavbarComponent } from '../../../shared/components/student-navbar/student-navbar.component';
@@ -10,14 +11,16 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 
 // Servicios y Modelos
 import { StudentService } from '../../../core/services/student.service';
+import { LocationService } from '../../../core/services/location.service'; // 👈 IMPORTANTE
 import { StudentProfile } from '../../../core/models/student.models';
+import { DistritoResponse, UniversidadResponse } from '../../../core/models/location.models'; // 👈 IMPORTANTE
 
 @Component({
   selector: 'app-edit-student-profile-page',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule, // 👈 VITAL para que funcione el formulario
+    FormsModule,
     RouterModule,
     StudentNavbarComponent,
     FooterComponent,
@@ -29,68 +32,79 @@ import { StudentProfile } from '../../../core/models/student.models';
 export class EditStudentProfilePageComponent implements OnInit {
 
   private studentService = inject(StudentService);
+  private locationService = inject(LocationService); // 👈 Inyectamos servicio de ubicación
   private router = inject(Router);
   private cd = inject(ChangeDetectorRef);
 
   studentData: StudentProfile | null = null;
+
+  // Listas para los desplegables
+  distritos: DistritoResponse[] = [];
+  universidades: UniversidadResponse[] = [];
+
   isLoading = true;
   isSaving = false;
 
   ngOnInit() {
-    this.loadProfile();
+    // Cargamos todo en paralelo: Perfil + Catálogos
+    this.loadData();
   }
 
-  loadProfile() {
+  loadData() {
     this.isLoading = true;
-    this.studentService.getProfile().subscribe({
-      next: (data) => {
 
-        this.studentData = { ...data };
+    // Usamos forkJoin para esperar a que TODO (perfil, distritos y universidades) esté listo
+    forkJoin({
+      profile: this.studentService.getProfile(),
+      distritos: this.locationService.getAllDistricts(),
+      universidades: this.locationService.getAllUniversities()
+    }).subscribe({
+      next: (data) => {
+        this.studentData = { ...data.profile };
+        this.distritos = data.distritos;
+        this.universidades = data.universidades;
+
         this.isLoading = false;
         this.cd.detectChanges();
       },
       error: (err) => {
-        console.error('Error cargando perfil', err);
+        console.error('Error cargando datos', err);
         this.isLoading = false;
-        this.router.navigate(['/student/profile']);
+        // Si falla algo crítico, redirigimos o mostramos error
+        // this.router.navigate(['/student/profile']);
       }
     });
   }
 
-onSubmit() {
-  if (!this.studentData) return;
+  onSubmit() {
+    if (!this.studentData) return;
 
-  this.isSaving = true;
+    this.isSaving = true;
 
-  // CONSTRUIMOS EL PAYLOAD EXACTO
-  // Creamos un objeto nuevo solo con lo que pide el backend
-  const payload = {
-    nombre: this.studentData.nombre,
-    apellidos: this.studentData.apellidos,
-    telefono: this.studentData.telefono,
-    carrera: this.studentData.carrera,
-    ciclo: this.studentData.ciclo,
-    dni: this.studentData.dni,
+    const payload = {
+      nombre: this.studentData.nombre,
+      apellidos: this.studentData.apellidos,
+      telefono: this.studentData.telefono,
+      carrera: this.studentData.carrera,
+      ciclo: this.studentData.ciclo,
+      dni: this.studentData.dni,
+      distritoId: this.studentData.distritoId,
+      universidadId: this.studentData.universidadId
+    };
 
-    // Aquí asignamos los valores de los inputs numéricos que creamos
-    // Asegúrate de que en el HTML el ngModel sea studentData.distritoId y studentData.universidadId
-    distritoId: this.studentData.distritoId,
-    universidadId: this.studentData.universidadId
-  };
+    console.log('Enviando payload:', payload);
 
-  console.log('Enviando payload limpio:', payload);
-
-  this.studentService.updateProfile(payload).subscribe({
-    next: () => {
-      console.log('Perfil actualizado');
-      this.isSaving = false;
-      this.router.navigate(['/student/profile']);
-    },
-    error: (err) => {
-      console.error('Error al actualizar:', err);
-      this.isSaving = false;
-      alert('Hubo un error. Revisa la consola para ver detalles.');
-    }
-  });
-}
+    this.studentService.updateProfile(payload).subscribe({
+      next: () => {
+        console.log('Perfil actualizado');
+        this.isSaving = false;
+        this.router.navigate(['/student/profile']);
+      },
+      error: (err) => {
+        console.error('Error al actualizar:', err);
+        this.isSaving = false;
+        alert('Hubo un error al actualizar el perfil.');
+      }
+    });
+  }
 }

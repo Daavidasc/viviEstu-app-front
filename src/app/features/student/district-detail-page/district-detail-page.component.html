@@ -42,7 +42,6 @@
                             Volver
                         </button>
                         <button class="btn-search" (click)="searchInDistrict()">
-                            <span class="btn-icon">🔍</span>
                             Buscar alojamientos aquí
                         </button>
                     </div>
@@ -57,33 +56,6 @@
                         <p class="info-text">{{ zone.nombre }}</p>
                     </div>
 
-                    <!-- Universidades Cercanas -->
-                    <div class="info-card">
-                        <h3 class="info-title">Universidades Cercanas</h3>
-                        @if (zone.universidades && zone.universidades.length > 0) {
-                        <div class="tags-list">
-                            @for (universidad of zone.universidades; track universidad) {
-                            <span class="tag">{{ universidad }}</span>
-                            }
-                        </div>
-                        } @else {
-                        <p class="no-info">No se encontró información</p>
-                        }
-                    </div>
-
-                    <!-- Opciones de Movilidad -->
-                    <div class="info-card">
-                        <h3 class="info-title">Opciones de Movilidad</h3>
-                        @if (zone.transportes && zone.transportes.length > 0) {
-                        <div class="tags-list">
-                            @for (transporte of zone.transportes; track transporte) {
-                            <span class="tag">{{ transporte }}</span>
-                            }
-                        </div>
-                        } @else {
-                        <p class="no-info">No se encontró información</p>
-                        }
-                    </div>
 
                     <!-- Nivel de Seguridad -->
                     <div class="info-card">
