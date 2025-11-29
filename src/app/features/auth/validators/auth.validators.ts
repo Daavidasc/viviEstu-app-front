@@ -24,7 +24,7 @@ export class AuthValidators {
         };
     }
 
-    // Validador para la estructura de una contraseña fuerte
+    // Validador para la estructura de una contraseña fuertes
     static strongPassword(minLength: number = 8): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             if (!control.value) {
