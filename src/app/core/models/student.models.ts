@@ -1,4 +1,4 @@
-// DTO del Backend (Perfil puro)
+// student.models.ts
 export interface EstudianteProfileResponse {
     id: number;
     nombre: string;
@@ -8,18 +8,13 @@ export interface EstudianteProfileResponse {
     carrera: string;
     ciclo: number;
     dni: string;
-    distrito: string;
-    universidad: string;
-    urlFotoPerfil?: string;
+    universidadId?: number;
+    distritoId?: number;
+
+    // Mantén estos para mostrar el texto si quieres, o elimínalos
+    universidad?: string;
+    distrito?: string;
 }
 
-// ViewModel (Para el Frontend - Dashboard)
-export interface StudentProfileViewModel extends EstudianteProfileResponse {
-    fullName: string; // nombre + apellidos
-    university?: string;
-    district?: string;
-    age?: number;     // Dato calculado o mock
-    preferredZone?: string;
-    budget?: number;
-    avatarUrl?: string;
-}
+// Alias opcional para frontend
+export type StudentProfile = EstudianteProfileResponse;

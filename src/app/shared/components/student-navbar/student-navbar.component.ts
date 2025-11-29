@@ -2,7 +2,7 @@ import { AuthService } from './../../../core/services/auth.service';
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { StudentProfileViewModel } from '../../../core/models/student.models';
+import { StudentProfile } from '../../../core/models/student.models';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { StudentProfileViewModel } from '../../../core/models/student.models';
   styleUrls: ['./student-navbar.component.css']
 })
 export class StudentNavbarComponent {
-  @Input() currentUser: StudentProfileViewModel | null = null;
+  @Input() currentUser: StudentProfile | null = null;
   imageLoadError = false;
 
   constructor(private authService: AuthService) {}

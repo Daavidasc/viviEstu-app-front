@@ -8,35 +8,45 @@
 
       <!-- HEADER PERFIL -->
       @if (isLoadingProfile) {
-      <app-loading-spinner message="Cargando perfil..." />
-      } @else {
-      <div class="profile-header-card">
-        <div class="profile-avatar">
-          <i class="far fa-user-circle"></i>
+        <app-loading-spinner message="Cargando perfil..." />
+      }
+      <!-- 👇 CORRECCIÓN: Verificamos que 'student' exista antes de mostrar datos -->
+      @else if (student) {
+        <div class="profile-header-card">
+          <div class="profile-avatar">
+            <i class="far fa-user-circle"></i>
+          </div>
+          <div class="profile-basic-info">
+            <!-- Ahora es seguro acceder a .nombre porque verificamos que student no es null -->
+            <h2 class="profile-name">{{ student.nombre }} {{ student.apellidos }}</h2>
+            <p class="profile-email">{{ student.correo }}</p>
+          </div>
         </div>
-        <div class="profile-basic-info">
-          <h2 class="profile-name">{{ student.nombre }} {{ student.apellidos }}</h2>
-          <p class="profile-email">{{ student.correo }}</p>
-        </div>
-      </div>
 
-      <!-- INFORMACIÓN DETALLADA -->
-      <app-profile-info-card [student]="student" />
+        <!-- INFORMACIÓN DETALLADA -->
+        <app-profile-info-card [student]="student" />
+      }
+      <!-- 👇 OPCIONAL: Manejo de caso de error donde no cargó y no es loading -->
+      @else {
+        <div class="error-state">
+          <p>No se pudo cargar la información del perfil.</p>
+          <button class="btn btn-secondary" (click)="ngOnInit()">Reintentar</button>
+        </div>
       }
 
       <div class="section-spacer"></div>
       <h2 class="section-subtitle">Favoritos</h2>
 
       @if (isLoadingFavorites) {
-      <app-loading-spinner message="Cargando favoritos..." />
+        <app-loading-spinner message="Cargando favoritos..." />
       } @else {
-      <div class="favorites-list">
-        <app-accommodation-card *ngFor="let fav of favorites" [accommodation]="fav"
-          (favoriteToggled)="handleFavoriteToggle(fav)" />
-        @if (favorites.length === 0) {
-        <p>No tienes favoritos aún.</p>
-        }
-      </div>
+        <div class="favorites-list">
+          <app-accommodation-card *ngFor="let fav of favorites" [accommodation]="fav"
+            (favoriteToggled)="handleFavoriteToggle(fav)" />
+          @if (favorites.length === 0) {
+            <p>No tienes favoritos aún.</p>
+          }
+        </div>
       }
 
       <div class="see-more-container">
@@ -45,21 +55,21 @@
 
       <!-- SECCIÓN SOLICITUDES ACTIVAS -->
       <div class="section-spacer"></div>
-<h2 class="section-subtitle">Solicitudes Activas</h2>
+      <h2 class="section-subtitle">Solicitudes Activas</h2>
 
-@if (isLoadingRequests) {
- <app-loading-spinner message="Cargando solicitudes..." />
-} @else {
- <div class="requests-list">
-     <app-request-card *ngFor="let req of requests"
-      [request]="req"
-      (requestCancelled)="handleCancelRequest($event)" />
+      @if (isLoadingRequests) {
+        <app-loading-spinner message="Cargando solicitudes..." />
+      } @else {
+        <div class="requests-list">
+          <app-request-card *ngFor="let req of requests"
+            [request]="req"
+            (requestCancelled)="handleCancelRequest($event)" />
 
-    @if (requests.length === 0) {
- <p>No tienes solicitudes activas.</p>
-}
- </div>
-}
+          @if (requests.length === 0) {
+            <p>No tienes solicitudes activas.</p>
+          }
+        </div>
+      }
 
     </div>
   </main>

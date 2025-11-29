@@ -14,7 +14,7 @@ import { StudentService } from '../../../core/services/student.service';
 import { InteractionService } from '../../../core/services/interaction.service';
 
 // Modelos
-import { StudentProfileViewModel } from '../../../core/models/student.models'; // 👈 Asegúrate de esta ruta
+import { StudentProfile } from '../../../core/models/student.models'; // 👈 Asegúrate de esta ruta
 import { AccommodationCardViewModel } from '../../../core/models/accommodation.models';
 
 @Component({
@@ -37,7 +37,7 @@ export class StudentDashboardComponent implements OnInit {
   private interactionService = inject(InteractionService);
   private cdr = inject(ChangeDetectorRef);
 
-  currentUser: StudentProfileViewModel | null = null;
+  currentUser: StudentProfile | null = null;
 
   allAccommodations: AccommodationCardViewModel[] = [];
   zoneRecommendations: AccommodationCardViewModel[] = [];
@@ -54,7 +54,7 @@ export class StudentDashboardComponent implements OnInit {
     this.isLoading = true;
 
     // 1. Obtener Perfil
-    this.studentService.getViewProfile().subscribe({
+    this.studentService.getProfile().subscribe({
       next: (profile) => {
         this.currentUser = profile;
 
@@ -68,7 +68,7 @@ export class StudentDashboardComponent implements OnInit {
 
             if (user) {
               // Validamos que user.district exista antes de filtrar
-              const userDistrict = user.district || user.distrito; // Fallback por si acaso
+              const userDistrict = user.distrito; // Fallback por si acaso
 
               if (userDistrict) {
                 this.zoneRecommendations = this.allAccommodations
@@ -79,7 +79,7 @@ export class StudentDashboardComponent implements OnInit {
               }
 
               // Validamos que user.university exista antes de filtrar
-              const userUni = user.university || user.universidad; // Fallback por si acaso
+              const userUni = user.universidad; // Fallback por si acaso
 
               if (userUni) {
                   this.uniRecommendations = this.allAccommodations

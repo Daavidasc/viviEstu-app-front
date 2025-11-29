@@ -25,7 +25,7 @@
       <div class="dashboard-header">
         <h1 class="greeting">Hola {{ currentUser.nombre }}</h1>
         <div class="subtitle-row">
-          <h2 class="section-subtitle">Recomendados en tu zona: <span class="highlight">{{ currentUser.district
+          <h2 class="section-subtitle">Recomendados en tu zona: <span class="highlight">{{ currentUser.distrito
               }}</span></h2>
           <a [routerLink]="['/student/districts']" class="btn-districts">Ver zonas</a>
         </div>
@@ -41,20 +41,20 @@
       </div>
       } @else {
       <div class="empty-state">
-        <p>No encontramos alojamientos en {{ currentUser.district }} por el momento.</p>
+        <p>No encontramos alojamientos en {{ currentUser.distrito }} por el momento.</p>
       </div>
       }
 
       @if (zoneRecommendations.length > 0) {
       <div class="see-more-container">
-        <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: currentUser.district }"
-          class="see-more-link">Ver más en {{ currentUser.district }}...</a>
+        <a [routerLink]="['/student/accommodations']" [queryParams]="{ district: currentUser.distrito }"
+          class="see-more-link">Ver más en {{ currentUser.distrito }}...</a>
       </div>
       }
 
       <!-- Listado 2: Recomendados cerca a Universidad -->
       <div class="section-spacer"></div>
-      <h2 class="section-subtitle secondary">Recomendados cerca a <span class="highlight">{{ currentUser.university
+      <h2 class="section-subtitle secondary">Recomendados cerca a <span class="highlight">{{ currentUser.universidad
           }}</span></h2>
 
       @if (uniRecommendations.length > 0) {
@@ -66,13 +66,13 @@
       </div>
       } @else {
       <div class="empty-state">
-        <p>No hay recomendaciones cerca a {{ currentUser.university }} actualmente.</p>
+        <p>No hay recomendaciones cerca a {{ currentUser.universidad }} actualmente.</p>
       </div>
       }
 
       @if (uniRecommendations.length > 0) {
       <div class="see-more-container">
-        <a [routerLink]="['/student/accommodations']" [queryParams]="{ university: currentUser.university }"
+        <a [routerLink]="['/student/accommodations']" [queryParams]="{ university: currentUser.universidad }"
           class="see-more-link">Ver más cerca a la U...</a>
       </div>
       }

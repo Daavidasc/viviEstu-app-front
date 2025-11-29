@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { StudentProfileViewModel } from '../../../../core/models/student.models';
+import { StudentProfile } from '../../../../core/models/student.models';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { StudentProfileViewModel } from '../../../../core/models/student.models'
   styleUrls: ['./profile-info-card.component.css']
 })
 export class ProfileInfoCardComponent {
-  @Input() student: StudentProfileViewModel | null = null;
+  @Input() student: StudentProfile | null = null;
 
   // El constructor y la función editProfile() ya no son necesarios aquí.
   constructor() { }

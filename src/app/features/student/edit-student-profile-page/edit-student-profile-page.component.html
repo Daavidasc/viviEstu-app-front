@@ -1,10 +1,92 @@
 <div class="app-container">
   <app-student-navbar />
+
   <main class="main-content">
-    <div class="container profile-container">
+    <div class="container">
       <h1 class="page-title">Editar Perfil</h1>
-      <app-edit-student-profile-form [student]="student" />
+
+      @if (isLoading) {
+        <app-loading-spinner message="Cargando datos..." />
+      }
+
+      @else if (studentData) {
+        <div class="form-card">
+          <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="label-text">Nombres</label>
+                <input type="text" class="form-input" [(ngModel)]="studentData.nombre" name="nombre" required>
+              </div>
+
+              <div class="form-group">
+                <label class="label-text">Apellidos</label>
+                <input type="text" class="form-input" [(ngModel)]="studentData.apellidos" name="apellidos" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="label-text">Correo (No editable)</label>
+              <input type="email" class="form-input disabled" [(ngModel)]="studentData.correo" name="correo" disabled>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                  <label class="label-text">DNI</label>
+                  <input type="text" class="form-input" [(ngModel)]="studentData.dni" name="dni" required>
+              </div>
+
+              <div class="form-group">
+                  <label class="label-text">Teléfono</label>
+                  <input type="tel" class="form-input" [(ngModel)]="studentData.telefono" name="telefono" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="label-text">Universidad</label>
+              <input type="number" class="form-input" [(ngModel)]="studentData.universidadId" name="universidad" required>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                  <label class="label-text">Carrera</label>
+                  <input type="text" class="form-input" [(ngModel)]="studentData.carrera" name="carrera" required>
+              </div>
+
+              <div class="form-group">
+                <label class="label-text">Ciclo</label>
+                <input type="number" class="form-input" [(ngModel)]="studentData.ciclo" name="ciclo" required min="1" max="12">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="label-text">Distrito / Zona Preferida</label>
+              <input type="number" class="form-input" [(ngModel)]="studentData.distritoId" name="distrito" required>
+            </div>
+
+            <div class="form-actions">
+              <a routerLink="/student/profile" class="btn btn-secondary">Cancelar</a>
+              <button type="submit" class="btn btn-primary" [disabled]="isSaving || profileForm.invalid">
+                @if (isSaving) {
+                  <span>Guardando...</span>
+                } @else {
+                  <span>Guardar Cambios</span>
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+      }
+
+      @else {
+        <div class="error-message">
+          <p>No se pudieron cargar los datos del perfil.</p>
+          <button class="btn btn-secondary" (click)="loadProfile()">Reintentar</button>
+        </div>
+      }
+
     </div>
   </main>
+
   <app-footer />
 </div>
