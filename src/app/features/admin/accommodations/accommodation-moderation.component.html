@@ -2,9 +2,12 @@
     <h2 class="page-title">Moderación de Alojamientos</h2>
 </div>
 
-<app-loading-spinner *ngIf="loading()" [fullscreen]="false"></app-loading-spinner>
+@if (loading()) {
+<app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+}
 
-<div class="table-container" *ngIf="!loading()">
+@if (!loading()) {
+<div class="table-container">
     <table class="data-table">
         <thead>
             <tr>
@@ -18,11 +21,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let acc of accommodations()">
+            @for (acc of accommodations(); track acc.id) {
+            <tr>
                 <td>{{ acc.id }}</td>
                 <td>
-                    <div class="acc-title">{{ acc.titulo }}</div>
-                    <small class="acc-address">{{ acc.direccion }}</small>
+                    <div class="cell-title">{{ acc.titulo }}</div>
+                    <small class="cell-subtitle">{{ acc.direccion }}</small>
                 </td>
                 <td>{{ acc.propietario }}</td>
                 <td>{{ acc.distrito }}</td>
@@ -41,9 +45,13 @@
                     <button class="btn-icon delete" (click)="deleteAccommodation(acc)" title="Eliminar">🗑️</button>
                 </td>
             </tr>
-            <tr *ngIf="accommodations().length === 0">
+            }
+            @if (accommodations().length === 0) {
+            <tr>
                 <td colspan="7" class="empty-state">No hay alojamientos registrados.</td>
             </tr>
+            }
         </tbody>
     </table>
 </div>
+}

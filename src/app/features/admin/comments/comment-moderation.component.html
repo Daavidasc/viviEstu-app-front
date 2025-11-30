@@ -2,9 +2,12 @@
     <h2 class="page-title">Moderación de Comentarios</h2>
 </div>
 
-<app-loading-spinner *ngIf="loading()" [fullscreen]="false"></app-loading-spinner>
+@if (loading()) {
+<app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+}
 
-<div class="table-container" *ngIf="!loading()">
+@if (!loading()) {
+<div class="table-container">
     <table class="data-table">
         <thead>
             <tr>
@@ -16,7 +19,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let comment of comments()">
+            @for (comment of comments(); track comment.id) {
+            <tr>
                 <td>{{ comment.id }}</td>
                 <td>{{ comment.estudianteNombre }}</td>
                 <td>{{ comment.alojamientoTitulo }}</td>
@@ -25,9 +29,13 @@
                     <button class="btn-icon delete" (click)="deleteComment(comment)" title="Eliminar">🗑️</button>
                 </td>
             </tr>
-            <tr *ngIf="comments().length === 0">
+            }
+            @if (comments().length === 0) {
+            <tr>
                 <td colspan="5" class="empty-state">No hay comentarios registrados.</td>
             </tr>
+            }
         </tbody>
     </table>
 </div>
+}

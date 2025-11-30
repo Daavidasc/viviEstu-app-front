@@ -5,9 +5,12 @@
     </button>
 </div>
 
-<app-loading-spinner *ngIf="loading()" [fullscreen]="false"></app-loading-spinner>
+@if (loading()) {
+<app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+}
 
-<div class="table-container" *ngIf="!loading()">
+@if (!loading()) {
+<div class="table-container">
     <table class="data-table">
         <thead>
             <tr>
@@ -20,7 +23,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let dist of districts()">
+            @for (dist of districts(); track dist.id) {
+            <tr>
                 <td>{{ dist.id }}</td>
                 <td>
                     <div class="cell-title">{{ dist.nombre }}</div>
@@ -38,12 +42,18 @@
                     <button class="btn-icon delete" (click)="deleteDistrict(dist)">🗑️</button>
                 </td>
             </tr>
-            <tr *ngIf="districts().length === 0">
+            }
+            @if (districts().length === 0) {
+            <tr>
                 <td colspan="6" class="empty-state">No hay distritos registrados.</td>
             </tr>
+            }
         </tbody>
     </table>
 </div>
+}
 
-<app-district-form *ngIf="showModal" [district]="selectedDistrict" (save)="onSaveDistrict($event)"
+@if (showModal) {
+<app-district-form [district]="selectedDistrict" (save)="onSaveDistrict($event)"
     (cancel)="closeModal()"></app-district-form>
+}

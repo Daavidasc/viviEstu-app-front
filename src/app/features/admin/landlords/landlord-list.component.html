@@ -2,34 +2,43 @@
     <h2 class="page-title">Gestión de Arrendadores</h2>
 </div>
 
-<app-loading-spinner *ngIf="loading()" [fullscreen]="false"></app-loading-spinner>
+@if (loading()) {
+<app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+}
 
-<div class="table-container" *ngIf="!loading()">
+@if (!loading()) {
+<div class="table-container">
     <table class="data-table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nombre Completo</th>
-                <th>Correo</th>
+                <th>Arrendador</th>
                 <th>Teléfono</th>
                 <th>DNI</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let landlord of landlords()">
+            @for (landlord of landlords(); track landlord.id) {
+            <tr>
                 <td>{{ landlord.id }}</td>
-                <td>{{ landlord.nombre }} {{ landlord.apellidos }}</td>
-                <td>{{ landlord.correo }}</td>
+                <td>
+                    <div class="cell-title">{{ landlord.nombre }} {{ landlord.apellidos }}</div>
+                    <small class="cell-subtitle">{{ landlord.correo }}</small>
+                </td>
                 <td>{{ landlord.telefono }}</td>
                 <td>{{ landlord.dni }}</td>
                 <td class="actions-cell">
                     <button class="btn-icon delete" (click)="deleteLandlord(landlord)" title="Eliminar">🗑️</button>
                 </td>
             </tr>
-            <tr *ngIf="landlords().length === 0">
-                <td colspan="6" class="empty-state">No hay arrendadores registrados.</td>
+            }
+            @if (landlords().length === 0) {
+            <tr>
+                <td colspan="5" class="empty-state">No hay arrendadores registrados.</td>
             </tr>
+            }
         </tbody>
     </table>
 </div>
+}

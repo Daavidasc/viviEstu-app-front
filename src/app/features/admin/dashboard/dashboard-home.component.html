@@ -1,10 +1,13 @@
 <div class="admin-container">
     <main class="main-content">
         <div class="content-wrapper">
-            <app-loading-spinner *ngIf="loading()" [fullscreen]="false"></app-loading-spinner>
+            @if (loading()) {
+            <app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+            }
             <div class="dashboard-container">
                 <h1 class="page-title">Panel de Control</h1>
-                <div class="stats" *ngIf="!loading()">
+                @if (!loading()) {
+                <div class="stats">
                     <div class="stats-grid">
                         <!-- Estudiantes -->
                         <div class="stat-card">
@@ -51,6 +54,7 @@
                         </div>
                     </div>
                 </div>
+                }
 
                 <div class="welcome-section">
                     <h3>Bienvenido al Administrador de ViviEstu</h3>

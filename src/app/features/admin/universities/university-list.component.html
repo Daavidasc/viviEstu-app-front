@@ -5,9 +5,12 @@
     </button>
 </div>
 
-<app-loading-spinner *ngIf="loading()" [fullscreen]="false"></app-loading-spinner>
+@if (loading()) {
+<app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+}
 
-<div class="table-container" *ngIf="!loading()">
+@if (!loading()) {
+<div class="table-container">
     <table class="data-table">
         <thead>
             <tr>
@@ -18,21 +21,30 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let uni of universities()">
+            @for (uni of universities(); track uni.id) {
+            <tr>
                 <td>{{ uni.id }}</td>
-                <td>{{ uni.nombre }}</td>
+                <td>
+                    <div class="cell-title">{{ uni.nombre }}</div>
+                </td>
                 <td>{{ uni.distritoNombre }}</td>
                 <td class="actions-cell">
                     <button class="btn-icon edit" (click)="editUniversity(uni)">✏️</button>
                     <button class="btn-icon delete" (click)="deleteUniversity(uni)">🗑️</button>
                 </td>
             </tr>
-            <tr *ngIf="universities().length === 0">
+            }
+            @if (universities().length === 0) {
+            <tr>
                 <td colspan="4" class="empty-state">No hay universidades registradas.</td>
             </tr>
+            }
         </tbody>
     </table>
 </div>
+}
 
-<app-university-form *ngIf="showModal" [university]="selectedUniversity" (save)="onSaveUniversity($event)"
+@if (showModal) {
+<app-university-form [university]="selectedUniversity" (save)="onSaveUniversity($event)"
     (cancel)="closeModal()"></app-university-form>
+}
