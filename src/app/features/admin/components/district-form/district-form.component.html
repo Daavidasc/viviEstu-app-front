@@ -1,0 +1,76 @@
+<div class="modal-overlay" (click)="onCancel()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h3 class="modal-title">{{ isEdit ? 'Editar Distrito' : 'Nuevo Distrito' }}</h3>
+            <button class="btn-close" (click)="onCancel()">×</button>
+        </div>
+
+        <form [formGroup]="districtForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" formControlName="nombre" class="form-control"
+                            placeholder="Ej. Miraflores">
+                        @if (districtForm.get('nombre')?.touched && districtForm.get('nombre')?.invalid) {
+                        <div class="error-message">
+                            Requerido
+                        </div>
+                        }
+                    </div>
+                    <div class="form-group half">
+                        <label for="tipo">Tipo</label>
+                        <input type="text" id="tipo" formControlName="tipo" class="form-control"
+                            placeholder="Ej. Residencial">
+                        @if (districtForm.get('tipo')?.touched && districtForm.get('tipo')?.invalid) {
+                        <div class="error-message">
+                            Requerido
+                        </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="precioProm">Precio Promedio (S/)</label>
+                        <input type="number" id="precioProm" formControlName="precioProm" class="form-control" min="0">
+                        @if (districtForm.get('precioProm')?.touched && districtForm.get('precioProm')?.invalid) {
+                        <div class="error-message">
+                            Inválido
+                        </div>
+                        }
+                    </div>
+                    <div class="form-group half">
+                        <label for="seguridad">Seguridad (1-5)</label>
+                        <select id="seguridad" formControlName="seguridad" class="form-control">
+                            <option [value]="1">1 - Muy Baja</option>
+                            <option [value]="2">2 - Baja</option>
+                            <option [value]="3">3 - Media</option>
+                            <option [value]="4">4 - Alta</option>
+                            <option [value]="5">5 - Muy Alta</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="urlImg">URL de Imagen</label>
+                    <input type="url" id="urlImg" formControlName="urlImg" class="form-control"
+                        placeholder="https://ejemplo.com/imagen.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" formControlName="descripcion" class="form-control" rows="3"
+                        placeholder="Breve descripción del distrito..."></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" (click)="onCancel()">Cancelar</button>
+                <button type="submit" class="btn-primary" [disabled]="districtForm.invalid">
+                    {{ isEdit ? 'Guardar Cambios' : 'Crear Distrito' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
