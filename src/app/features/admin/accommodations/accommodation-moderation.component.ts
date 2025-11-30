@@ -1,4 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../../core/services/admin.service';
 import { AlojamientoResponse } from '../../../core/models/accommodation.models';
@@ -13,6 +14,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 })
 export class AccommodationModerationComponent implements OnInit {
     private adminService = inject(AdminService);
+    private router = inject(Router);
 
     accommodations = signal<AlojamientoResponse[]>([]);
     loading = signal(false);
@@ -56,5 +58,9 @@ export class AccommodationModerationComponent implements OnInit {
                 error: (err) => console.error('Error deleting accommodation', err)
             });
         }
+    }
+
+    viewAccommodation(acc: AlojamientoResponse) {
+        this.router.navigate(['/student/accommodations', acc.id]);
     }
 }

@@ -17,6 +17,7 @@
                 <th>Distrito</th>
                 <th>Precio</th>
                 <th>Estado</th>
+                <th>Ver</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -36,6 +37,9 @@
                         {{ acc.alquilado ? 'Alquilado' : 'Disponible' }}
                     </span>
                 </td>
+                <td>
+                    <button class="btn-icon view" (click)="viewAccommodation(acc)" title="Ver Detalle">👁️</button>
+                </td>
                 <td class="actions-cell">
                     <button class="btn-icon action"
                         [title]="acc.alquilado ? 'Marcar como Disponible' : 'Marcar como Alquilado'"
@@ -48,7 +52,7 @@
             }
             @if (accommodations().length === 0) {
             <tr>
-                <td colspan="7" class="empty-state">No hay alojamientos registrados.</td>
+                <td colspan="8" class="empty-state">No hay alojamientos registrados.</td>
             </tr>
             }
         </tbody>

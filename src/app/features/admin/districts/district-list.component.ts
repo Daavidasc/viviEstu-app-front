@@ -1,4 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../../core/services/admin.service';
 import { LocationService } from '../../../core/services/location.service';
@@ -16,6 +17,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 export class DistrictListComponent implements OnInit {
     private locationService = inject(LocationService);
     private adminService = inject(AdminService);
+    private router = inject(Router);
 
     districts = signal<DistritoResponse[]>([]);
     loading = signal(false);
@@ -84,5 +86,9 @@ export class DistrictListComponent implements OnInit {
                 error: (err) => console.error('Error deleting district', err)
             });
         }
+    }
+
+    viewDistrict(dist: DistritoResponse) {
+        this.router.navigate(['/student/districts', dist.id]);
     }
 }
