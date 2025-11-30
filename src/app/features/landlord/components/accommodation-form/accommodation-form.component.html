@@ -12,6 +12,9 @@
         <input type="text" class="form-input" formControlName="titulo"
           placeholder="Ej: Habitación amplia cerca a la UPC"
           [class.error]="hasError('titulo', 'required') || hasError('titulo', 'minlength')">
+        <div class="char-counter">
+          {{ getControl('titulo')?.value?.length || 0 }} / 10 caracteres
+        </div>
         @if (hasError('titulo', 'required')) {
         <div class="error-message">
           El título es obligatorio
@@ -48,10 +51,18 @@
       <div class="form-group">
         <label class="label-text">Dirección Completa *</label>
         <input type="text" class="form-input" formControlName="direccion" placeholder="Calle, número, referencia"
-          [class.error]="hasError('direccion', 'required')">
+          [class.error]="hasError('direccion', 'required') || hasError('direccion', 'minlength')">
+        <div class="char-counter">
+          {{ getControl('direccion')?.value?.length || 0 }} / 10 caracteres
+        </div>
         @if (hasError('direccion', 'required')) {
         <div class="error-message">
           La dirección es obligatoria
+        </div>
+        }
+        @if (hasError('direccion', 'minlength')) {
+        <div class="error-message">
+          La dirección debe tener al menos 10 caracteres
         </div>
         }
       </div>
@@ -59,7 +70,10 @@
       <div class="form-group">
         <label class="label-text">Número de Partida Registral *</label>
         <input type="text" class="form-input" formControlName="nroPartida" placeholder="Solo números"
-          [class.error]="hasError('nroPartida', 'required') || hasError('nroPartida', 'pattern')">
+          [class.error]="hasError('nroPartida', 'required') || hasError('nroPartida', 'pattern') || hasError('nroPartida', 'minlength')">
+        <div class="char-counter">
+          {{ getControl('nroPartida')?.value?.length || 0 }} / 8 dígitos
+        </div>
         @if (hasError('nroPartida', 'required')) {
         <div class="error-message">
           El número de partida es obligatorio
@@ -68,6 +82,11 @@
         @if (hasError('nroPartida', 'pattern')) {
         <div class="error-message">
           El número de partida debe contener solo dígitos
+        </div>
+        }
+        @if (hasError('nroPartida', 'minlength')) {
+        <div class="error-message">
+          El número de partida debe tener al menos 8 dígitos
         </div>
         }
       </div>
