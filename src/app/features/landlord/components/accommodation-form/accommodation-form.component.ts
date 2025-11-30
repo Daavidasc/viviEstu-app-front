@@ -165,18 +165,58 @@ export class AccommodationFormComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
+    console.log('🔍 Validando formulario...');
+    console.log('📋 Form value:', this.accommodationForm.value);
+    console.log('📋 Form valid:', this.accommodationForm.valid);
+    
     this.accommodationForm.markAllAsTouched();
 
+    // LOGS DETALLADOS DE VALIDACIÓN
     if (this.accommodationForm.invalid) {
-      alert('Por favor, completa todos los campos requeridos correctamente.');
+      console.log('❌ Form is invalid. Checking each field:');
+      
+      const invalidFields: string[] = [];
+      
+      Object.keys(this.accommodationForm.controls).forEach(key => {
+        const control = this.accommodationForm.get(key);
+        if (control && control.invalid) {
+          console.log(`❌ ${key}:`, {
+            value: control.value,
+            errors: control.errors,
+            required: control.hasError('required'),
+            minlength: control.hasError('minlength'),
+            min: control.hasError('min'),
+            max: control.hasError('max'),
+            minArrayLength: control.hasError('minArrayLength')
+          });
+          
+          // Agregar mensaje específico para cada campo
+          const fieldMessage = this.getFieldErrorMessage(key, control.errors);
+          if (fieldMessage) {
+            invalidFields.push(fieldMessage);
+          }
+        } else {
+          console.log(`✅ ${key}: valid`);
+        }
+      });
+
+      // Mostrar mensaje con todos los errores específicos
+      const errorMessage = invalidFields.length > 0 
+        ? `Por favor corrige los siguientes campos:\n\n${invalidFields.join('\n')}`
+        : 'Por favor, completa todos los campos requeridos correctamente.';
+      
+      alert(errorMessage);
       this.scrollToFirstError();
       return;
     }
 
     if (this.selectedFiles().length === 0) {
+      console.log('❌ No images selected');
       alert('Debes subir al menos una imagen del alojamiento.');
       return;
     }
+
+    console.log('✅ All validations passed, proceeding with submission...');
 
     try {
       this.submitting.set(true);
@@ -218,6 +258,69 @@ export class AccommodationFormComponent implements OnInit {
   private scrollToFirstError(): void {
     const firstElementWithError = document.querySelector('.ng-invalid');
     firstElementWithError?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  private getFieldErrorMessage(fieldName: string, errors: ValidationErrors | null): string | null {
+    if (!errors) return null;
+
+    const fieldLabels: { [key: string]: string } = {
+      'titulo': 'Título',
+      'descripcion': 'Descripción',
+      'direccion': 'Dirección',
+      'precioMensual': 'Precio Mensual',
+      'nroPartida': 'Número de Partida',
+      'distritoId': 'Distrito',
+      'universidadesIds': 'Universidades',
+      'transportes': 'Medios de Transporte',
+      'habitaciones': 'Habitaciones',
+      'banios': 'Baños',
+      'area': 'Área',
+      'piso': 'Piso'
+    };
+
+    const fieldLabel = fieldLabels[fieldName] || fieldName;
+
+    if (errors['required']) {
+      return `• ${fieldLabel}: Este campo es obligatorio.`;
+    }
+
+    if (errors['minlength']) {
+      const requiredLength = errors['minlength'].requiredLength;
+      if (fieldName === 'titulo') return `• ${fieldLabel}: Debe tener al menos ${requiredLength} caracteres (actualmente ${errors['minlength'].actualLength}).`;
+      if (fieldName === 'descripcion') return `• ${fieldLabel}: Debe tener al menos ${requiredLength} caracteres (actualmente ${errors['minlength'].actualLength}).`;
+      if (fieldName === 'direccion') return `• ${fieldLabel}: Debe tener al menos ${requiredLength} caracteres. Ejemplo: "Av. Universidad 456, San Miguel"`;
+      if (fieldName === 'nroPartida') return `• ${fieldLabel}: Debe tener al menos ${requiredLength} dígitos. Ejemplo: "12345678"`;
+    }
+
+    if (errors['min']) {
+      const minValue = errors['min'].min;
+      if (fieldName === 'precioMensual') return `• ${fieldLabel}: Debe ser mayor a S/${minValue}.`;
+      if (fieldName === 'area') return `• ${fieldLabel}: Debe ser mayor a ${minValue} m².`;
+      if (fieldName === 'habitaciones' || fieldName === 'banios' || fieldName === 'piso') {
+        return `• ${fieldLabel}: Debe ser mayor a ${minValue}.`;
+      }
+    }
+
+    if (errors['max']) {
+      const maxValue = errors['max'].max;
+      if (fieldName === 'precioMensual') return `• ${fieldLabel}: Debe ser menor a S/${maxValue}.`;
+      if (fieldName === 'area') return `• ${fieldLabel}: Debe ser menor a ${maxValue} m².`;
+      if (fieldName === 'habitaciones' || fieldName === 'banios' || fieldName === 'piso') {
+        return `• ${fieldLabel}: Debe ser menor a ${maxValue}.`;
+      }
+    }
+
+    if (errors['pattern']) {
+      if (fieldName === 'nroPartida') return `• ${fieldLabel}: Solo debe contener números. Ejemplo: "12345678"`;
+    }
+
+    if (errors['minArrayLength']) {
+      const required = errors['minArrayLength'].required;
+      if (fieldName === 'universidadesIds') return `• ${fieldLabel}: Debes seleccionar al menos ${required} universidad.`;
+      if (fieldName === 'transportes') return `• ${fieldLabel}: Debes seleccionar al menos ${required} medio de transporte.`;
+    }
+
+    return `• ${fieldLabel}: Campo inválido.`;
   }
 
   getControl(name: string): AbstractControl | null {
