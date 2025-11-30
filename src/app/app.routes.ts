@@ -1,24 +1,27 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./features/auth/auth.routes').then(m => m.authRoutes)
   },
-{
+  {
     path: 'student',
-    // La redirección irá aquí: /student/dashboard
     loadChildren: () => import('./features/student/student.routes').then(m => m.studentRoutes)
   },
   {
     path: 'landlord',
-    // La redirección irá aquí: /landlord/dashboard
     loadChildren: () => import('./features/landlord/landlord.routes').then(m => m.landlordRoutes)
   },
   {
     path: '',
     loadChildren: () => import('./features/landing/home.routes').then(m => m.homeRoutes)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./features/admin/admin.routes').then(m => m.adminRoutes)
   },
   {
     path: '**', // Ruta comodín para cualquier URL no encontrada

@@ -61,7 +61,6 @@ export class LoginComponent {
             break;
 
           case RoleType.ROLE_ADMIN:
-            // Si tienes un módulo de admin, usa su ruta
             this.router.navigate(['/admin/dashboard']);
             break;
 
@@ -71,7 +70,7 @@ export class LoginComponent {
             this.authService.logout();
             break;
         }
-
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Login error', err);

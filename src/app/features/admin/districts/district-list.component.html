@@ -1,0 +1,53 @@
+<div class="admin-container">
+    <app-admin-sidebar></app-admin-sidebar>
+    <main class="main-content">
+        <app-admin-topbar></app-admin-topbar>
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h2 class="page-title">Gestión de Distritos</h2>
+                <button class="btn-primary" (click)="openCreateModal()">
+                    + Nuevo Distrito
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Precio Prom.</th>
+                            <th>Seguridad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let dist of districts()">
+                            <td>{{ dist.id }}</td>
+                            <td>{{ dist.nombre }}</td>
+                            <td>{{ dist.tipo }}</td>
+                            <td>S/ {{ dist.precioProm }}</td>
+                            <td>
+                                <span class="security-badge" [class.high]="dist.seguridad >= 4"
+                                    [class.medium]="dist.seguridad === 3" [class.low]="dist.seguridad < 3">
+                                    {{ dist.seguridad }}/5
+                                </span>
+                            </td>
+                            <td class="actions-cell">
+                                <button class="btn-icon edit" (click)="editDistrict(dist)">✏️</button>
+                                <button class="btn-icon delete" (click)="deleteDistrict(dist)">🗑️</button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="districts().length === 0">
+                            <td colspan="6" class="empty-state">No hay distritos registrados.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <app-district-form *ngIf="showModal" [district]="selectedDistrict" (save)="onSaveDistrict($event)"
+                (cancel)="closeModal()"></app-district-form>
+        </div>
+    </main>
+</div>

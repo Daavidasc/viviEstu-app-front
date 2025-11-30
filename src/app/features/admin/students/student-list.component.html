@@ -1,0 +1,46 @@
+<div class="admin-container">
+    <app-admin-sidebar></app-admin-sidebar>
+    <main class="main-content">
+        <app-admin-topbar></app-admin-topbar>
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h2 class="page-title">Gestión de Estudiantes</h2>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre Completo</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>DNI</th>
+                            <th>Carrera</th>
+                            <th>Ciclo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let student of students()">
+                            <td>{{ student.id }}</td>
+                            <td>{{ student.nombre }} {{ student.apellidos }}</td>
+                            <td>{{ student.correo }}</td>
+                            <td>{{ student.telefono }}</td>
+                            <td>{{ student.dni }}</td>
+                            <td>{{ student.carrera }}</td>
+                            <td>{{ student.ciclo }}</td>
+                            <td class="actions-cell">
+                                <button class="btn-icon delete" (click)="banStudent(student)"
+                                    title="Eliminar/Banear">🗑️</button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="students().length === 0">
+                            <td colspan="8" class="empty-state">No hay estudiantes registrados.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
