@@ -1,57 +1,49 @@
-<div class="admin-container">
-    <app-admin-sidebar></app-admin-sidebar>
-    <main class="main-content">
-        <app-admin-topbar></app-admin-topbar>
-        <div class="content-wrapper">
-            <div class="page-header">
-                <h2 class="page-title">Moderación de Alojamientos</h2>
-            </div>
+<div class="page-header">
+    <h2 class="page-title">Moderación de Alojamientos</h2>
+</div>
 
-            <div class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Título</th>
-                            <th>Propietario</th>
-                            <th>Distrito</th>
-                            <th>Precio</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let acc of accommodations()">
-                            <td>{{ acc.id }}</td>
-                            <td>
-                                <div class="acc-title">{{ acc.titulo }}</div>
-                                <small class="acc-address">{{ acc.direccion }}</small>
-                            </td>
-                            <td>{{ acc.propietario }}</td>
-                            <td>{{ acc.distrito }}</td>
-                            <td>S/ {{ acc.precioMensual }}</td>
-                            <td>
-                                <span class="status-badge" [class.rented]="acc.alquilado"
-                                    [class.available]="!acc.alquilado">
-                                    {{ acc.alquilado ? 'Alquilado' : 'Disponible' }}
-                                </span>
-                            </td>
-                            <td class="actions-cell">
-                                <button class="btn-icon action"
-                                    [title]="acc.alquilado ? 'Marcar como Disponible' : 'Marcar como Alquilado'"
-                                    (click)="toggleStatus(acc)">
-                                    {{ acc.alquilado ? '🔓' : '🔒' }}
-                                </button>
-                                <button class="btn-icon delete" (click)="deleteAccommodation(acc)"
-                                    title="Eliminar">🗑️</button>
-                            </td>
-                        </tr>
-                        <tr *ngIf="accommodations().length === 0">
-                            <td colspan="7" class="empty-state">No hay alojamientos registrados.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
+<app-loading-spinner *ngIf="loading()" [fullscreen]="false"></app-loading-spinner>
+
+<div class="table-container" *ngIf="!loading()">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Propietario</th>
+                <th>Distrito</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let acc of accommodations()">
+                <td>{{ acc.id }}</td>
+                <td>
+                    <div class="acc-title">{{ acc.titulo }}</div>
+                    <small class="acc-address">{{ acc.direccion }}</small>
+                </td>
+                <td>{{ acc.propietario }}</td>
+                <td>{{ acc.distrito }}</td>
+                <td>S/ {{ acc.precioMensual }}</td>
+                <td>
+                    <span class="status-badge" [class.rented]="acc.alquilado" [class.available]="!acc.alquilado">
+                        {{ acc.alquilado ? 'Alquilado' : 'Disponible' }}
+                    </span>
+                </td>
+                <td class="actions-cell">
+                    <button class="btn-icon action"
+                        [title]="acc.alquilado ? 'Marcar como Disponible' : 'Marcar como Alquilado'"
+                        (click)="toggleStatus(acc)">
+                        {{ acc.alquilado ? '🔓' : '🔒' }}
+                    </button>
+                    <button class="btn-icon delete" (click)="deleteAccommodation(acc)" title="Eliminar">🗑️</button>
+                </td>
+            </tr>
+            <tr *ngIf="accommodations().length === 0">
+                <td colspan="7" class="empty-state">No hay alojamientos registrados.</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

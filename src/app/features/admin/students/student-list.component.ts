@@ -2,13 +2,12 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../../core/services/admin.service';
 import { StudentResponse } from '../../../core/models/user.models';
-import { AdminSidebarComponent } from '../components/admin-sidebar/admin-sidebar.component';
-import { AdminTopbarComponent } from '../components/admin-topbar/admin-topbar.component';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'app-student-list',
     standalone: true,
-    imports: [CommonModule, AdminSidebarComponent, AdminTopbarComponent],
+    imports: [CommonModule, LoadingSpinnerComponent],
     templateUrl: './student-list.component.html',
     styleUrls: ['./student-list.component.css']
 })
@@ -16,15 +15,23 @@ export class StudentListComponent implements OnInit {
     private adminService = inject(AdminService);
 
     students = signal<StudentResponse[]>([]);
+    loading = signal(false);
 
     ngOnInit() {
         this.loadStudents();
     }
 
     loadStudents() {
+        this.loading.set(true);
         this.adminService.getStudents().subscribe({
-            next: (data) => this.students.set(data),
-            error: (err) => console.error('Error loading students', err)
+            next: (data) => {
+                this.students.set(data);
+                this.loading.set(false);
+            },
+            error: (err) => {
+                console.error('Error loading students', err);
+                this.loading.set(false);
+            }
         });
     }
 

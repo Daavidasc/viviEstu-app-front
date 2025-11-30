@@ -1,40 +1,33 @@
-<div class="admin-container">
-    <app-admin-sidebar></app-admin-sidebar>
-    <main class="main-content">
-        <app-admin-topbar></app-admin-topbar>
-        <div class="content-wrapper">
-            <div class="page-header">
-                <h2 class="page-title">Moderación de Comentarios</h2>
-            </div>
+<div class="page-header">
+    <h2 class="page-title">Moderación de Comentarios</h2>
+</div>
 
-            <div class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Contenido</th>
-                            <th>Estudiante</th>
-                            <th>Alojamiento</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let comment of comments()">
-                            <td>{{ comment.id }}</td>
-                            <td class="content-cell">{{ comment.contenido }}</td>
-                            <td>{{ comment.estudianteNombre }}</td>
-                            <td>{{ comment.alojamientoTitulo }}</td>
-                            <td class="actions-cell">
-                                <button class="btn-icon delete" (click)="deleteComment(comment)"
-                                    title="Eliminar">🗑️</button>
-                            </td>
-                        </tr>
-                        <tr *ngIf="comments().length === 0">
-                            <td colspan="5" class="empty-state">No hay comentarios registrados.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
+<app-loading-spinner *ngIf="loading()" [fullscreen]="false"></app-loading-spinner>
+
+<div class="table-container" *ngIf="!loading()">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Estudiante</th>
+                <th>Alojamiento</th>
+                <th>Contenido</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let comment of comments()">
+                <td>{{ comment.id }}</td>
+                <td>{{ comment.estudianteNombre }}</td>
+                <td>{{ comment.alojamientoTitulo }}</td>
+                <td class="content-cell">{{ comment.contenido }}</td>
+                <td class="actions-cell">
+                    <button class="btn-icon delete" (click)="deleteComment(comment)" title="Eliminar">🗑️</button>
+                </td>
+            </tr>
+            <tr *ngIf="comments().length === 0">
+                <td colspan="5" class="empty-state">No hay comentarios registrados.</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

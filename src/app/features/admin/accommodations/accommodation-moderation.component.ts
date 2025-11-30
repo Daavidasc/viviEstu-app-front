@@ -2,13 +2,12 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../../core/services/admin.service';
 import { AlojamientoResponse } from '../../../core/models/accommodation.models';
-import { AdminSidebarComponent } from '../components/admin-sidebar/admin-sidebar.component';
-import { AdminTopbarComponent } from '../components/admin-topbar/admin-topbar.component';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'app-accommodation-moderation',
     standalone: true,
-    imports: [CommonModule, AdminSidebarComponent, AdminTopbarComponent],
+    imports: [CommonModule, LoadingSpinnerComponent],
     templateUrl: './accommodation-moderation.component.html',
     styleUrls: ['./accommodation-moderation.component.css']
 })
@@ -16,15 +15,23 @@ export class AccommodationModerationComponent implements OnInit {
     private adminService = inject(AdminService);
 
     accommodations = signal<AlojamientoResponse[]>([]);
+    loading = signal(false);
 
     ngOnInit() {
         this.loadAccommodations();
     }
 
     loadAccommodations() {
+        this.loading.set(true);
         this.adminService.getAccommodations().subscribe({
-            next: (data) => this.accommodations.set(data),
-            error: (err) => console.error('Error loading accommodations', err)
+            next: (data) => {
+                this.accommodations.set(data);
+                this.loading.set(false);
+            },
+            error: (err) => {
+                console.error('Error loading accommodations', err);
+                this.loading.set(false);
+            }
         });
     }
 

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from '../../core/guards/admin.guard';
 import { RoleType } from '../../core/models/auth.models';
+import { AdminComponent } from './admin.component';
 import { DashboardHomeComponent } from './dashboard/dashboard-home.component';
 import { AccommodationModerationComponent } from './accommodations/accommodation-moderation.component';
 import { UniversityListComponent } from './universities/university-list.component';
@@ -13,52 +14,44 @@ const ADMIN_ROLE = [RoleType.ROLE_ADMIN];
 
 export const adminRoutes: Routes = [
     {
-        path: 'dashboard',
-        component: DashboardHomeComponent,
-        canActivate: [adminGuard],
-        data: { roles: ADMIN_ROLE }
-    },
-    {
-        path: 'universities',
-        component: UniversityListComponent,
-        canActivate: [adminGuard],
-        data: { roles: ADMIN_ROLE }
-    },
-    {
-        path: 'districts',
-        component: DistrictListComponent,
-        canActivate: [adminGuard],
-        data: { roles: ADMIN_ROLE }
-    },
-    {
-        path: 'students',
-        component: StudentListComponent,
-        canActivate: [adminGuard],
-        data: { roles: ADMIN_ROLE }
-    },
-    {
-        path: 'landlords',
-        component: LandlordListComponent,
-        canActivate: [adminGuard],
-        data: { roles: ADMIN_ROLE }
-    },
-    {
-        path: 'accommodations',
-        component: AccommodationModerationComponent,
-        canActivate: [adminGuard],
-        data: { roles: ADMIN_ROLE }
-    },
-    {
-        path: 'comments',
-        component: CommentModerationComponent,
-        canActivate: [adminGuard],
-        data: { roles: ADMIN_ROLE }
-    },
-    {
         path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full'
+        component: AdminComponent,
+        canActivate: [adminGuard],
+        data: { roles: ADMIN_ROLE },
+        children: [
+            {
+                path: 'dashboard',
+                component: DashboardHomeComponent
+            },
+            {
+                path: 'universities',
+                component: UniversityListComponent
+            },
+            {
+                path: 'districts',
+                component: DistrictListComponent
+            },
+            {
+                path: 'students',
+                component: StudentListComponent
+            },
+            {
+                path: 'landlords',
+                component: LandlordListComponent
+            },
+            {
+                path: 'accommodations',
+                component: AccommodationModerationComponent
+            },
+            {
+                path: 'comments',
+                component: CommentModerationComponent
+            },
+            {
+                path: '',
+                redirectTo: 'dashboard',
+                pathMatch: 'full'
+            }
+        ]
     }
-
-
 ];

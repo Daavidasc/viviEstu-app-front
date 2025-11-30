@@ -3,16 +3,18 @@ import { CommonModule } from '@angular/common';
 import { AdminService } from '../../../core/services/admin.service';
 import { LocationService } from '../../../core/services/location.service';
 import { UniversidadResponse } from '../../../core/models/location.models';
-import { AdminSidebarComponent } from '../components/admin-sidebar/admin-sidebar.component';
-import { AdminTopbarComponent } from '../components/admin-topbar/admin-topbar.component';
 import { UniversityFormComponent } from '../components/university-form/university-form.component';
+
+
+
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 
 
 
 @Component({
     selector: 'app-university-list',
     standalone: true,
-    imports: [CommonModule, UniversityFormComponent, AdminSidebarComponent, AdminTopbarComponent],
+    imports: [CommonModule, UniversityFormComponent, LoadingSpinnerComponent],
     templateUrl: './university-list.component.html',
     styleUrls: ['./university-list.component.css']
 })
@@ -21,6 +23,7 @@ export class UniversityListComponent implements OnInit {
     private locationService = inject(LocationService);
 
     universities = signal<UniversidadResponse[]>([]);
+    loading = signal(false);
     showModal = false;
     selectedUniversity: UniversidadResponse | null = null;
 
@@ -29,9 +32,16 @@ export class UniversityListComponent implements OnInit {
     }
 
     loadUniversities() {
+        this.loading.set(true);
         this.locationService.getAllUniversities().subscribe({
-            next: (data) => this.universities.set(data),
-            error: (err) => console.error('Error loading universities', err)
+            next: (data) => {
+                this.universities.set(data);
+                this.loading.set(false);
+            },
+            error: (err) => {
+                console.error('Error loading universities', err);
+                this.loading.set(false);
+            }
         });
     }
 

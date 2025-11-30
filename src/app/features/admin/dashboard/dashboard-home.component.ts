@@ -1,12 +1,21 @@
-import { Component } from '@angular/core';
-import { AdminSidebarComponent } from '../components/admin-sidebar/admin-sidebar.component';
-import { AdminTopbarComponent } from '../components/admin-topbar/admin-topbar.component';
+import { Component, OnInit, signal } from '@angular/core';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-dashboard-home',
     standalone: true,
-    imports: [AdminSidebarComponent, AdminTopbarComponent],
+    imports: [CommonModule, LoadingSpinnerComponent],
     templateUrl: './dashboard-home.component.html',
     styleUrls: ['./dashboard-home.component.css']
 })
-export class DashboardHomeComponent { }
+export class DashboardHomeComponent implements OnInit {
+    loading = signal(true);
+
+    ngOnInit() {
+        // Simulate loading for dashboard stats
+        setTimeout(() => {
+            this.loading.set(false);
+        }, 1000);
+    }
+}

@@ -1,0 +1,35 @@
+<div class="page-header">
+    <h2 class="page-title">Gestión de Arrendadores</h2>
+</div>
+
+<app-loading-spinner *ngIf="loading()" [fullscreen]="false"></app-loading-spinner>
+
+<div class="table-container" *ngIf="!loading()">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre Completo</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>DNI</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let landlord of landlords()">
+                <td>{{ landlord.id }}</td>
+                <td>{{ landlord.nombre }} {{ landlord.apellidos }}</td>
+                <td>{{ landlord.correo }}</td>
+                <td>{{ landlord.telefono }}</td>
+                <td>{{ landlord.dni }}</td>
+                <td class="actions-cell">
+                    <button class="btn-icon delete" (click)="deleteLandlord(landlord)" title="Eliminar">🗑️</button>
+                </td>
+            </tr>
+            <tr *ngIf="landlords().length === 0">
+                <td colspan="6" class="empty-state">No hay arrendadores registrados.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

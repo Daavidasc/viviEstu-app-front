@@ -2,23 +2,23 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../../core/services/admin.service';
 import { LocationService } from '../../../core/services/location.service';
-import { AdminSidebarComponent } from '../components/admin-sidebar/admin-sidebar.component';
-import { AdminTopbarComponent } from '../components/admin-topbar/admin-topbar.component';
-import { DistritoResponse } from '../../../core/models/location.models';
 import { DistrictFormComponent } from '../components/district-form/district-form.component';
+import { DistritoResponse } from '../../../core/models/location.models';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'app-district-list',
     standalone: true,
-    imports: [CommonModule, AdminSidebarComponent, AdminTopbarComponent, DistrictFormComponent],
+    imports: [CommonModule, DistrictFormComponent, LoadingSpinnerComponent],
     templateUrl: './district-list.component.html',
     styleUrls: ['./district-list.component.css']
 })
 export class DistrictListComponent implements OnInit {
-    private adminService = inject(AdminService);
     private locationService = inject(LocationService);
+    private adminService = inject(AdminService);
 
     districts = signal<DistritoResponse[]>([]);
+    loading = signal(false);
     showModal = false;
     selectedDistrict: DistritoResponse | null = null;
 
@@ -27,9 +27,16 @@ export class DistrictListComponent implements OnInit {
     }
 
     loadDistricts() {
+        this.loading.set(true);
         this.locationService.getAllDistricts().subscribe({
-            next: (data) => this.districts.set(data),
-            error: (err) => console.error('Error loading districts', err)
+            next: (data) => {
+                this.districts.set(data);
+                this.loading.set(false);
+            },
+            error: (err) => {
+                console.error('Error loading districts', err);
+                this.loading.set(false);
+            }
         });
     }
 
