@@ -16,7 +16,7 @@
                             </div>
                             <div class="stat-info">
                                 <span class="stat-label">Estudiantes</span>
-                                <span class="stat-value">1,234</span>
+                                <span class="stat-value">{{ stats()?.totalUsuarios || 0 }}</span>
                             </div>
                         </div>
 
@@ -27,7 +27,7 @@
                             </div>
                             <div class="stat-info">
                                 <span class="stat-label">Propietarios</span>
-                                <span class="stat-value">56</span>
+                                <span class="stat-value">{{ stats()?.totalPropietarios || 0 }}</span>
                             </div>
                         </div>
 
@@ -38,7 +38,7 @@
                             </div>
                             <div class="stat-info">
                                 <span class="stat-label">Alojamientos</span>
-                                <span class="stat-value">89</span>
+                                <span class="stat-value">{{ stats()?.totalAlojamientos || 0 }}</span>
                             </div>
                         </div>
 
@@ -49,7 +49,7 @@
                             </div>
                             <div class="stat-info">
                                 <span class="stat-label">Universidades</span>
-                                <span class="stat-value">12</span>
+                                <span class="stat-value">{{ stats()?.totalUniversidades || 0 }}</span>
                             </div>
                         </div>
                     </div>

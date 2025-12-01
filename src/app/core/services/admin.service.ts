@@ -7,6 +7,7 @@ import {
     DistritoResponse,
     DistrictDetailViewModel
 } from '../models/location.models';
+import { AdminStats } from '../models/admin.models';
 // Assuming models for Student, Landlord, Accommodation exist or will be created. 
 // For now using any or defining interfaces here if not present.
 // Ideally we should have models. 
@@ -94,5 +95,10 @@ export class AdminService {
 
     deleteComment(id: number): Observable<any> {
         return this.http.delete(`${this.apiUrl}/comentarios/${id}`);
+    }
+
+    // --- Stats ---
+    getDashboardStats(): Observable<AdminStats> {
+        return this.http.get<AdminStats>(`${this.apiUrl}/admin/stats`);
     }
 }
