@@ -8,6 +8,7 @@ import {
     DistrictDetailViewModel
 } from '../models/location.models';
 import { AdminStats } from '../models/admin.models';
+import { ComentarioResponse } from '../models/interaction.models';
 // Assuming models for Student, Landlord, Accommodation exist or will be created. 
 // For now using any or defining interfaces here if not present.
 // Ideally we should have models. 
@@ -89,8 +90,8 @@ export class AdminService {
     }
 
     // --- Comments ---
-    getComments(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.apiUrl}/comentarios`);
+    getComments(): Observable<ComentarioResponse[]> {
+        return this.http.get<ComentarioResponse[]>(`${this.apiUrl}/comentarios`);
     }
 
     deleteComment(id: number): Observable<any> {
