@@ -1,0 +1,49 @@
+<div class="page-header">
+    <h2 class="page-title">Gestión de Estudiantes</h2>
+</div>
+
+@if (loading()) {
+<app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+}
+
+@if (!loading()) {
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Estudiante</th>
+                <th>Teléfono</th>
+                <th>DNI</th>
+                <th>Carrera / Ciclo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (student of students(); track student.id) {
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>
+                    <div class="cell-title">{{ student.nombre }} {{ student.apellidos }}</div>
+                    <small class="cell-subtitle">{{ student.correo }}</small>
+                </td>
+                <td>{{ student.telefono }}</td>
+                <td>{{ student.dni }}</td>
+                <td>
+                    <div class="cell-title">{{ student.carrera }}</div>
+                    <small class="cell-subtitle">Ciclo {{ student.ciclo }}</small>
+                </td>
+                <td class="actions-cell">
+                    <button class="btn-icon delete" (click)="banStudent(student)" title="Banear/Eliminar">🚫</button>
+                </td>
+            </tr>
+            }
+            @if (students().length === 0) {
+            <tr>
+                <td colspan="6" class="empty-state">No hay estudiantes registrados.</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}

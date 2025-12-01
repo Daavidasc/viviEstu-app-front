@@ -1,0 +1,41 @@
+<div class="page-header">
+    <h2 class="page-title">Moderación de Comentarios</h2>
+</div>
+
+@if (loading()) {
+<app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+}
+
+@if (!loading()) {
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Estudiante</th>
+                <th>Alojamiento</th>
+                <th>Contenido</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (comment of comments(); track comment.id) {
+            <tr>
+                <td>{{ comment.id }}</td>
+                <td>{{ comment.estudianteNombre }}</td>
+                <td>{{ comment.alojamientoTitulo }}</td>
+                <td class="content-cell">{{ comment.contenido }}</td>
+                <td class="actions-cell">
+                    <button class="btn-icon delete" (click)="deleteComment(comment)" title="Eliminar">🗑️</button>
+                </td>
+            </tr>
+            }
+            @if (comments().length === 0) {
+            <tr>
+                <td colspan="5" class="empty-state">No hay comentarios registrados.</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}

@@ -1,0 +1,50 @@
+<div class="page-header">
+    <h2 class="page-title">Gestión de Universidades</h2>
+    <button class="btn-primary" (click)="openCreateModal()">
+        + Nueva Universidad
+    </button>
+</div>
+
+@if (loading()) {
+<app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+}
+
+@if (!loading()) {
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Distrito</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (uni of universities(); track uni.id) {
+            <tr>
+                <td>{{ uni.id }}</td>
+                <td>
+                    <div class="cell-title">{{ uni.nombre }}</div>
+                </td>
+                <td>{{ uni.distritoNombre }}</td>
+                <td class="actions-cell">
+                    <button class="btn-icon edit" (click)="editUniversity(uni)">✏️</button>
+                    <button class="btn-icon delete" (click)="deleteUniversity(uni)">🗑️</button>
+                </td>
+            </tr>
+            }
+            @if (universities().length === 0) {
+            <tr>
+                <td colspan="4" class="empty-state">No hay universidades registradas.</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}
+
+@if (showModal) {
+<app-university-form [university]="selectedUniversity" (save)="onSaveUniversity($event)"
+    (cancel)="closeModal()"></app-university-form>
+}

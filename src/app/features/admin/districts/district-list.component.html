@@ -1,0 +1,61 @@
+<div class="page-header">
+    <h2 class="page-title">Gestión de Distritos</h2>
+    <button class="btn-primary" (click)="openCreateModal()">
+        + Nuevo Distrito
+    </button>
+</div>
+
+@if (loading()) {
+<app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+}
+
+@if (!loading()) {
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Precio Prom.</th>
+                <th>Seguridad</th>
+                <th>Ver</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (dist of districts(); track dist.id) {
+            <tr>
+                <td>{{ dist.id }}</td>
+                <td>{{ dist.nombre }}</td>
+                <td>{{ dist.tipo }}</td>
+                <td>S/ {{ dist.precioProm }}</td>
+                <td>
+                    <span class="security-badge" [class.high]="dist.seguridad >= 4"
+                        [class.medium]="dist.seguridad === 3" [class.low]="dist.seguridad < 3">
+                        {{ dist.seguridad }}/5
+                    </span>
+                </td>
+                <td>
+                    <button class="btn-icon view" (click)="viewDistrict(dist)" title="Ver Detalle">👁️</button>
+                </td>
+                <td class="actions-cell">
+                    <button class="btn-icon edit" (click)="editDistrict(dist)" title="Editar">✏️</button>
+                    <button class="btn-icon delete" (click)="deleteDistrict(dist)" title="Eliminar">🗑️</button>
+                </td>
+            </tr>
+            }
+            @if (districts().length === 0) {
+            <tr>
+                <td colspan="7" class="empty-state">No hay distritos registrados.</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}
+
+@if (showModal) {
+<app-district-form [district]="selectedDistrict" (save)="onSaveDistrict($event)"
+    (cancel)="closeModal()"></app-district-form>
+}

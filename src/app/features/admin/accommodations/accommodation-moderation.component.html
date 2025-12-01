@@ -1,0 +1,61 @@
+<div class="page-header">
+    <h2 class="page-title">Moderación de Alojamientos</h2>
+</div>
+
+@if (loading()) {
+<app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+}
+
+@if (!loading()) {
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Propietario</th>
+                <th>Distrito</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Ver</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (acc of accommodations(); track acc.id) {
+            <tr>
+                <td>{{ acc.id }}</td>
+                <td>
+                    <div class="cell-title">{{ acc.titulo }}</div>
+                    <small class="cell-subtitle">{{ acc.direccion }}</small>
+                </td>
+                <td>{{ acc.propietario }}</td>
+                <td>{{ acc.distrito }}</td>
+                <td>S/ {{ acc.precioMensual }}</td>
+                <td>
+                    <span class="status-badge" [class.rented]="acc.alquilado" [class.available]="!acc.alquilado">
+                        {{ acc.alquilado ? 'Alquilado' : 'Disponible' }}
+                    </span>
+                </td>
+                <td>
+                    <button class="btn-icon view" (click)="viewAccommodation(acc)" title="Ver Detalle">👁️</button>
+                </td>
+                <td class="actions-cell">
+                    <button class="btn-icon action"
+                        [title]="acc.alquilado ? 'Marcar como Disponible' : 'Marcar como Alquilado'"
+                        (click)="toggleStatus(acc)">
+                        {{ acc.alquilado ? '🔓' : '🔒' }}
+                    </button>
+                    <button class="btn-icon delete" (click)="deleteAccommodation(acc)" title="Eliminar">🗑️</button>
+                </td>
+            </tr>
+            }
+            @if (accommodations().length === 0) {
+            <tr>
+                <td colspan="8" class="empty-state">No hay alojamientos registrados.</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}

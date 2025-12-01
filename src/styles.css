@@ -9,4 +9,26 @@
 :root {
   color-scheme: light dark;
 
+  /* Identidad de Marca */
+  --primary-gold: #B88F2F;
+  /* Acciones principales, Sidebar activo */
+  --secondary-cream: #FFF3E3;
+  /* Fondos de cabeceras y hovers */
+  --accent-ivory: #FCF8F3;
+  /* Fondo general del área de trabajo */
+
+  /* UI / Neutros */
+  --text-dark: #2C3E50;
+  /* Sidebar fondo, Texto principal */
+  --text-light: #7F8C8D;
+  /* Textos secundarios */
+  --border-color: #E0E0E0;
+  /* Separadores */
+  --white: #FFFFFF;
+
+  /* Estados */
+  --danger: #DC3545;
+  /* Botones de eliminar/banear */
+  --success: #28A745;
+  /* Indicadores de estado activo */
 }

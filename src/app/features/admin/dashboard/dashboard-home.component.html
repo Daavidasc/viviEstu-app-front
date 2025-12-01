@@ -1,0 +1,67 @@
+<div class="admin-container">
+    <main class="main-content">
+        <div class="content-wrapper">
+            @if (loading()) {
+            <app-loading-spinner [fullscreen]="false"></app-loading-spinner>
+            }
+            <div class="dashboard-container">
+                <h1 class="page-title">Panel de Control</h1>
+                @if (!loading()) {
+                <div class="stats">
+                    <div class="stats-grid">
+                        <!-- Estudiantes -->
+                        <div class="stat-card">
+                            <div class="icon-container">
+                                <span class="icon">🎓</span>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">Estudiantes</span>
+                                <span class="stat-value">{{ stats()?.totalUsuarios || 0 }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Propietarios -->
+                        <div class="stat-card">
+                            <div class="icon-container">
+                                <span class="icon">🏠</span>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">Propietarios</span>
+                                <span class="stat-value">{{ stats()?.totalPropietarios || 0 }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Alojamientos -->
+                        <div class="stat-card">
+                            <div class="icon-container">
+                                <span class="icon">🛡️</span>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">Alojamientos</span>
+                                <span class="stat-value">{{ stats()?.totalAlojamientos || 0 }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Universidades -->
+                        <div class="stat-card">
+                            <div class="icon-container">
+                                <span class="icon">🏛️</span>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">Universidades</span>
+                                <span class="stat-value">{{ stats()?.totalUniversidades || 0 }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+
+                <div class="welcome-section">
+                    <h3>Bienvenido al Administrador de ViviEstu</h3>
+                    <p>Desde aquí podrás gestionar la infraestructura de datos, moderar usuarios y revisar las
+                        publicaciones de alojamientos.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

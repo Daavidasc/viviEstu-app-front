@@ -1,0 +1,70 @@
+.sidebar {
+    width: 260px;
+    background-color: var(--text-dark);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    left: 0;
+    top: 0;
+}
+
+.logo-container {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-container h2 {
+    color: var(--primary-gold);
+    margin: 0;
+}
+
+.badge {
+    background: var(--primary-gold);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.nav-menu {
+    padding: 20px 0;
+}
+
+.nav-section {
+    margin-bottom: 20px;
+}
+
+.nav-section h3 {
+    padding: 0 20px;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.nav-section a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: var(--white);
+    text-decoration: none;
+    transition: all 0.3s;
+    gap: 10px;
+}
+
+.nav-section a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--secondary-cream);
+}
+
+.nav-section a.active {
+    background-color: var(--primary-gold);
+    color: var(--white);
+    border-left: 4px solid var(--secondary-cream);
+}
