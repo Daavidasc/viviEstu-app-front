@@ -4,6 +4,7 @@ import { UploadAccommodationPageComponent } from './upload-accommodation-page/up
 import { LandlordProfilePageComponent } from './landlord-profile-page/landlord-profile-page.component';
 import { EditLandlordProfilePageComponent } from './edit-landlord-profile-page/edit-landlord-profile-page.component';
 import { LandlordAccommodationDetailComponent } from './landlord-accommodation-detail/landlord-accommodation-detail.component';
+import { AccommodationRequestsPageComponent } from './accommodation-requests-page/accommodation-requests-page.component';
 import { RoleType } from '../../core/models/auth.models';
 import { authGuard } from '../../core/guards/auth.guard';
 
@@ -15,6 +16,12 @@ export const landlordRoutes: Routes = [
     component: LandlordDashboardComponent,
     canActivate: [authGuard], // 👈 APLICAR GUARD
     data: { roles: LANDLORD_ROLE } // 👈 REQUERIR ROL
+  },
+  {
+    path: 'requests',
+    component: AccommodationRequestsPageComponent,
+    canActivate: [authGuard],
+    data: { roles: LANDLORD_ROLE }
   },
   {
     path: 'upload',

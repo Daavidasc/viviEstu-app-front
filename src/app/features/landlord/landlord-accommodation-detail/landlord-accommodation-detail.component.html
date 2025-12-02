@@ -1,6 +1,18 @@
 <div class="app-container">
     <app-landlord-navbar />
 
+    <!-- Notification Popup -->
+    @if (notification.show) {
+    <div class="notification-toast" [class]="'notification-' + notification.type">
+        <div class="notification-content">
+            <div class="notification-message">{{ notification.message }}</div>
+            <button class="notification-close" (click)="closeNotification()">
+                Entendido
+            </button>
+        </div>
+    </div>
+    }
+
     @if (isLoading) {
     <app-loading-spinner message="Cargando detalles del alojamiento..." />
     } @else {
@@ -63,7 +75,10 @@
                         <span class="requests-count">{{ requests.length }}</span>
                     </div>
                     <div class="requests-content">
-                        <app-accommodation-requests-list [requests]="requests" />
+                        <app-accommodation-requests-list 
+                            [requests]="requests" 
+                            (acceptRequest)="acceptRequest($event)"
+                            (rejectRequest)="rejectRequest($event)" />
                     </div>
                 </div>
             </div>

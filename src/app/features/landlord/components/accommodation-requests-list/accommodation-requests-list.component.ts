@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RequestViewModel } from '../../../../core/models/request.models';
 
@@ -13,4 +13,14 @@ import { RequestViewModel } from '../../../../core/models/request.models';
 })
 export class AccommodationRequestsListComponent {
   @Input() requests: RequestViewModel[] = [];
+  @Output() acceptRequest = new EventEmitter<number>();
+  @Output() rejectRequest = new EventEmitter<number>();
+
+  onAcceptRequest(requestId: number) {
+    this.acceptRequest.emit(requestId);
+  }
+
+  onRejectRequest(requestId: number) {
+    this.rejectRequest.emit(requestId);
+  }
 }

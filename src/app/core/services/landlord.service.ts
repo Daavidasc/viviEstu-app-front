@@ -70,6 +70,11 @@ export class LandlordService {
     );
   }
 
+  // === ACTUALIZAR ESTADO DE SOLICITUD ===
+  updateRequestStatus(requestId: number, status: 'ACEPTADO' | 'RECHAZADO'): Observable<any> {
+    return this.http.put(`${this.apiUrl}/solicitudes/${requestId}/estado`, { estado: status });
+  }
+
   // Helper privado para mapear
   private mapToRequestViewModel(dto: SolicitudResponse): RequestViewModel {
     let color: 'green' | 'yellow' | 'red' | 'gray' = 'gray';
