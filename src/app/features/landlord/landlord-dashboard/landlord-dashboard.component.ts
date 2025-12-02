@@ -8,7 +8,7 @@ import { LandlordRentalCardComponent } from '../components/landlord-rental-card/
 
 import { LandlordService } from '../../../core/services/landlord.service';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
-import { MyRentalViewModel } from '../../../core/models/landlord.models';
+import { MyRentalViewModel, AccommodationAnalyticsViewModel } from '../../../core/models/landlord.models';
 import { RequestViewModel } from '../../../core/models/request.models';
 
 @Component({
@@ -22,8 +22,10 @@ export class LandlordDashboardComponent implements OnInit {
   userName: string = '';
   requests: RequestViewModel[] = [];
   myRentals: MyRentalViewModel[] = [];
+  analytics: AccommodationAnalyticsViewModel[] = [];
   isLoading = true;
   requestsError: string | null = null;
+  analyticsError: string | null = null;
 
   constructor(
     private landlordService: LandlordService,
@@ -72,12 +74,27 @@ export class LandlordDashboardComponent implements OnInit {
         this.checkLoading();
       }
     });
+
+    // Cargar estadísticas de alojamientos
+    this.landlordService.getAccommodationAnalytics().subscribe({
+      next: (analytics) => {
+        this.analytics = analytics;
+        this.analyticsError = null;
+        this.checkLoading();
+      },
+      error: (err) => {
+        console.error('Error loading analytics', err);
+        this.analyticsError = 'Sin datos de interacciones disponibles aún.';
+        this.analytics = [];
+        this.checkLoading();
+      }
+    });
   }
 
   private loadedCount = 0;
   private checkLoading() {
     this.loadedCount++;
-    if (this.loadedCount >= 2) { // Esperamos a rentals y requests
+    if (this.loadedCount >= 3) { // Esperamos a rentals, requests y analytics
       this.isLoading = false;
       this.cdr.detectChanges();
     }

@@ -14,6 +14,50 @@
         </div>
       </div>
 
+      <!-- Analytics Table Section -->
+      <section class="analytics-section">
+        @if (analyticsError) {
+        <div class="alert alert-info">
+          <h4>📊 Estadísticas de Interacciones</h4>
+          <p>{{ analyticsError }}</p>
+          <small>Las estadísticas aparecerán cuando los estudiantes interactúen con tus alojamientos.</small>
+        </div>
+        } @else if (analytics.length > 0) {
+        <div class="analytics-table-container">
+          <table class="analytics-table">
+            <thead>
+              <tr>
+                <th>Alojamiento</th>
+                <th>Interacciones</th>
+                <th>Estudiantes</th>
+                <th>Universidad Principal</th>
+                <th>Distrito Principal</th>
+                <th>Promedio/Estudiante</th>
+                <th>Última Interacción</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(item of analytics; track item.id) {
+              <tr>
+                <td class="accommodation-name">{{ item.name }}</td>
+                <td class="metric-value">{{ item.totalInteractions }}</td>
+                <td class="metric-value">{{ item.uniqueStudents }}</td>
+                <td class="university">{{ item.topUniversity }}</td>
+                <td class="district">{{ item.topDistrict }}</td>
+                <td class="metric-value">{{ item.avgInteractionsPerStudent | number:'1.1-1' }}</td>
+                <td class="last-interaction">{{ item.formattedLastInteraction }}</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        } @else {
+        <div class="no-analytics">
+          <p>No hay datos de interacciones disponibles.</p>
+        </div>
+        }
+      </section>
+
       @if (requestsError) {
       <div class="alert alert-danger">
         {{ requestsError }}
