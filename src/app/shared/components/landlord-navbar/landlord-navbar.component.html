@@ -15,12 +15,7 @@
     <div class="user-actions">
       <a routerLink="/landlord/profile" class="user-avatar-nav">
         <div class="user-avatar">
-          @if (currentUser && currentUser.urlFotoPerfil && !imageLoadError) {
-          <img [src]="currentUser.urlFotoPerfil" alt="Avatar de {{currentUser.nombre}}" class="avatar-image"
-            (error)="handleImageError()">
-          } @else {
           <i class="far fa-user-circle"></i>
-          }
         </div>
       </a>
       <button (click)="logout()" class="logout-button desktop-only">

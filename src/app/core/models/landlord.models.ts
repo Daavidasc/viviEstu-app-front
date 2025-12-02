@@ -1,4 +1,3 @@
-// DTO del Backend
 export interface PropietarioProfileResponse {
     id: number;
     nombre: string;
@@ -6,16 +5,10 @@ export interface PropietarioProfileResponse {
     correo: string;
     telefono: string;
     dni: string;
-    urlFotoPerfil?: string;
 }
 
-// ViewModel (Para el Dashboard del Propietario)
-export interface LandlordProfileViewModel extends PropietarioProfileResponse {
-    fullName: string;
-    age?: number;
-    address?: string;
-    propertiesCount?: number;
-}
+// Alias para facilitar uso en el frontend
+export type LandlordProfile = PropietarioProfileResponse;
 
 // ViewModel para la tarjeta "Mis Alquileres" en el dashboard
 export interface MyRentalViewModel {

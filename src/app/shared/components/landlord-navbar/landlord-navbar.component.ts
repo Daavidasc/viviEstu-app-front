@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LandlordProfileViewModel } from '../../../core/models/landlord.models';
+import { LandlordProfile } from '../../../core/models/landlord.models';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { LandlordProfileViewModel } from '../../../core/models/landlord.models';
   styleUrls: ['./landlord-navbar.component.css']
 })
 export class LandlordNavbarComponent {
-  @Input() currentUser: LandlordProfileViewModel | null = null;
+  @Input() currentUser: LandlordProfile | null = null;
   imageLoadError = false;
 
   constructor(private authService: AuthService) { }

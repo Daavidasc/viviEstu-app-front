@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
-import { PropietarioProfileResponse, LandlordProfileViewModel, MyRentalViewModel } from '../models/landlord.models';
+import { LandlordProfile, MyRentalViewModel } from '../models/landlord.models';
 import { AlojamientoResponse } from '../models/accommodation.models';
 import { SolicitudResponse, RequestViewModel } from '../models/request.models';
 
@@ -16,20 +16,13 @@ export class LandlordService {
   private apiUrl = `${environment.apiUrl}`;
 
   // === PERFIL ===
-  getProfile(): Observable<PropietarioProfileResponse> {
-    return this.http.get<PropietarioProfileResponse>(`${this.apiUrl}/propietarios/me`);
+  getProfile(): Observable<LandlordProfile> {
+    return this.http.get<LandlordProfile>(`${this.apiUrl}/propietarios/me`);
   }
 
-  getViewProfile(): Observable<LandlordProfileViewModel> {
-    return this.getProfile().pipe(
-      map(p => ({
-        ...p,
-        fullName: `${p.nombre} ${p.apellidos}`,
-        age: 40, // Mock: Dato no disponible en backend aún
-        address: 'Lima, Perú', // Mock
-        propertiesCount: 0
-      }))
-    );
+  // 👇 NUEVO: Método para actualizar perfil
+  updateProfile(data: LandlordProfile): Observable<any> {
+    return this.http.put(`${this.apiUrl}/propietarios/me`, data);
   }
 
   // === MIS ALQUILERES ===
@@ -51,7 +44,7 @@ export class LandlordService {
     );
   }
 
-  // === SOLICITUDES RECIBIDAS (Todas) ===
+  // === SOLICITUDES ===
   getIncomingRequests(): Observable<RequestViewModel[]> {
     return this.getProfile().pipe(
       switchMap(p => this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/propietario/${p.id}`)),
@@ -59,7 +52,6 @@ export class LandlordService {
     );
   }
 
-  // 👇 MÉTODO CORREGIDO: Ahora se llama como lo espera tu componente
   getRequestsByAccommodationId(accommodationId: number): Observable<RequestViewModel[]> {
     return this.getProfile().pipe(
       switchMap(p => this.http.get<SolicitudResponse[]>(`${this.apiUrl}/solicitudes/propietario/${p.id}`)),
@@ -70,7 +62,6 @@ export class LandlordService {
     );
   }
 
-  // Helper privado para mapear
   private mapToRequestViewModel(dto: SolicitudResponse): RequestViewModel {
     let color: 'green' | 'yellow' | 'red' | 'gray' = 'gray';
     if (dto.estado === 'ACEPTADO') color = 'green';
@@ -80,10 +71,9 @@ export class LandlordService {
     return {
       requestId: dto.id,
       accommodationId: dto.alojamientoId,
-      // Para el landlord: Title = Nombre Estudiante, Subtitle = Título Alojamiento
       title: dto.nombreEstudiante,
       subtitle: dto.tituloAlojamiento,
-      image: `https://ui-avatars.com/api/?name=${dto.nombreEstudiante}`, // Avatar simple basado en nombre
+      image: `https://ui-avatars.com/api/?name=${dto.nombreEstudiante}`,
       status: dto.estado,
       statusColor: color,
       message: dto.mensaje,

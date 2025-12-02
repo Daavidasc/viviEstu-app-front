@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LandlordProfileViewModel } from '../../../../core/models/landlord.models';
+import { LandlordProfile } from '../../../../core/models/landlord.models';
 
 
 @Component({
@@ -11,5 +11,5 @@ import { LandlordProfileViewModel } from '../../../../core/models/landlord.model
   styleUrls: ['./profile-header-card.component.css']
 })
 export class ProfileHeaderCardComponent {
-  @Input() landlord!: LandlordProfileViewModel;
+  @Input() landlord!: LandlordProfile;
 }

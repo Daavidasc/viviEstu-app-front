@@ -1,10 +1,73 @@
 <div class="app-container">
   <app-landlord-navbar />
+
   <main class="main-content">
     <div class="container profile-container">
       <h1 class="page-title">Editar Perfil</h1>
-      <app-edit-profile-form [landlord]="landlord" />
+
+      @if (isLoading) {
+        <app-loading-spinner message="Cargando datos..." />
+      }
+      @else if (landlordData) {
+        <div class="form-card">
+          <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+
+            <div class="form-grid">
+              <!-- Nombres -->
+              <div class="form-group">
+                <label class="label-text">Nombres</label>
+                <input type="text" class="form-input" [(ngModel)]="landlordData.nombre" name="nombre" required>
+              </div>
+
+              <!-- Apellidos -->
+              <div class="form-group">
+                <label class="label-text">Apellidos</label>
+                <input type="text" class="form-input" [(ngModel)]="landlordData.apellidos" name="apellidos" required>
+              </div>
+            </div>
+
+            <!-- Correo (Read-only) -->
+            <div class="form-group">
+              <label class="label-text">Correo (No editable)</label>
+              <input type="email" class="form-input disabled" [(ngModel)]="landlordData.correo" name="correo" disabled>
+            </div>
+
+            <div class="form-grid">
+              <!-- DNI -->
+              <div class="form-group">
+                  <label class="label-text">DNI</label>
+                  <input type="text" class="form-input" [(ngModel)]="landlordData.dni" name="dni" required>
+              </div>
+
+              <!-- Teléfono -->
+              <div class="form-group">
+                  <label class="label-text">Teléfono</label>
+                  <input type="tel" class="form-input" [(ngModel)]="landlordData.telefono" name="telefono" required>
+              </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="form-actions">
+              <a routerLink="/landlord/profile" class="btn btn-secondary">Cancelar</a>
+              <button type="submit" class="btn btn-primary" [disabled]="isSaving || profileForm.invalid">
+                @if (isSaving) {
+                  <span>Guardando...</span>
+                } @else {
+                  <span>Guardar Cambios</span>
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+      }
+      @else {
+        <div class="error-message">
+          <p>No se pudieron cargar los datos del perfil.</p>
+          <button class="btn btn-secondary" (click)="loadProfile()">Reintentar</button>
+        </div>
+      }
     </div>
   </main>
+
   <app-footer />
 </div>

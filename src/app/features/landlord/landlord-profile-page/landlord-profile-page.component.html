@@ -1,27 +1,30 @@
 <div class="app-container">
   <app-landlord-navbar />
+
   <main class="main-content">
     <div class="container profile-container">
       <h1 class="page-title">Mi Perfil</h1>
-      
+
       <!-- Estado de carga -->
-      <div *ngIf="loading" class="loading-container">
-        <div class="spinner"></div>
-        <p>Cargando perfil...</p>
-      </div>
-      
-      <!-- Estado de error -->
-      <div *ngIf="error" class="error-container">
-        <p class="error-message">{{ error }}</p>
-        <button class="retry-btn" (click)="loadProfile()">Reintentar</button>
-      </div>
-      
+      @if (loading) {
+        <app-loading-spinner message="Cargando perfil..." />
+      }
+
       <!-- Perfil cargado -->
-      <div *ngIf="landlord && !loading && !error">
+      @else if (landlord) {
         <app-profile-header-card [landlord]="landlord" />
         <app-profile-info-card [landlord]="landlord" />
-      </div>
+      }
+
+      <!-- Estado de error -->
+      @else {
+        <div class="error-container">
+          <p class="error-message">{{ error || 'No se pudo cargar el perfil' }}</p>
+          <button class="btn btn-secondary" (click)="loadProfile()">Reintentar</button>
+        </div>
+      }
     </div>
   </main>
+
   <app-footer />
 </div>
