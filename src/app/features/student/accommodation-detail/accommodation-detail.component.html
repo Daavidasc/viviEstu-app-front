@@ -72,14 +72,21 @@
                 }
               </div>
             </div>
+
+            <!-- Mapa de Ubicación -->
+            <div class="section-block">
+              <h3 class="section-label">Ubicación en el Mapa</h3>
+              <app-google-maps [center]="mapCenter" [zoom]="mapZoom" [markers]="mapMarkers">
+              </app-google-maps>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- COLUMNA DERECHA: Formulario de Contacto + Comentarios -->
-    <div class="sidebar-column">
-     <app-contact-form [accommodationId]="accommodation.id" [studentId]="currentStudentId" />
-            <!-- Sección de Comentarios -->
+      <div class="sidebar-column">
+        <app-contact-form [accommodationId]="accommodation.id" [studentId]="currentStudentId" />
+        <!-- Sección de Comentarios -->
         <div class="comments-card">
           <h3 class="comments-title">💬 Comentarios</h3>
 
