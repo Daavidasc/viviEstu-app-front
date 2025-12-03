@@ -27,13 +27,14 @@
 
                     <div class="info-content">
                         <!-- Cabecera: Precio y Editar -->
-                        <div class="header-row">
-                            <h1 class="price-tag">S/.{{ accommodation.precioMensual }} <span class="period">/mes</span>
-                            </h1>
-                            <button type="button" class="btn-edit" (click)="openEditModal()">
-                                <i class="fas fa-edit"></i> Editar
-                            </button>
-                        </div>
+                          <div class="header-row">
+                              <h1 class="price-tag">S/.{{ accommodation.precioMensual }} <span class="period">/mes</span>
+                              </h1>
+
+                              <a [routerLink]="['/landlord/edit', accommodation.id]" class="btn-edit">
+                                  <i class="fas fa-edit"></i> Editar Datos
+                              </a>
+                          </div>
 
                         <p class="description-text">{{ accommodation.descripcion }}</p>
 
@@ -103,9 +104,4 @@
 
     <app-footer />
 
-    @if (isEditing && accommodation) {
-    <app-edit-accommodation-modal [accommodationId]="accommodation.id" (close)="isEditing = false"
-        (updated)="onAccommodationUpdated()">
-    </app-edit-accommodation-modal>
-    }
 </div>

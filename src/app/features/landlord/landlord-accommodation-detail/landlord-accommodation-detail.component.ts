@@ -12,12 +12,11 @@ import { CommonModule } from '@angular/common';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { AccommodationDetailViewModel } from '../../../core/models/accommodation.models';
 import { RequestViewModel } from '../../../core/models/request.models';
-import { EditAccommodationModalComponent } from '../components/edit-accommodation-modal/edit-accommodation-modal.component';
 
 @Component({
   selector: 'app-landlord-accommodation-detail',
   standalone: true,
-  imports: [FormsModule, RouterModule, LandlordNavbarComponent, FooterComponent, GalleryComponent, AccommodationRequestsListComponent, LoadingSpinnerComponent, CommonModule, EditAccommodationModalComponent],
+  imports: [FormsModule, RouterModule, LandlordNavbarComponent, FooterComponent, GalleryComponent, AccommodationRequestsListComponent, LoadingSpinnerComponent, CommonModule],
   templateUrl: './landlord-accommodation-detail.component.html',
   styleUrls: ['./landlord-accommodation-detail.component.css']
 })
@@ -80,10 +79,6 @@ export class LandlordAccommodationDetailComponent implements OnInit {
 
   getImageUrls(): string[] {
     return this.accommodation?.imagenes?.map(img => img.url) || [];
-  }
-
-  openEditModal() {
-    this.isEditing = true;
   }
 
   onAccommodationUpdated() {
