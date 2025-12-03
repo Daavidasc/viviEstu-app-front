@@ -26,6 +26,10 @@ export class AccommodationService {
     );
   }
 
+  updateAccommodation(id: number, data: any): Observable<AlojamientoResponse> {
+    return this.http.put<AlojamientoResponse>(`${this.apiUrl}/${id}`, data);
+  }
+
   /**
    * 👇 MÉTODO AGREGADO: Filtrado de alojamientos en el cliente
    * (Nota: Idealmente esto se haría en el backend, pero mantenemos la lógica actual)

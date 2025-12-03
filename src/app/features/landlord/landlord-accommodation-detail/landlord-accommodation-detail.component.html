@@ -28,14 +28,29 @@
                     <div class="info-content">
                         <!-- Cabecera: Precio y Editar -->
                         <div class="header-row">
-                            <h1 class="price-tag">S/.{{ accommodation.precioMensual }} <span class="period">/mes</span>
-                            </h1>
-                            <a [routerLink]="['/landlord/upload']" class="btn-edit">
+                            <h1 class="price-tag">S/.{{ accommodation.precioMensual }} <span class="period">/mes</span></h1>
+
+                            <a [routerLink]="['/landlord/edit', accommodation.id]" class="btn-edit">
                                 <i class="fas fa-edit"></i> Editar
                             </a>
                         </div>
 
                         <p class="description-text">{{ accommodation.descripcion }}</p>
+
+                        <div class="features-summary">
+                            <div class="feature-box">
+                                <i class="fas fa-ruler-combined"></i>
+                                <span>{{ accommodation.area }} m²</span>
+                            </div>
+                            <div class="feature-box">
+                                <i class="fas fa-bed"></i>
+                                <span>{{ accommodation.habitaciones }} Dorm.</span>
+                            </div>
+                            <div class="feature-box">
+                                <i class="fas fa-bath"></i>
+                                <span>{{ accommodation.banios }} Baños</span>
+                            </div>
+                        </div>
 
                         <!-- Ubicación -->
                         <div class="section-block">
@@ -75,8 +90,8 @@
                         <span class="requests-count">{{ requests.length }}</span>
                     </div>
                     <div class="requests-content">
-                        <app-accommodation-requests-list 
-                            [requests]="requests" 
+                        <app-accommodation-requests-list
+                            [requests]="requests"
                             (acceptRequest)="acceptRequest($event)"
                             (rejectRequest)="rejectRequest($event)" />
                     </div>

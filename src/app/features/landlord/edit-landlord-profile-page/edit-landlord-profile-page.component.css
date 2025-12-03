@@ -103,6 +103,38 @@
   justify-content: center;
 }
 
+.features-summary {
+    display: flex;
+    gap: 20px; /* Espacio entre cuadritos */
+    margin: 1.5rem 0; /* Separación arriba y abajo */
+    padding: 15px;
+    background-color: #f8f9fa; /* Fondo gris claro */
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.feature-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #495057;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.feature-box i {
+    color: #4a90e2; /* Color azul para los iconos */
+    font-size: 1.1rem;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 480px) {
+    .features-summary {
+        justify-content: space-between;
+        font-size: 0.85rem;
+    }
+}
+
 .btn-primary { background-color: var(--primary); color: var(--white); }
 .btn-primary:hover:not(:disabled) { background-color: var(--primary-hover); }
 .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }

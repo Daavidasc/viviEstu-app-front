@@ -65,7 +65,16 @@ export class LandlordService {
 
   // === ACTUALIZAR ESTADO DE SOLICITUD ===
   updateRequestStatus(requestId: number, status: 'ACEPTADO' | 'RECHAZADO'): Observable<any> {
-    return this.http.put(`${this.apiUrl}/solicitudes/${requestId}/estado`, { estado: status });
+    // 1. Determinar el endpoint según la acción
+    const action = status === 'ACEPTADO' ? 'aceptar' : 'rechazar';
+
+    // 2. Construir la URL correcta que espera tu backend
+    // Ejemplo: /api/v1/solicitudes/11/aceptar
+    const url = `${this.apiUrl}/solicitudes/${requestId}/${action}`;
+
+    // 3. Enviar la petición PUT.
+    // Nota: Tu backend NO pide @RequestBody, así que enviamos un objeto vacío {} o null.
+    return this.http.put(url, {});
   }
 
   private mapToRequestViewModel(dto: SolicitudResponse): RequestViewModel {
@@ -74,7 +83,7 @@ export class LandlordService {
     else if (dto.estado === 'PENDIENTE') color = 'yellow';
     else if (dto.estado === 'RECHAZADO') color = 'red';
 
-    return {
+  return {
       requestId: dto.id,
       accommodationId: dto.alojamientoId,
       title: dto.nombreEstudiante,
@@ -83,7 +92,11 @@ export class LandlordService {
       status: dto.estado,
       statusColor: color,
       message: dto.mensaje,
-      price: dto.oferta
+
+      // ✅ AGREGAR ESTOS MAPEOS:
+      price: dto.oferta,            // Mapea oferta -> price
+      months: dto.mesesAlquiler,    // Mapea mesesAlquiler -> months
+      occupants: dto.cantInquilinos // Mapea cantInquilinos -> occupants
     };
   }
 }

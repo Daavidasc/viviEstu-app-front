@@ -7,6 +7,7 @@
     <div class="requests-list">
         @for (request of requests; track request.requestId) {
         <div class="request-card">
+
             <div class="request-header">
                 <div class="student-info">
                     @if (request.image) {
@@ -24,9 +25,27 @@
                 </span>
             </div>
 
+            <div class="request-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Oferta:</span>
+                    <span class="stat-value price">S/. {{ request.price }}</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-label">Tiempo:</span>
+                    <span class="stat-value">{{ request.months }} meses</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-label">Inquilinos:</span>
+                    <span class="stat-value">{{ request.occupants }} pers.</span>
+                </div>
+            </div>
+
             @if (request.message) {
             <div class="request-message">
-                <p>{{ request.message }}</p>
+                <span class="message-label">Mensaje:</span>
+                <p>"{{ request.message }}"</p>
             </div>
             }
 

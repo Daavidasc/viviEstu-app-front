@@ -34,13 +34,17 @@ export interface ContactFormViewModel {
 // ViewModels (Cómo se ve en el Dashboard)
 export interface RequestViewModel {
     requestId: number;
-    accommodationId?: number; // Para el estudiante ir al detalle
-    title: string;            // Nombre alojamiento (estudiante) o Nombre estudiante (propietario)
-    subtitle: string;         // Distrito (estudiante) o Universidad (propietario)
-    image: string;            // Foto depa (estudiante) o Foto estudiante (propietario)
+    accommodationId?: number;
+    title: string;
+    subtitle: string;
+    image: string;
     status: EstadoSolicitud;
     statusColor: 'green' | 'yellow' | 'red' | 'gray';
     message?: string;
     date?: Date;
-    price?: number;           // Oferta
+
+    // ✅ ASEGÚRATE DE TENER ESTOS 3 CAMPOS:
+    price?: number;      // Oferta
+    months?: number;     // Meses de alquiler
+    occupants?: number;  // Cantidad de inquilinos
 }
