@@ -21,10 +21,10 @@ export interface AlojamientoRequestForm {
     distritoId: number;
     transportes: string[];
     universidadesIds: number[];
-    habitaciones?: number;
-    banios?: number;
-    area?: number;
-    piso?: number;
+    habitaciones: number;
+    banios: number;
+    area: number;
+    piso: number;
     imagenes: File[]; // Para el FormData
 }
 

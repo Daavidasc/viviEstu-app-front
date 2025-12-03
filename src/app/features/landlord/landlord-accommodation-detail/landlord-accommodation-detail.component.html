@@ -38,18 +38,16 @@
 
                         <p class="description-text">{{ accommodation.descripcion }}</p>
 
-                        <div class="features-summary">
-                            <div class="feature-box">
-                                <i class="fas fa-ruler-combined"></i>
-                                <span>{{ accommodation.area }} m²</span>
-                            </div>
-                            <div class="feature-box">
-                                <i class="fas fa-bed"></i>
-                                <span>{{ accommodation.habitaciones }} Dorm.</span>
-                            </div>
-                            <div class="feature-box">
-                                <i class="fas fa-bath"></i>
-                                <span>{{ accommodation.banios }} Baños</span>
+                        <div class="section-block">
+                            <h3 class="section-label">Incluye:</h3>
+                            <div class="features-list">
+                                <span class="feature-tag">{{ accommodation.area || 0 }}m²</span>
+
+                                <span class="feature-tag">
+                                    {{ accommodation.banios || 0 }} baño{{ accommodation.banios !== 1 ? 's' : '' }}
+                                </span>
+
+                                <span class="feature-tag">{{ accommodation.habitaciones || 0 }} dorm.</span>
                             </div>
                         </div>
 

@@ -62,6 +62,12 @@ export class LandlordService {
     );
   }
 
+  getAccommodationRequestsCount(accommodationId: number): Observable<number> {
+  // Reutilizamos tu método existente que ya filtra por ID
+  return this.getRequestsByAccommodationId(accommodationId).pipe(
+    map(requests => requests ? requests.length : 0) // Simplemente contamos el array
+  );
+}
 
   // === ACTUALIZAR ESTADO DE SOLICITUD ===
   updateRequestStatus(requestId: number, status: 'ACEPTADO' | 'RECHAZADO'): Observable<any> {
@@ -93,29 +99,39 @@ export class LandlordService {
   }
 
   private mapToAnalyticsViewModel(dto: AccommodationAnalyticsResponse): AccommodationAnalyticsViewModel {
-    const lastInteractionDate = new Date(dto.ultimaInteraccion);
+    const lastInteractionDate = dto.ultimaInteraccion ? new Date(dto.ultimaInteraccion) : null;
 
     return {
       id: dto.alojamientoId,
       name: dto.nombreAlojamiento,
       totalInteractions: dto.totalInteracciones,
       uniqueStudents: dto.estudiantesUnicos,
-      lastInteraction: lastInteractionDate,
+      lastInteraction: lastInteractionDate!,
       topUniversity: dto.universidadPrincipal,
       topDistrict: dto.distritoPrincipal,
       avgInteractionsPerStudent: dto.promedioInteraccionesPorEstudiante,
-      formattedLastInteraction: this.formatDate(lastInteractionDate)
+      formattedLastInteraction: lastInteractionDate ? this.formatDate(lastInteractionDate) : '-'
     };
   }
 
-  private formatDate(date: Date): string {
+private formatDate(date: Date): string {
     const now = new Date();
-    const diffTime = Math.abs(now.getTime() - date.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffTime = now.getTime() - date.getTime(); // Diferencia en milisegundos
 
-    if (diffDays === 1) return 'Hace 1 día';
-    if (diffDays < 7) return `Hace ${diffDays} días`;
-    if (diffDays < 30) return `Hace ${Math.ceil(diffDays / 7)} semanas`;
+    // Convertimos a unidades
+    const minutes = Math.floor(diffTime / (1000 * 60));
+    const hours = Math.floor(diffTime / (1000 * 60 * 60));
+    const days = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Usamos FLOOR, no CEIL
+
+    // Lógica de retorno
+    if (minutes < 1) return 'Hace un momento';
+    if (minutes < 60) return `Hace ${minutes} min`;
+    if (hours < 24) return `Hace ${hours} h`; // O puedes poner "Hoy" si prefieres
+
+    if (days === 1) return 'Ayer';
+    if (days < 7) return `Hace ${days} días`;
+    if (days < 30) return `Hace ${Math.ceil(days / 7)} semanas`;
+
     return date.toLocaleDateString('es-PE');
   }
 

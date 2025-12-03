@@ -19,7 +19,7 @@
       <section class="analytics-section">
         @if (analyticsError) {
         <div class="alert alert-info">
-          <h4>📊 Estadísticas de Interacciones</h4>
+          <h4>Estadísticas de Interacciones</h4>
           <p>{{ analyticsError }}</p>
           <small>Las estadísticas aparecerán cuando los estudiantes interactúen con tus alojamientos.</small>
         </div>
@@ -56,17 +56,6 @@
         <div class="no-analytics">
           <p>No hay datos de interacciones disponibles.</p>
         </div>
-        }
-      </section>
-
-      <section class="requests-section">
-        <h3 class="section-subtitle-orange">Solicitudes Recientes</h3>
-        @if (requestsError) {
-        <div class="alert alert-danger">
-          {{ requestsError }}
-        </div>
-        } @else {
-        <app-requests-section [requests]="requests" />
         }
       </section>
 

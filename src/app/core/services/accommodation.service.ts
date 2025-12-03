@@ -66,6 +66,9 @@ export class AccommodationService {
     return this.http.get<AlojamientoResponse>(`${this.apiUrl}/${id}`).pipe(
       map(dto => ({
         ...dto,
+        area: dto.area || 0,
+        banios: dto.banios || 0,
+        habitaciones: dto.habitaciones || 0,
         formattedDate: new Date(dto.fecha).toLocaleDateString(),
         googleMapsUrl: `https://maps.google.com/?q=${dto.latitud},${dto.longitud}`,
         securityLevelLabel: 'Normal' // Mock
@@ -83,8 +86,11 @@ export class AccommodationService {
     formData.append('alquilado', data.alquilado.toString());
     formData.append('propietarioId', data.propietarioId.toString());
     formData.append('distritoId', data.distritoId.toString());
-
-    // Arrays
+    formData.append('area', (data.area || 0).toString());
+    formData.append('banios', (data.banios || 0).toString());
+    formData.append('habitaciones', (data.habitaciones || 0).toString());
+    formData.append('piso', (data.piso || 0).toString()); // Si también usas piso
+        // Arrays
     if (data.transportes) {
       data.transportes.forEach((t, i) => formData.append(`transportes[${i}]`, t));
     }

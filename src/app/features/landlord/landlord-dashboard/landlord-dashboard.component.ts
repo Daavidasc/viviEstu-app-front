@@ -5,7 +5,6 @@ import { catchError } from 'rxjs/operators';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { LandlordNavbarComponent } from '../../../shared/components/landlord-navbar/landlord-navbar.component';
-import { RequestsSectionComponent } from '../components/requests-section/requests-section.component';
 import { LandlordRentalCardComponent } from '../components/landlord-rental-card/landlord-rental-card.component';
 
 import { LandlordService } from '../../../core/services/landlord.service';
@@ -16,7 +15,7 @@ import { RequestViewModel } from '../../../core/models/request.models';
 @Component({
   selector: 'app-landlord-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, FooterComponent, LandlordNavbarComponent, RequestsSectionComponent, LandlordRentalCardComponent, LoadingSpinnerComponent],
+  imports: [CommonModule, RouterModule, FooterComponent, LandlordNavbarComponent, LandlordRentalCardComponent, LoadingSpinnerComponent],
   templateUrl: './landlord-dashboard.component.html',
   styleUrls: ['./landlord-dashboard.component.css']
 })

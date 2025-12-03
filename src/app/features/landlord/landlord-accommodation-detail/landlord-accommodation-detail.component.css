@@ -260,3 +260,31 @@
 .btn-edit i {
     font-size: 1rem;
 }
+.section-block {
+    margin-bottom: 1.5rem;
+}
+
+.section-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 0.75rem;
+}
+
+.features-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.feature-tag {
+    background-color: #f3f4f6; /* Gris claro */
+    color: #374151; /* Texto oscuro */
+    padding: 0.5rem 1rem;
+    border-radius: 9999px; /* Bordes totalmente redondeados (pill shape) */
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #e5e7eb;
+}
