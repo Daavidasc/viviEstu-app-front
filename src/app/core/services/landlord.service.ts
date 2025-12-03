@@ -76,9 +76,19 @@ export class LandlordService {
     );
   }
 
+  getAccommodationTotalInteractions(accommodationId: number): Observable<number> {
+    return this.http.get<AccommodationAnalyticsResponse | AccommodationAnalyticsResponse[]>(`${this.apiUrl}/interacciones/reporte/${accommodationId}`)
+      .pipe(map(response => {
+        if (Array.isArray(response)) {
+          return response.map(dto => dto.totalInteracciones).reduce((a, b) => a + b, 0);
+        }
+        return response?.totalInteracciones ?? 0;
+      }));
+  }
+
   private mapToAnalyticsViewModel(dto: AccommodationAnalyticsResponse): AccommodationAnalyticsViewModel {
     const lastInteractionDate = new Date(dto.ultimaInteraccion);
-    
+
     return {
       id: dto.alojamientoId,
       name: dto.nombreAlojamiento,
@@ -96,7 +106,7 @@ export class LandlordService {
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - date.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays === 1) return 'Hace 1 día';
     if (diffDays < 7) return `Hace ${diffDays} días`;
     if (diffDays < 30) return `Hace ${Math.ceil(diffDays / 7)} semanas`;
