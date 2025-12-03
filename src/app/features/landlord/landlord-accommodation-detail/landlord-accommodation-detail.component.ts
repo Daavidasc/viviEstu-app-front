@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -13,20 +12,20 @@ import { CommonModule } from '@angular/common';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { AccommodationDetailViewModel } from '../../../core/models/accommodation.models';
 import { RequestViewModel } from '../../../core/models/request.models';
+import { EditAccommodationModalComponent } from '../components/edit-accommodation-modal/edit-accommodation-modal.component';
 
 @Component({
   selector: 'app-landlord-accommodation-detail',
   standalone: true,
-  imports: [FormsModule, RouterModule, LandlordNavbarComponent, FooterComponent, GalleryComponent, AccommodationRequestsListComponent, LoadingSpinnerComponent, CommonModule],
+  imports: [FormsModule, RouterModule, LandlordNavbarComponent, FooterComponent, GalleryComponent, AccommodationRequestsListComponent, LoadingSpinnerComponent, CommonModule, EditAccommodationModalComponent],
   templateUrl: './landlord-accommodation-detail.component.html',
   styleUrls: ['./landlord-accommodation-detail.component.css']
 })
-
-
 export class LandlordAccommodationDetailComponent implements OnInit {
   accommodation: AccommodationDetailViewModel | null = null;
   requests: RequestViewModel[] = [];
   isLoading = true;
+  isEditing = false;
 
   // Notification system
   notification: { message: string; type: 'success' | 'error'; show: boolean } = {
@@ -49,8 +48,6 @@ export class LandlordAccommodationDetailComponent implements OnInit {
 
   loadData(id: number) {
     this.isLoading = true;
-    // Usamos forkJoin si quisiéramos esperar a ambos, pero por ahora lo manejamos simple
-    // Cargamos datos del alojamiento
     this.accommodationService.getAccommodationDetail(id).subscribe({
       next: (data) => {
         this.accommodation = data;
@@ -61,7 +58,6 @@ export class LandlordAccommodationDetailComponent implements OnInit {
       }
     });
 
-    // Cargamos solicitudes
     this.landlordService.getRequestsByAccommodationId(id).subscribe({
       next: (data) => {
         this.requests = data;
@@ -86,20 +82,29 @@ export class LandlordAccommodationDetailComponent implements OnInit {
     return this.accommodation?.imagenes?.map(img => img.url) || [];
   }
 
+  openEditModal() {
+    this.isEditing = true;
+  }
+
+  onAccommodationUpdated() {
+    this.isEditing = false;
+    if (this.accommodation) {
+      this.loadData(this.accommodation.id);
+      this.showNotification('Alojamiento actualizado correctamente', 'success');
+    }
+  }
+
   acceptRequest(requestId: number) {
     const request = this.requests.find(r => r.requestId === requestId);
     const studentName = request?.title || 'el estudiante';
-    
+
     this.landlordService.updateRequestStatus(requestId, 'ACEPTADO').subscribe({
       next: () => {
-        // Update request status locally
         const req = this.requests.find(r => r.requestId === requestId);
         if (req) {
           req.status = 'ACEPTADO';
           req.statusColor = 'green';
         }
-        
-        // Show success notification
         this.showNotification(`Solicitud de ${studentName} aceptada exitosamente`, 'success');
       },
       error: (error) => {
@@ -112,13 +117,10 @@ export class LandlordAccommodationDetailComponent implements OnInit {
   rejectRequest(requestId: number) {
     const request = this.requests.find(r => r.requestId === requestId);
     const studentName = request?.title || 'el estudiante';
-    
+
     this.landlordService.updateRequestStatus(requestId, 'RECHAZADO').subscribe({
       next: () => {
-        // Remove request from the list
         this.requests = this.requests.filter(r => r.requestId !== requestId);
-        
-        // Show success notification
         this.showNotification(`Solicitud de ${studentName} rechazada`, 'success');
       },
       error: (error) => {
@@ -130,8 +132,6 @@ export class LandlordAccommodationDetailComponent implements OnInit {
 
   private showNotification(message: string, type: 'success' | 'error') {
     this.notification = { message, type, show: true };
-    
-    // Auto-hide notification after 3 seconds
     setTimeout(() => {
       this.notification.show = false;
     }, 3000);

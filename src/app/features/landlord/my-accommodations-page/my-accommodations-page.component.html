@@ -1,0 +1,41 @@
+<div class="app-container">
+    <app-landlord-navbar />
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Mis Propiedades</h1>
+                <a routerLink="/landlord/upload" class="btn btn-primary btn-add">
+                    <i class="fas fa-plus"></i> Nuevo Alojamiento
+                </a>
+            </div>
+
+            @if (isLoading) {
+            <app-loading-spinner message="Cargando tus propiedades..." />
+            } @else if (error) {
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+            } @else if (myRentals.length === 0) {
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>Aún no tienes propiedades registradas</h3>
+                <p>Comienza a ganar dinero alquilando tus espacios a estudiantes.</p>
+                <a routerLink="/landlord/upload" class="btn btn-primary">
+                    Publicar mi primer alojamiento
+                </a>
+            </div>
+            } @else {
+            <div class="rentals-grid">
+                @for (rental of myRentals; track rental.id) {
+                <app-landlord-rental-card [rental]="rental" />
+                }
+            </div>
+            }
+        </div>
+    </main>
+
+    <app-footer />
+</div>

@@ -90,7 +90,11 @@ export class AccommodationFormComponent implements OnInit {
   private loadUniversities(): void {
     this.locationService.getAllUniversities().subscribe({
       next: (universities) => {
-        this.universities.set(universities);
+        // Filtrar universidades para que sean únicas por nombre
+        const uniqueUniversities = universities.filter((uni, index, self) =>
+          index === self.findIndex((u) => u.nombre === uni.nombre)
+        );
+        this.universities.set(uniqueUniversities);
       },
       error: (err) => {
         console.error('Error al cargar universidades:', err);
@@ -168,15 +172,15 @@ export class AccommodationFormComponent implements OnInit {
     console.log('🔍 Validando formulario...');
     console.log('📋 Form value:', this.accommodationForm.value);
     console.log('📋 Form valid:', this.accommodationForm.valid);
-    
+
     this.accommodationForm.markAllAsTouched();
 
     // LOGS DETALLADOS DE VALIDACIÓN
     if (this.accommodationForm.invalid) {
       console.log('❌ Form is invalid. Checking each field:');
-      
+
       const invalidFields: string[] = [];
-      
+
       Object.keys(this.accommodationForm.controls).forEach(key => {
         const control = this.accommodationForm.get(key);
         if (control && control.invalid) {
@@ -189,7 +193,7 @@ export class AccommodationFormComponent implements OnInit {
             max: control.hasError('max'),
             minArrayLength: control.hasError('minArrayLength')
           });
-          
+
           // Agregar mensaje específico para cada campo
           const fieldMessage = this.getFieldErrorMessage(key, control.errors);
           if (fieldMessage) {
@@ -201,10 +205,10 @@ export class AccommodationFormComponent implements OnInit {
       });
 
       // Mostrar mensaje con todos los errores específicos
-      const errorMessage = invalidFields.length > 0 
+      const errorMessage = invalidFields.length > 0
         ? `Por favor corrige los siguientes campos:\n\n${invalidFields.join('\n')}`
         : 'Por favor, completa todos los campos requeridos correctamente.';
-      
+
       alert(errorMessage);
       this.scrollToFirstError();
       return;

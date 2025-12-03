@@ -85,16 +85,37 @@ export class AccommodationService {
 
     // Arrays
     if (data.transportes) {
-        data.transportes.forEach((t, i) => formData.append(`transportes[${i}]`, t));
+      data.transportes.forEach((t, i) => formData.append(`transportes[${i}]`, t));
     }
     if (data.universidadesIds) {
-        data.universidadesIds.forEach((id, i) => formData.append(`universidadesIds[${i}]`, id.toString()));
+      data.universidadesIds.forEach((id, i) => formData.append(`universidadesIds[${i}]`, id.toString()));
     }
 
     // Archivos
     data.imagenes.forEach(file => formData.append('imagenes', file));
 
     return this.http.post<AlojamientoResponse>(this.apiUrl, formData);
+  }
+
+  updateAccommodation(id: number, data: AlojamientoRequestForm): Observable<AlojamientoResponse> {
+    const payload = {
+      titulo: data.titulo,
+      descripcion: data.descripcion,
+      direccion: data.direccion,
+      precioMensual: data.precioMensual,
+      nroPartida: data.nroPartida,
+      alquilado: data.alquilado,
+      propietarioId: data.propietarioId,
+      distritoId: data.distritoId,
+      transportes: data.transportes,
+      universidadesIds: data.universidadesIds,
+      habitaciones: data.habitaciones,
+      banios: data.banios,
+      area: data.area,
+      piso: data.piso
+    };
+
+    return this.http.put<AlojamientoResponse>(`${this.apiUrl}/${id}`, payload);
   }
 
   getThumbnailUrl(id: number): Observable<string> {
