@@ -69,19 +69,16 @@ export class LandlordService {
   }
 
   // === ESTADÍSTICAS DE ALOJAMIENTOS ===
-  getAccommodationAnalytics(): Observable<AccommodationAnalyticsViewModel[]> {
+  getAccommodationAnalytics(accommodationId: number): Observable<AccommodationAnalyticsViewModel> {
     return this.getProfile().pipe(
-      switchMap(p => this.http.get<AccommodationAnalyticsResponse[]>(`${this.apiUrl}/interacciones/propietario/${p.id}/reporte`)),
-      map(dtos => dtos.map(dto => this.mapToAnalyticsViewModel(dto)))
+      switchMap(p => this.http.get<AccommodationAnalyticsResponse>(`${this.apiUrl}/interacciones/reporte/${accommodationId}`)),
+      map(dto => this.mapToAnalyticsViewModel(dto))
     );
   }
 
   getAccommodationTotalInteractions(accommodationId: number): Observable<number> {
-    return this.http.get<AccommodationAnalyticsResponse | AccommodationAnalyticsResponse[]>(`${this.apiUrl}/interacciones/reporte/${accommodationId}`)
+    return this.http.get<AccommodationAnalyticsResponse>(`${this.apiUrl}/interacciones/reporte/${accommodationId}`)
       .pipe(map(response => {
-        if (Array.isArray(response)) {
-          return response.map(dto => dto.totalInteracciones).reduce((a, b) => a + b, 0);
-        }
         return response?.totalInteracciones ?? 0;
       }));
   }

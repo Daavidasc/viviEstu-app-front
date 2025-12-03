@@ -10,7 +10,8 @@
         <h1 class="greeting">Hola {{ userName }}</h1>
         <div class="header-actions">
           <h2 class="section-title-gold">Flujo de Alquileres</h2>
-          <a routerLink="/landlord/upload" class="btn btn-primary btn-upload" style="text-decoration: none;">Subir Alojamiento</a>
+          <a routerLink="/landlord/upload" class="btn btn-primary btn-upload" style="text-decoration: none;">Subir
+            Alojamiento</a>
         </div>
       </div>
 
@@ -58,13 +59,16 @@
         }
       </section>
 
-      @if (requestsError) {
-      <div class="alert alert-danger">
-        {{ requestsError }}
-      </div>
-      } @else {
-      <app-requests-section [requests]="requests" />
-      }
+      <section class="requests-section">
+        <h3 class="section-subtitle-orange">Solicitudes Recientes</h3>
+        @if (requestsError) {
+        <div class="alert alert-danger">
+          {{ requestsError }}
+        </div>
+        } @else {
+        <app-requests-section [requests]="requests" />
+        }
+      </section>
 
       <section class="my-rentals-section">
         <h3 class="section-subtitle-orange">Mis Alquileres</h3>
