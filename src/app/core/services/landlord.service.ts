@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
-import { LandlordProfile, MyRentalViewModel } from '../models/landlord.models';
+import { LandlordProfile, MyRentalViewModel, AccommodationAnalyticsResponse, AccommodationAnalyticsViewModel } from '../models/landlord.models';
 import { AlojamientoResponse } from '../models/accommodation.models';
 import { SolicitudResponse, RequestViewModel } from '../models/request.models';
 
@@ -75,6 +75,48 @@ export class LandlordService {
     // 3. Enviar la petición PUT.
     // Nota: Tu backend NO pide @RequestBody, así que enviamos un objeto vacío {} o null.
     return this.http.put(url, {});
+  }
+
+  // === ESTADÍSTICAS DE ALOJAMIENTOS ===
+  getAccommodationAnalytics(accommodationId: number): Observable<AccommodationAnalyticsViewModel> {
+    return this.getProfile().pipe(
+      switchMap(p => this.http.get<AccommodationAnalyticsResponse>(`${this.apiUrl}/interacciones/reporte/${accommodationId}`)),
+      map(dto => this.mapToAnalyticsViewModel(dto))
+    );
+  }
+
+  getAccommodationTotalInteractions(accommodationId: number): Observable<number> {
+    return this.http.get<AccommodationAnalyticsResponse>(`${this.apiUrl}/interacciones/reporte/${accommodationId}`)
+      .pipe(map(response => {
+        return response?.totalInteracciones ?? 0;
+      }));
+  }
+
+  private mapToAnalyticsViewModel(dto: AccommodationAnalyticsResponse): AccommodationAnalyticsViewModel {
+    const lastInteractionDate = new Date(dto.ultimaInteraccion);
+
+    return {
+      id: dto.alojamientoId,
+      name: dto.nombreAlojamiento,
+      totalInteractions: dto.totalInteracciones,
+      uniqueStudents: dto.estudiantesUnicos,
+      lastInteraction: lastInteractionDate,
+      topUniversity: dto.universidadPrincipal,
+      topDistrict: dto.distritoPrincipal,
+      avgInteractionsPerStudent: dto.promedioInteraccionesPorEstudiante,
+      formattedLastInteraction: this.formatDate(lastInteractionDate)
+    };
+  }
+
+  private formatDate(date: Date): string {
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - date.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 1) return 'Hace 1 día';
+    if (diffDays < 7) return `Hace ${diffDays} días`;
+    if (diffDays < 30) return `Hace ${Math.ceil(diffDays / 7)} semanas`;
+    return date.toLocaleDateString('es-PE');
   }
 
   private mapToRequestViewModel(dto: SolicitudResponse): RequestViewModel {

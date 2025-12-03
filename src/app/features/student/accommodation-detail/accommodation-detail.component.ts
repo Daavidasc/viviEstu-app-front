@@ -22,6 +22,8 @@ import {
 } from '../../../core/models/interaction.models'; // 👈 Agregado ComentarioRequest
 import { AccommodationDetailViewModel } from '../../../core/models/accommodation.models';
 
+import { GoogleMapsComponent } from '../../../shared/components/google-maps/google-maps.component';
+
 @Component({
   selector: 'app-accommodation-detail',
   standalone: true,
@@ -32,7 +34,8 @@ import { AccommodationDetailViewModel } from '../../../core/models/accommodation
     FooterComponent,
     GalleryComponent,
     ContactFormComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    GoogleMapsComponent
   ],
   templateUrl: './accommodation-detail.component.html',
   styleUrls: ['./accommodation-detail.component.css']
@@ -52,6 +55,11 @@ export class AccommodationDetailComponent implements OnInit {
   errorMessage = '';
   currentStudentId: number | null = null;
   isPostingComment = false;
+
+  // Map Data
+  mapCenter: google.maps.LatLngLiteral = { lat: -12.046374, lng: -77.042793 }; // Default Lima
+  mapMarkers: { position: google.maps.LatLngLiteral, title: string, description?: string }[] = [];
+  mapZoom = 15;
 
   ngOnInit() {
     const accommodationId = Number(this.route.snapshot.paramMap.get('id'));
@@ -80,12 +88,22 @@ export class AccommodationDetailComponent implements OnInit {
       next: (data) => {
         this.accommodation = data;
 
+        // Configurar mapa
+        if (data.latitud && data.longitud) {
+          this.mapCenter = { lat: data.latitud, lng: data.longitud };
+          this.mapMarkers = [{
+            position: this.mapCenter,
+            title: data.titulo,
+            description: `S/ ${data.precioMensual}`
+          }];
+        }
+
         // 💡 IMPORTANTE: Aquí deberías verificar si este alojamiento ya es favorito
         // para inicializar el booleano `isFavorite`.
         // Si tu backend no devuelve ese dato en el detalle, tendrías que
         // consultar la lista de favoritos del estudiante y cruzar datos.
         if (this.currentStudentId) {
-             this.checkIfFavorite(id);
+          this.checkIfFavorite(id);
         }
 
         this.isLoading = false;
@@ -103,12 +121,12 @@ export class AccommodationDetailComponent implements OnInit {
 
   // Método auxiliar para verificar estado inicial de favorito
   checkIfFavorite(accommodationId: number) {
-      this.studentService.getFavorites().subscribe(favorites => {
-          if (this.accommodation) {
-              const isFav = favorites.some(f => f.alojamientoId === accommodationId);
-              this.accommodation.isFavorite = isFav;
-          }
-      });
+    this.studentService.getFavorites().subscribe(favorites => {
+      if (this.accommodation) {
+        const isFav = favorites.some(f => f.alojamientoId === accommodationId);
+        this.accommodation.isFavorite = isFav;
+      }
+    });
   }
 
   loadComments(alojamientoId: number) {
@@ -129,8 +147,8 @@ export class AccommodationDetailComponent implements OnInit {
 
   toggleFavorite() {
     if (!this.accommodation || !this.currentStudentId) {
-        alert('Debes iniciar sesión para guardar favoritos.');
-        return;
+      alert('Debes iniciar sesión para guardar favoritos.');
+      return;
     }
 
     // Estado actual antes del cambio
@@ -141,18 +159,18 @@ export class AccommodationDetailComponent implements OnInit {
 
     // Llamada al servicio correcto
     this.interactionService.toggleFavorite(this.currentStudentId, this.accommodation.id, currentStatus)
-        .subscribe({
-            next: () => console.log('Favorito actualizado exitosamente'),
-            error: (err) => {
-                console.error('Error actualizando favorito', err);
-                // Revertir cambio en caso de error
-                if (this.accommodation) {
-                    this.accommodation.isFavorite = currentStatus;
-                    this.cdr.detectChanges();
-                }
-                alert('No se pudo actualizar favoritos.');
-            }
-        });
+      .subscribe({
+        next: () => console.log('Favorito actualizado exitosamente'),
+        error: (err) => {
+          console.error('Error actualizando favorito', err);
+          // Revertir cambio en caso de error
+          if (this.accommodation) {
+            this.accommodation.isFavorite = currentStatus;
+            this.cdr.detectChanges();
+          }
+          alert('No se pudo actualizar favoritos.');
+        }
+      });
   }
 
   postComment() {

@@ -44,7 +44,6 @@ export class DistrictDetailPageComponent implements OnInit {
         this.isLoading = true;
         this.imageLoadError = false;
 
-        // 🛠️ CORRECCIÓN: Usamos el método 'getDistrictById' del nuevo servicio
         this.locationService.getDistrictById(id).subscribe({
           next: (data) => {
             this.zone = data;
