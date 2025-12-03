@@ -1,3 +1,4 @@
+import { EditAccommodationPageComponent } from './edit-accommodation-page.component/edit-accommodation-page.component';
 import { Routes } from '@angular/router';
 import { LandlordDashboardComponent } from './landlord-dashboard/landlord-dashboard.component';
 import { UploadAccommodationPageComponent } from './upload-accommodation-page/upload-accommodation-page.component';
@@ -43,8 +44,14 @@ export const landlordRoutes: Routes = [
     data: { roles: LANDLORD_ROLE }
   },
   {
-    path: 'profile/edit',
-    component: EditLandlordProfilePageComponent,
+    path: 'edit/:id',
+    component: EditAccommodationPageComponent,
+    canActivate: [authGuard],
+    data: { roles: LANDLORD_ROLE }
+  },
+  {
+    path: 'edit/:id',
+    component: EditAccommodationPageComponent,
     canActivate: [authGuard],
     data: { roles: LANDLORD_ROLE }
   },

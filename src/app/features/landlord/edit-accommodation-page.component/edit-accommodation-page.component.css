@@ -1,0 +1,166 @@
+/* Contenedor principal para centrar el formulario */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f5f7fa; /* Fondo gris muy suave */
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: flex-start; /* Alinea arriba con un poco de margen */
+}
+
+/* Ajustes del contenedor del formulario */
+.edit-container {
+    width: 100%;
+    max-width: 700px; /* Ancho máximo para que no se estire demasiado */
+
+}
+
+.edit-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Sombra suave */
+    padding: 2rem;
+    border: 1px solid #eef0f2;
+}
+
+.edit-card h2 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 1rem;
+    font-weight: 700;
+}
+
+/* Estado de carga */
+.loading-state {
+    text-align: center;
+    padding: 3rem;
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+/* Grupos de formulario */
+.form-group {
+    margin-bottom: 1.5rem;
+        color: #000;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.95rem;
+}
+
+/* Estilos de los inputs y textarea */
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+    color: #000;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #4a90e2; /* Color de acento al escribir */
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+textarea.form-control {
+    resize: vertical; /* Permite cambiar tamaño solo verticalmente */
+    min-height: 100px;
+    color: #000;
+}
+
+/* Fila para inputs numéricos (Área, Hab, Baños) */
+.row-inputs {
+    display: flex;
+    gap: 20px;
+}
+
+.row-inputs .form-group {
+    flex: 1; /* Todos ocupan el mismo ancho */
+}
+
+/* Botones de acción */
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f0f2f5;
+}
+
+.btn-cancel, .btn-save {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+}
+
+.btn-cancel:hover {
+    background-color: #e2e6ea;
+    color: #495057;
+}
+
+.btn-save {
+    background-color: #2ecc71; /* Verde guardar */
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: #27ae60;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(46, 204, 113, 0.2);
+}
+
+.btn-save:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 600px) {
+    .row-inputs {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .actions {
+        flex-direction: column-reverse;
+    }
+
+    .btn-cancel, .btn-save {
+        width: 100%;
+        text-align: center;
+    }
+
+    .main-content {
+        padding: 20px 15px;
+    }
+}

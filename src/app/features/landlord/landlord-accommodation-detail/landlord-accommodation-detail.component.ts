@@ -95,21 +95,28 @@ export class LandlordAccommodationDetailComponent implements OnInit {
   }
 
   acceptRequest(requestId: number) {
-    const request = this.requests.find(r => r.requestId === requestId);
-    const studentName = request?.title || 'el estudiante';
-
     this.landlordService.updateRequestStatus(requestId, 'ACEPTADO').subscribe({
       next: () => {
-        const req = this.requests.find(r => r.requestId === requestId);
-        if (req) {
-          req.status = 'ACEPTADO';
-          req.statusColor = 'green';
-        }
-        this.showNotification(`Solicitud de ${studentName} aceptada exitosamente`, 'success');
+        setTimeout(() => {
+          // 1. Lógica de actualización
+          const req = this.requests.find(r => r.requestId === requestId);
+          if (req) {
+            req.status = 'ACEPTADO';
+            req.statusColor = 'green';
+          }
+          this.requests = [...this.requests];
+
+          // 2. Notificación
+          this.showNotification(`Solicitud aceptada exitosamente`, 'success');
+
+          // 3. 🔥 EL FIX: Forzar la detección de cambios AQUÍ
+          this.cdr.detectChanges();
+
+        }, 0);
       },
       error: (error) => {
-        console.error('Error accepting request:', error);
-        this.showNotification('Error al aceptar la solicitud. Intente nuevamente.', 'error');
+        console.error('Error al aceptar:', error);
+        this.showNotification('Error al procesar la solicitud.', 'error');
       }
     });
   }
@@ -120,18 +127,38 @@ export class LandlordAccommodationDetailComponent implements OnInit {
 
     this.landlordService.updateRequestStatus(requestId, 'RECHAZADO').subscribe({
       next: () => {
-        this.requests = this.requests.filter(r => r.requestId !== requestId);
-        this.showNotification(`Solicitud de ${studentName} rechazada`, 'success');
+        setTimeout(() => {
+
+          // 1. MODIFICADO: En lugar de filtrar (borrar), buscamos y actualizamos
+          const req = this.requests.find(r => r.requestId === requestId);
+
+          if (req) {
+            req.status = 'RECHAZADO';
+            req.statusColor = 'red'; // Esto hará que se vea roja la etiqueta
+          }
+
+          // Refrescamos la referencia del array para que Angular detecte el cambio en el item
+          this.requests = [...this.requests];
+
+          // 2. Notificación
+          this.showNotification(`Solicitud de ${studentName} rechazada`, 'success');
+
+          // 3. Forzar detección de cambios
+          this.cdr.detectChanges();
+
+        }, 0);
       },
       error: (error) => {
         console.error('Error rejecting request:', error);
-        this.showNotification('Error al rechazar la solicitud. Intente nuevamente.', 'error');
+        this.showNotification('Error al rechazar la solicitud.', 'error');
       }
     });
   }
 
   private showNotification(message: string, type: 'success' | 'error') {
     this.notification = { message, type, show: true };
+
+    // Auto-hide notification after 3 seconds
     setTimeout(() => {
       this.notification.show = false;
     }, 3000);

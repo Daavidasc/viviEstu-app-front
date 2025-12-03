@@ -1,0 +1,58 @@
+<div class="app-container">
+    <app-landlord-navbar />
+
+    <main class="main-content">
+        <div class="container edit-container">
+            <div class="card edit-card">
+                <h2>Editar Datos del Alojamiento</h2>
+
+
+                    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+
+                        <div class="form-group">
+                            <label>Título del aviso</label>
+                            <input type="text" formControlName="titulo" class="form-control" placeholder="Ej: Habitación cerca a la UTP">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Precio Mensual (S/.)</label>
+                            <input type="number" formControlName="precioMensual" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Dirección exacta</label>
+                            <input type="text" formControlName="direccion" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Descripción detallada</label>
+                            <textarea formControlName="descripcion" rows="5" class="form-control"></textarea>
+                        </div>
+
+                        <div class="row-inputs">
+                             <div class="form-group col">
+                                <label>Área (m²)</label>
+                                <input type="number" formControlName="area" class="form-control">
+                            </div>
+                            <div class="form-group col">
+                                <label>Habitaciones</label>
+                                <input type="number" formControlName="habitaciones" class="form-control">
+                            </div>
+                             <div class="form-group col">
+                                <label>Baños</label>
+                                <input type="number" formControlName="banios" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            <button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+                            <button type="submit" class="btn-save" [disabled]="editForm.invalid">Guardar Cambios</button>
+                        </div>
+                    </form>
+
+            </div>
+        </div>
+    </main>
+
+    <app-footer />
+</div>
