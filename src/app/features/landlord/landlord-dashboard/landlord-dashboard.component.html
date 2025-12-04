@@ -9,7 +9,7 @@
       <div class="dashboard-header">
         <h1 class="greeting">Hola {{ userName }}</h1>
         <div class="header-actions">
-          <h2 class="section-title-gold">Flujo de Alquileres</h2>
+          <h2 class="section-title-gold">Estadísticas de Interacciones</h2>
           <a routerLink="/landlord/upload" class="btn btn-primary btn-upload" style="text-decoration: none;">Subir
             Alojamiento</a>
         </div>
@@ -28,13 +28,14 @@
           <table class="analytics-table">
             <thead>
               <tr>
-                <th>Alojamiento</th>
-                <th>Interacciones</th>
-                <th>Estudiantes</th>
-                <th>Universidad Principal</th>
-                <th>Distrito Principal</th>
-                <th>Promedio/Estudiante</th>
-                <th>Última Interacción</th>
+                <th title="Nombre del alojamiento publicado">Alojamiento</th>
+                <th title="Total de veces que los estudiantes han interactuado con tu publicación">Interacciones</th>
+                <th title="Cantidad de estudiantes únicos que han mostrado interés">Estudiantes</th>
+                <th title="Universidad más frecuente entre los estudiantes interesados">Universidad Principal</th>
+                <th title="Distrito donde residen o estudian la mayoría de los interesados">Distrito Principal</th>
+                <th title="Promedio de veces que un mismo estudiante interactúa con tu publicación">Promedio
+                  Interacciones</th>
+                <th title="Fecha y hora de la última actividad registrada">Última Interacción</th>
               </tr>
             </thead>
             <tbody>
