@@ -27,14 +27,14 @@
 
                     <div class="info-content">
                         <!-- Cabecera: Precio y Editar -->
-                          <div class="header-row">
-                              <h1 class="price-tag">S/.{{ accommodation.precioMensual }} <span class="period">/mes</span>
-                              </h1>
+                        <div class="header-row">
+                            <h1 class="price-tag">S/.{{ accommodation.precioMensual }} <span class="period">/mes</span>
+                            </h1>
 
-                              <a [routerLink]="['/landlord/edit', accommodation.id]" class="btn-edit">
-                                  <i class="fas fa-edit"></i> Editar Datos
-                              </a>
-                          </div>
+                            <a [routerLink]="['/landlord/edit', accommodation.id]" class="btn-edit">
+                                <i class="fas fa-edit"></i> Editar Datos
+                            </a>
+                        </div>
 
                         <p class="description-text">{{ accommodation.descripcion }}</p>
 
@@ -91,6 +91,33 @@
                     <div class="requests-content">
                         <app-accommodation-requests-list [requests]="requests" (acceptRequest)="acceptRequest($event)"
                             (rejectRequest)="rejectRequest($event)" />
+                    </div>
+                </div>
+
+                <!-- Sección de Comentarios -->
+                <div class="comments-card">
+                    <h3 class="comments-title">💬 Comentarios</h3>
+
+                    <!-- Lista de comentarios existentes (scrolleable) -->
+                    <div class="comments-scroll-container">
+                        @if (comments.length > 0) {
+                        <div class="comments-list">
+                            @for (comment of comments; track comment.id) {
+                            <div class="comment-item">
+                                <div class="comment-header">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span class="comment-author">{{ comment.estudianteNombre }}</span>
+                                </div>
+                                <p class="comment-content">{{ comment.contenido }}</p>
+                            </div>
+                            }
+                        </div>
+                        } @else {
+                        <p class="no-comments">
+                            <i class="fas fa-comments"></i>
+                            No hay comentarios aún.
+                        </p>
+                        }
                     </div>
                 </div>
             </div>
