@@ -239,9 +239,14 @@
 }
 
 /* Requests Sidebar Styles */
-.requests-card {
+.sidebar-column {
     position: sticky;
     top: 2rem;
+    height: fit-content;
+}
+
+.requests-card {
+    height: fit-content;
 }
 
 .requests-header {
