@@ -10,6 +10,7 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: row;
+    color: #000;
 }
 
 .card-image-wrapper {
