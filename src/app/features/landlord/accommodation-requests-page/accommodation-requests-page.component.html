@@ -36,14 +36,12 @@
         @for (accommodation of accommodationsWithRequests; track accommodation.id) {
         <div class="accommodation-card">
           <!-- Accommodation header -->
-          <div class="accommodation-header">
+          <div class="accommodation-header" (click)="toggleAccommodation(accommodation)">
             <div class="accommodation-info">
               <img [src]="accommodation.imageUrl" [alt]="accommodation.title" class="accommodation-image">
               <div class="accommodation-details">
                 <h2 class="accommodation-title">
-                  <a [routerLink]="['/landlord/accommodations', accommodation.id]" class="title-link">
-                    {{ accommodation.title }}
-                  </a>
+                  <span class="title-text">{{ accommodation.title }}</span>
                 </h2>
                 <p class="accommodation-address">{{ accommodation.address }}</p>
                 <div class="accommodation-meta">
@@ -52,14 +50,17 @@
                 </div>
               </div>
             </div>
-            <div class="requests-count">
-              <span class="count-badge">{{ accommodation.requests.length }}</span>
-              <span class="count-label">solicitud{{ accommodation.requests.length !== 1 ? 'es' : '' }}</span>
+            <div class="header-actions">
+              <div class="requests-count">
+                <span class="count-badge">{{ accommodation.requests.length }}</span>
+                <span class="count-label">solicitud{{ accommodation.requests.length !== 1 ? 'es' : '' }}</span>
+              </div>
+              <i class="fas fa-chevron-down chevron" [class.rotated]="accommodation.isExpanded"></i>
             </div>
           </div>
 
           <!-- Requests list -->
-          <div class="requests-section">
+          <div class="requests-section" [class.expanded]="accommodation.isExpanded">
             @if (accommodation.requests.length === 0) {
             <div class="no-requests">
               <p>No hay solicitudes para este alojamiento</p>
@@ -67,39 +68,9 @@
             } @else {
             <div class="requests-list">
               @for (request of accommodation.requests; track request.requestId) {
-              <div class="request-item">
-                <div class="request-header">
-                  <div class="student-info">
-                    <div class="student-details">
-                      <h4 class="student-name">{{ request.title }}</h4>
-                      <span class="student-university">{{ request.subtitle }}</span>
-                    </div>
-                  </div>
-                  <div class="request-meta">
-                    <span class="request-status" [class]="getStatusClass(request.status)">
-                      {{ request.status }}
-                    </span>
-                    <span class="request-date">{{ request.date | date:'dd/MM/yyyy' }}</span>
-                  </div>
-                </div>
-
-                @if (request.message) {
-                <div class="request-message">
-                  <p>{{ request.message }}</p>
-                </div>
-                }
-
-                <div class="request-actions">
-                  @if (request.status !== 'AGENDADO' && request.status !== 'RECHAZADO') {
-                  <button class="btn-action btn-accept" (click)="acceptRequest(request.requestId)">
-                    Aceptar
-                  </button>
-                  <button class="btn-action btn-reject" (click)="rejectRequest(request.requestId)">
-                    Rechazar
-                  </button>
-                  }
-                </div>
-              </div>
+              <app-detailed-request [request]="request" (accept)="acceptRequest($event)"
+                (reject)="rejectRequest($event)">
+              </app-detailed-request>
               }
             </div>
             }

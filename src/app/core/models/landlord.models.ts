@@ -38,6 +38,7 @@ export interface AccommodationAnalyticsViewModel {
 // ViewModel para la tarjeta "Mis Alquileres" en el dashboard
 export interface MyRentalViewModel {
     id: number;
+    title: string;
     image: string;
     price: number;
     district: string;

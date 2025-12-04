@@ -31,6 +31,7 @@ export class LandlordService {
       switchMap(p => this.http.get<AlojamientoResponse[]>(`${this.apiUrl}/alojamientos/propietario/${p.id}`)),
       map(dtos => dtos.map(dto => ({
         id: dto.id,
+        title: dto.titulo,
         image: dto.imagenes?.[0]?.url || 'assets/placeholder.jpg',
         price: dto.precioMensual,
         district: dto.distrito,

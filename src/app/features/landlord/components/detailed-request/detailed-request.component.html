@@ -1,0 +1,51 @@
+<div class="request-card">
+    <div class="request-header">
+        <div class="student-info">
+            <img [src]="request.image" [alt]="request.title" class="student-avatar">
+            <div class="student-details">
+                <h4 class="student-name">{{ request.title }}</h4>
+                <span class="student-university">{{ request.subtitle }}</span>
+            </div>
+        </div>
+        <div class="request-meta">
+            <span class="request-status" [class]="getStatusClass(request.status)">
+                {{ request.status }}
+            </span>
+            <span class="request-date">{{ request.date | date:'dd/MM/yyyy' }}</span>
+        </div>
+    </div>
+
+    <div class="request-body">
+        <div class="offer-details">
+            <div class="detail-item">
+                <span class="label">Oferta:</span>
+                <span class="value price">S/.{{ request.price || 0 }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="label">Tiempo:</span>
+                <span class="value">{{ request.months || 0 }} meses</span>
+            </div>
+            <div class="detail-item">
+                <span class="label">Ocupantes:</span>
+                <span class="value">{{ request.occupants || 1 }} persona(s)</span>
+            </div>
+        </div>
+
+        @if (request.message) {
+        <div class="request-message">
+            <p>{{ request.message }}</p>
+        </div>
+        }
+    </div>
+
+    <div class="request-actions">
+        @if (request.status !== 'AGENDADO' && request.status !== 'RECHAZADO') {
+        <button class="btn-action btn-accept" (click)="onAccept()">
+            <i class="fas fa-check"></i> Aceptar
+        </button>
+        <button class="btn-action btn-reject" (click)="onReject()">
+            <i class="fas fa-times"></i> Rechazar
+        </button>
+        }
+    </div>
+</div>
