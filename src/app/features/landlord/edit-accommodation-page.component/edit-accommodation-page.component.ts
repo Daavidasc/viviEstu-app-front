@@ -54,8 +54,8 @@ export class EditAccommodationPageComponent implements OnInit {
           descripcion: data.descripcion,
           precioMensual: data.precioMensual,
           direccion: data.direccion,
-          area: data.area,
-          habitaciones: data.habitaciones,
+          area: data.metrosCuadrados,
+          habitaciones: data.dormitorios,
           banios: data.banios,
           alquilado: data.alquilado
         });

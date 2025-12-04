@@ -66,9 +66,9 @@ export class AccommodationService {
     return this.http.get<AlojamientoResponse>(`${this.apiUrl}/${id}`).pipe(
       map(dto => ({
         ...dto,
-        area: dto.area || 0,
+        area: dto.metrosCuadrados || 0,
         banios: dto.banios || 0,
-        habitaciones: dto.habitaciones || 0,
+        habitaciones: dto.dormitorios || 0,
         formattedDate: new Date(dto.fecha).toLocaleDateString(),
         googleMapsUrl: `https://maps.google.com/?q=${dto.latitud},${dto.longitud}`,
         securityLevelLabel: 'Normal' // Mock
@@ -86,10 +86,10 @@ export class AccommodationService {
     formData.append('alquilado', data.alquilado.toString());
     formData.append('propietarioId', data.propietarioId.toString());
     formData.append('distritoId', data.distritoId.toString());
-    formData.append('area', (data.area || 0).toString());
+    formData.append('metrosCuadrados', (data.metrosCuadrados || 0).toString());
     formData.append('banios', (data.banios || 0).toString());
     formData.append('habitaciones', (data.habitaciones || 0).toString());
-    formData.append('piso', (data.piso || 0).toString()); // Si también usas piso
+    formData.append('dormitorios', (data.dormitorios || 0).toString()); // Si también usas piso
         // Arrays
     if (data.transportes) {
       data.transportes.forEach((t, i) => formData.append(`transportes[${i}]`, t));
@@ -116,10 +116,9 @@ export class AccommodationService {
       distritoId: data.distritoId,
       transportes: data.transportes,
       universidadesIds: data.universidadesIds,
-      habitaciones: data.habitaciones,
       banios: data.banios,
-      area: data.area,
-      piso: data.piso
+      metrosCuadrados: data.metrosCuadrados,
+      dormitorios: data.dormitorios
     };
 
     return this.http.put<AlojamientoResponse>(`${this.apiUrl}/${id}`, payload);
@@ -142,9 +141,9 @@ export class AccommodationService {
       isFavorite: false, // Este estado se gestiona/sobreescribe en el componente o StudentService
       description: dto.descripcion,
       universityNear: dto.universidades?.[0], // Primera universidad como referencia
-      area: dto.area,
+      area: dto.metrosCuadrados,
       baths: dto.banios,
-      rooms: dto.habitaciones,
+      rooms: dto.dormitorios,
       isFeatured: false
     };
   }
