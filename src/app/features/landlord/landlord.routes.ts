@@ -32,6 +32,12 @@ export const landlordRoutes: Routes = [
     data: { roles: LANDLORD_ROLE }
   },
   {
+    path: 'profile/edit',
+    component: EditLandlordProfilePageComponent,
+    canActivate: [authGuard],
+    data: { roles: LANDLORD_ROLE }
+  },
+  {
     path: 'accommodations/:id',
     component: LandlordAccommodationDetailComponent,
     canActivate: [authGuard],
