@@ -19,3 +19,8 @@ export interface FavoritoResponse {
     alojamientoId: number;
     estudianteId: number;
 }
+
+export interface InteractionRequest {
+    alojamientoId: number;
+    estudianteId: number;
+}

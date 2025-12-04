@@ -2,7 +2,7 @@ import { StudentProfile } from './../models/student.models';
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin, of, throwError } from 'rxjs';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 
@@ -75,7 +75,14 @@ export class StudentService {
   }
 
   getProfileId(): Observable<number> {
-    return this.getProfile().pipe(map(profile => profile.id));
+    const storedId = localStorage.getItem('studentId');
+    if (storedId) {
+      return of(Number(storedId));
+    }
+    return this.getProfile().pipe(
+      map(profile => profile.id),
+      tap(id => localStorage.setItem('studentId', id.toString()))
+    );
   }
 
   private mapToRequestViewModel(req: SolicitudResponse, imgUrl: string): RequestViewModel {

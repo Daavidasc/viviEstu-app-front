@@ -5,7 +5,8 @@ import { environment } from '../../../environments/environment';
 import {
   ComentarioRequest,
   ComentarioResponse,
-  FavoritoResponse
+  FavoritoResponse,
+  InteractionRequest
 } from '../models/interaction.models';
 
 @Injectable({
@@ -47,5 +48,9 @@ export class InteractionService {
     return isCurrentlyFavorite
       ? this.removeFavorite(estudianteId, alojamientoId)
       : this.addFavorite(estudianteId, alojamientoId);
+  }
+
+  addInteraction(interactionRequest: InteractionRequest): Observable<any> {
+    return this.http.post(`${this.apiUrl}/interacciones`, interactionRequest);
   }
 }

@@ -104,6 +104,14 @@ export class AccommodationDetailComponent implements OnInit {
         // consultar la lista de favoritos del estudiante y cruzar datos.
         if (this.currentStudentId) {
           this.checkIfFavorite(id);
+
+          // Registrar interacción
+          this.interactionService.addInteraction({
+            alojamientoId: id,
+            estudianteId: this.currentStudentId
+          }).subscribe({
+            error: (err) => console.error('Error registrando interacción:', err)
+          });
         }
 
         this.isLoading = false;
