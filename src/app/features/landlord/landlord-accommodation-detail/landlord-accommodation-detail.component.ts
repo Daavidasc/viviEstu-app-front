@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { AccommodationDetailViewModel } from '../../../core/models/accommodation.models';
 import { RequestViewModel } from '../../../core/models/request.models';
+import { InteractionService } from '../../../core/services/interaction.service';
+import { ComentarioResponse } from '../../../core/models/interaction.models';
 
 @Component({
   selector: 'app-landlord-accommodation-detail',
@@ -23,6 +25,7 @@ import { RequestViewModel } from '../../../core/models/request.models';
 export class LandlordAccommodationDetailComponent implements OnInit {
   accommodation: AccommodationDetailViewModel | null = null;
   requests: RequestViewModel[] = [];
+  comments: ComentarioResponse[] = [];
   isLoading = true;
   isEditing = false;
 
@@ -37,6 +40,7 @@ export class LandlordAccommodationDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private accommodationService: AccommodationService,
     private landlordService: LandlordService,
+    private interactionService: InteractionService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -65,6 +69,19 @@ export class LandlordAccommodationDetailComponent implements OnInit {
       error: () => {
         this.checkLoadingComplete();
       }
+    });
+
+    this.loadComments(id);
+  }
+
+  loadComments(alojamientoId: number) {
+    this.interactionService.getCommentsByAccommodation(alojamientoId).subscribe({
+      next: (data) => {
+        this.comments = data;
+        // No need to check loading complete for comments as it's not critical for page display
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error al cargar comentarios:', err)
     });
   }
 
