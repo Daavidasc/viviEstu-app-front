@@ -31,9 +31,14 @@
                             <h1 class="price-tag">S/.{{ accommodation.precioMensual }} <span class="period">/mes</span>
                             </h1>
 
-                            <a [routerLink]="['/landlord/edit', accommodation.id]" class="btn-edit">
-                                <i class="fas fa-edit"></i> Editar Datos
-                            </a>
+                            <div class="action-buttons">
+                                <button class="btn-rented" (click)="markAsRented()">
+                                    <i class="fas fa-check-circle"></i> Marcar como Alquilado
+                                </button>
+                                <a [routerLink]="['/landlord/edit', accommodation.id]" class="btn-edit">
+                                    <i class="fas fa-edit"></i> Editar Datos
+                                </a>
+                            </div>
                         </div>
 
                         <p class="description-text">{{ accommodation.descripcion }}</p>

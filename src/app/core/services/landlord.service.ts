@@ -63,11 +63,11 @@ export class LandlordService {
   }
 
   getAccommodationRequestsCount(accommodationId: number): Observable<number> {
-  // Reutilizamos tu método existente que ya filtra por ID
-  return this.getRequestsByAccommodationId(accommodationId).pipe(
-    map(requests => requests ? requests.length : 0) // Simplemente contamos el array
-  );
-}
+    // Reutilizamos tu método existente que ya filtra por ID
+    return this.getRequestsByAccommodationId(accommodationId).pipe(
+      map(requests => requests ? requests.length : 0) // Simplemente contamos el array
+    );
+  }
 
   // === ACTUALIZAR ESTADO DE SOLICITUD ===
   updateRequestStatus(requestId: number, status: 'ACEPTADO' | 'RECHAZADO'): Observable<any> {
@@ -114,7 +114,7 @@ export class LandlordService {
     };
   }
 
-private formatDate(date: Date): string {
+  private formatDate(date: Date): string {
     const now = new Date();
     const diffTime = now.getTime() - date.getTime(); // Diferencia en milisegundos
 
@@ -141,7 +141,7 @@ private formatDate(date: Date): string {
     else if (dto.estado === 'PENDIENTE') color = 'yellow';
     else if (dto.estado === 'RECHAZADO') color = 'red';
 
-  return {
+    return {
       requestId: dto.id,
       accommodationId: dto.alojamientoId,
       title: dto.nombreEstudiante,
@@ -156,5 +156,9 @@ private formatDate(date: Date): string {
       months: dto.mesesAlquiler,    // Mapea mesesAlquiler -> months
       occupants: dto.cantInquilinos // Mapea cantInquilinos -> occupants
     };
+  }
+
+  rentAccommodation(accommodationId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/alojamientos/${accommodationId}/alquilar`, {});
   }
 }

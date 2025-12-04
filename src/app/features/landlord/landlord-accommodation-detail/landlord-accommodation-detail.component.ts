@@ -167,6 +167,26 @@ export class LandlordAccommodationDetailComponent implements OnInit {
     });
   }
 
+  markAsRented() {
+    if (!this.accommodation) return;
+
+    if (!confirm('¿Estás seguro de que deseas marcar este alojamiento como alquilado?\n\n⚠️ IMPORTANTE: Esta acción no se puede deshacer por 30 días y ocultará el alojamiento de las búsquedas.')) {
+      return;
+    }
+
+    this.landlordService.rentAccommodation(this.accommodation.id).subscribe({
+      next: () => {
+        this.showNotification('Alojamiento marcado como alquilado exitosamente.', 'success');
+        // Opcional: Recargar datos o redirigir
+        // this.loadData(this.accommodation!.id);
+      },
+      error: (err) => {
+        console.error('Error marking as rented:', err);
+        this.showNotification('Error al marcar como alquilado.', 'error');
+      }
+    });
+  }
+
   private showNotification(message: string, type: 'success' | 'error') {
     this.notification = { message, type, show: true };
 

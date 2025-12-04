@@ -9,6 +9,30 @@
     --font-family: 'Poppins', sans-serif;
 }
 
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn-rented {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.btn-rented:hover {
+    background-color: #218838;
+}
+
 .app-container {
     font-family: var(--font-family);
     color: var(--text-dark);
