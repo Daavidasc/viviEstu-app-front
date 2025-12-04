@@ -46,6 +46,7 @@ export class AccommodationsPageComponent implements OnInit {
 
     accommodations: AccommodationCardViewModel[] = [];
     district: string | null = null;
+    currentUniversity: string | null = null;
     isLoading = true;
     currentStudentId: number | null = null;
 
@@ -81,6 +82,7 @@ export class AccommodationsPageComponent implements OnInit {
 
                 if (university) {
                     this.filterCriteria.university = university;
+                    this.currentUniversity = university;
                     console.log('Filtrando por URL (Universidad):', university);
                     return of({ filters: { university: university } });
                 }
@@ -124,9 +126,9 @@ export class AccommodationsPageComponent implements OnInit {
 
         // Carga auxiliar del ID (por si entramos por el Caso A, asegurarnos de tener el ID para favoritos)
         if (!this.currentStudentId) {
-             this.studentService.getProfile().subscribe({
+            this.studentService.getProfile().subscribe({
                 next: (p) => this.currentStudentId = p.id,
-                error: () => {} // Error silencioso, ya se maneja en otros lados
+                error: () => { } // Error silencioso, ya se maneja en otros lados
             });
         }
     }
@@ -229,10 +231,27 @@ export class AccommodationsPageComponent implements OnInit {
         this.loadAccommodationsByFilter(filters);
         // Actualizamos visualmente el distrito actual si se usó el filtro
         this.district = this.filterCriteria.district !== 'Todos' ? this.filterCriteria.district : null;
+        this.currentUniversity = this.filterCriteria.university !== 'Todas' ? this.filterCriteria.university : null;
         this.toggleFilterModal();
     }
 
     toggleFilterModal(): void {
         this.showFilterModal = !this.showFilterModal;
+    }
+
+    get pageTitle(): string {
+        if (!this.district && !this.currentUniversity) {
+            return 'Todos los departamentos disponibles';
+        }
+        if (this.district && this.currentUniversity) {
+            return `Departamentos en ${this.district} cerca a ${this.currentUniversity}`;
+        }
+        if (this.district) {
+            return `Departamentos en ${this.district}`;
+        }
+        if (this.currentUniversity) {
+            return `Departamentos cerca a ${this.currentUniversity}`;
+        }
+        return 'Todos los departamentos disponibles';
     }
 }

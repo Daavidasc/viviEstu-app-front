@@ -6,10 +6,7 @@
             <div class="page-header">
                 <div class="header-row">
                     <h1 class="page-title">
-                        {{ district ? 'Departamentos en ' + district : (accommodations.length > 0 &&
-                        accommodations[0].universityNear && !district ? 'Departamentos cerca a ' +
-                        accommodations[0].universityNear
-                        : 'Todos los departamentos disponibles') }}
+                        {{ pageTitle }}
                     </h1>
                     <button class="btn-filter" (click)="toggleFilterModal()">
                         <i class="fas fa-sliders-h"></i> Filtros
