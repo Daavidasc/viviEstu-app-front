@@ -35,9 +35,9 @@ export class LandlordService {
         price: dto.precioMensual,
         district: dto.distrito,
         description: dto.descripcion,
-        area: dto.area,
+        area: dto.metrosCuadrados,
         baths: dto.banios,
-        rooms: dto.habitaciones,
+        rooms: dto.dormitorios,
         clicks: 0,
         requestsCount: 0
       })))

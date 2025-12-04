@@ -23,8 +23,8 @@ export interface AlojamientoRequestForm {
     universidadesIds: number[];
     habitaciones: number;
     banios: number;
-    area: number;
-    piso: number;
+    metrosCuadrados: number;
+    dormitorios: number;
     imagenes: File[]; // Para el FormData
 }
 
@@ -45,9 +45,9 @@ export interface AlojamientoResponse {
     universidades: string[];
     latitud: number;
     longitud: number;
-    area: number;
+    metrosCuadrados: number;
     banios: number;
-    habitaciones: number;
+    dormitorios: number;
 }
 
 // ViewModel para Tarjetas (Búsqueda/Favoritos)

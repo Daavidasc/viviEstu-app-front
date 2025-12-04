@@ -57,10 +57,10 @@ export class AccommodationFormComponent implements OnInit {
       alquilado: [false],
       universidadesIds: [[], [Validators.required, this.minArrayLength(1)]],
       transportes: [[], [this.minArrayLength(1)]],
-      habitaciones: [1, [Validators.min(1), Validators.max(10)]],
+      dormitorios: [1, [Validators.min(1), Validators.max(10)]],
       banios: [1, [Validators.min(1), Validators.max(5)]],
-      area: [null, [Validators.min(10), Validators.max(500)]],
-      piso: [null, [Validators.min(1), Validators.max(30)]],
+      metrosCuadrados: [null, [Validators.min(10), Validators.max(500)]],
+
       servicios: [[]]
     });
   }
