@@ -102,4 +102,9 @@ export class AdminService {
     getDashboardStats(): Observable<AdminStats> {
         return this.http.get<AdminStats>(`${this.apiUrl}/admin/stats`);
     }
+
+    // --- Property Data ---
+    addPropertyData(data: { nroPartida: string, dniPropietario: string }): Observable<any> {
+        return this.http.post(`${this.apiUrl}/datos-propiedades`, data);
+    }
 }
