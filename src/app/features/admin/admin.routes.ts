@@ -48,6 +48,10 @@ export const adminRoutes: Routes = [
                 component: CommentModerationComponent
             },
             {
+                path: 'datos-propiedades',
+                loadComponent: () => import('./datos-propiedades/datos-propiedades.component').then(m => m.DatosPropiedadesComponent)
+            },
+            {
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full'
