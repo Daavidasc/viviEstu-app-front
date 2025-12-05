@@ -1,3 +1,5 @@
+import { RequestService } from './../../../core/services/request.service';
+import { EstadoSolicitud, SolicitudResponse } from './../../../core/models/request.models';
 import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +22,7 @@ import {
   ComentarioResponse,
   ComentarioRequest
 } from '../../../core/models/interaction.models'; // 👈 Agregado ComentarioRequest
-import { AccommodationDetailViewModel } from '../../../core/models/accommodation.models';
+import { AccommodationDetailViewModel, PropietarioContactDTO } from '../../../core/models/accommodation.models';
 
 import { GoogleMapsComponent } from '../../../shared/components/google-maps/google-maps.component';
 
@@ -45,6 +47,7 @@ export class AccommodationDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private interactionService = inject(InteractionService); // 👈 Corregido nombre (camelCase)
   private accommodationService = inject(AccommodationService);
+  private requestService = inject(RequestService);
   private studentService = inject(StudentService);
   private cdr = inject(ChangeDetectorRef);
 
@@ -56,6 +59,9 @@ export class AccommodationDetailComponent implements OnInit {
   currentStudentId: number | null = null;
   isPostingComment = false;
 
+  currentRequestStatus: EstadoSolicitud = 'NONE';
+  ownerContact: PropietarioContactDTO | null = null;
+  checkingStatus = false;
   // Map Data
   mapCenter: google.maps.LatLngLiteral = { lat: -12.046374, lng: -77.042793 }; // Default Lima
   mapMarkers: { position: google.maps.LatLngLiteral, title: string, description?: string }[] = [];
@@ -71,6 +77,9 @@ export class AccommodationDetailComponent implements OnInit {
         console.log('Student ID loaded:', this.currentStudentId);
         // 2. Cargar datos del alojamiento una vez tenemos el ID del estudiante
         this.loadAccommodationData(accommodationId);
+        if (this.currentStudentId) {
+          this.checkRequestStatus(this.currentStudentId, accommodationId);
+        }
       },
       error: (err) => {
         console.error('Error loading student ID:', err);
@@ -78,6 +87,66 @@ export class AccommodationDetailComponent implements OnInit {
         this.loadAccommodationData(accommodationId);
       }
     });
+  }
+  loadOwnerContact(id: number) {
+    this.accommodationService.getOwnerContact(id).subscribe({
+      next: (data) => {
+        this.ownerContact = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error cargando contacto dueño', err)
+    });
+  }
+
+checkRequestStatus(studentId: number, accommodationId: number) {
+    this.checkingStatus = true;
+
+    this.requestService.getRequestStatus(studentId, accommodationId).subscribe({
+      next: (response: any) => { // Usamos 'any' temporalmente para recibir Arrays u Objetos
+        console.log('✅ RESPUESTA DEL BACKEND:', response);
+
+        let status: EstadoSolicitud = 'NONE';
+
+        // CASO A: El backend devuelve un ARRAY (Lista de intentos)
+        if (Array.isArray(response)) {
+          if (response.length > 0) {
+            // Tomamos la ÚLTIMA solicitud de la lista (asumiendo que es la más reciente)
+            const ultimaSolicitud = response[response.length - 1];
+            status = ultimaSolicitud.estado;
+            console.log('📂 Es un array. Último estado:', status);
+          } else {
+             // Array vacío significa que no hay solicitudes
+             status = 'NONE';
+          }
+        }
+        // CASO B: El backend devuelve un solo OBJETO
+        else if (response && response.estado) {
+          status = response.estado;
+          console.log('📄 Es un objeto. Estado:', status);
+        }
+
+        this.currentRequestStatus = status;
+
+        // Si la última está aceptada, cargamos datos
+        if (this.currentRequestStatus === 'ACEPTADO') {
+          this.loadOwnerContact(accommodationId);
+        }
+
+        this.checkingStatus = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.warn('ℹ️ No se encontró solicitud (404) o error:', err.status);
+        this.currentRequestStatus = 'NONE';
+        this.checkingStatus = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  onRequestSent() {
+    this.currentRequestStatus = 'PENDIENTE';
+    this.cdr.detectChanges();
   }
 
   loadAccommodationData(id: number) {

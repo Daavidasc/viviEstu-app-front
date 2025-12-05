@@ -7,7 +7,8 @@ import {
   AlojamientoResponse,
   AlojamientoRequestForm,
   AccommodationCardViewModel,
-  AccommodationDetailViewModel
+  AccommodationDetailViewModel,
+  PropietarioContactDTO
 } from '../models/accommodation.models';
 
 @Injectable({
@@ -128,6 +129,10 @@ export class AccommodationService {
     return this.getAccommodationDetail(id).pipe(
       map(dto => dto.imagenes?.[0]?.url || 'assets/placeholder.jpg')
     );
+  }
+
+  getOwnerContact(alojamientoId: number): Observable<PropietarioContactDTO> {
+    return this.http.get<PropietarioContactDTO>(`${this.apiUrl}/${alojamientoId}/vendedor`);
   }
 
   // Utilidad de mapeo interno para reutilizar lógica

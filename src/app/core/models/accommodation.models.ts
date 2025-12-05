@@ -73,3 +73,12 @@ export interface AccommodationDetailViewModel extends AlojamientoResponse {
     formattedDate: string;
     isFavorite?: boolean;
 }
+
+export interface PropietarioContactDTO {
+  id: number;
+  nombre: string;
+  apellidos: string;
+  correo: string;
+  telefono: string;
+  dni: string;
+}

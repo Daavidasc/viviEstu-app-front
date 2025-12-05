@@ -438,3 +438,178 @@
 .new-comment-form .btn-comment i {
   font-size: 0.9rem;
 }
+
+
+.success-card {
+  background-color: var(--white);
+  /* Borde sutil usando tu color primario */
+  border: 1px solid rgba(184, 142, 47, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 0rem;
+  /* Sombra dorada muy suave */
+  box-shadow: 0 8px 24px rgba(184, 142, 47, 0.12);
+  transition: transform 0.3s ease;
+}
+
+.success-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Encabezado: Usamos tu PRIMARY (Dorado) para denotar éxito/premium */
+.card-header-success {
+  background-color: var(--primary); /* #B88E2F */
+  color: var(--white);
+  padding: 1.2rem 1rem;
+  text-align: center;
+}
+
+.card-header-success h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 0.5px;
+  font-family: var(--font-family);
+}
+
+.card-header-success i {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px;
+  border-radius: 50%;
+  font-size: 1rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.instruction {
+  text-align: center;
+  color: var(--text-dark); /* #2C3E50 */
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+/* Caja de información: Usamos tu fondo CREAM */
+.owner-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--bg-cream); /* #FFF8E7 - Integración clave */
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(184, 142, 47, 0.15); /* Borde sutil dorado */
+}
+
+.owner-avatar {
+  width: 65px;
+  height: 65px;
+  /* Avatar con fondo blanco para resaltar sobre el crema */
+  background-color: var(--white);
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.owner-details {
+  text-align: center;
+  width: 100%;
+}
+
+.owner-details h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  color: var(--text-dark); /* #2C3E50 */
+  font-weight: 700;
+}
+
+/* Items de contacto */
+.contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background-color: var(--white); /* Fondo blanco dentro del crema */
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.contact-item:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.contact-item i {
+  color: var(--primary);
+}
+
+/* Botón WhatsApp */
+/* Mantenemos verde por UX, pero ajustamos la forma y sombra */
+.btn-whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1.2rem;
+  background-color: #25D366; /* WhatsApp oficial */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px; /* Radio similar a tus otros botones */
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.25);
+  transition: all 0.2s;
+}
+
+.btn-whatsapp:hover {
+  background-color: #128C7E;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(37, 211, 102, 0.35);
+}
+
+/* Tarjeta Pendiente (Amarilla/Azul) */
+.pending-card {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+}
+
+.pending-icon {
+  color: #ffc107; /* Amarillo */
+  margin-bottom: 1rem;
+}
+
+/* Alerta Rechazada */
+.alert-rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid #f5c6cb;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

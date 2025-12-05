@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { SolicitudRequest } from '../models/request.models';
+import { SolicitudRequest, SolicitudResponse } from '../models/request.models';
 
 @Injectable({
   providedIn: 'root'
@@ -23,4 +23,11 @@ export class RequestService {
   cancelRequest(requestId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${requestId}`);
   }
+
+  getRequestStatus(estudianteId: number, alojamientoId: number): Observable<SolicitudResponse> {
+      return this.http.get<SolicitudResponse>(
+        `${this.apiUrl}/estudiante/${estudianteId}/alojamiento/${alojamientoId}`
+      );
+    }
+
 }

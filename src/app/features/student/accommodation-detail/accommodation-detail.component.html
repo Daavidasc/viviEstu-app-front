@@ -84,48 +84,107 @@
       </div>
 
       <!-- COLUMNA DERECHA: Formulario de Contacto + Comentarios -->
-      <div class="sidebar-column">
-        <app-contact-form [accommodationId]="accommodation.id" [studentId]="currentStudentId" />
-        <!-- Sección de Comentarios -->
-        <div class="comments-card">
-          <h3 class="comments-title">💬 Comentarios</h3>
+<div class="sidebar-column">
 
-          <!-- Lista de comentarios existentes (scrolleable) -->
-          <div class="comments-scroll-container">
-            @if (comments.length > 0) {
-            <div class="comments-list">
-              @for (comment of comments; track comment.id) {
-              <div class="comment-item">
-                <div class="comment-header">
-                  <i class="fas fa-user-circle"></i>
-                  <span class="comment-author">{{ comment.estudianteNombre }}</span>
-                </div>
-                <p class="comment-content">{{ comment.contenido }}</p>
-              </div>
-              }
+        @if (checkingStatus) {
+          <div class="card p-4 text-center">
+            <i class="fas fa-spinner fa-spin"></i> Verificando estado...
+          </div>
+        }
+
+        @else if (currentRequestStatus === 'ACEPTADO') {
+          <div class="card contact-card success-card">
+            <div class="card-header-success">
+              <h3><i class="fas fa-check-circle"></i> Solicitud Aprobada</h3>
             </div>
-            } @else {
-            <p class="no-comments">
-              <i class="fas fa-comments"></i>
-              No hay comentarios aún. ¡Sé el primero en comentar!
-            </p>
-            }
-          </div>
+            <div class="card-body">
 
-          <!-- Formulario para nuevo comentario -->
-          <div class="new-comment-form">
-            <textarea class="comment-input" rows="3" placeholder="Escribe tu comentario aquí..."
-              [(ngModel)]="newComment"></textarea>
-            <button class="btn btn-primary btn-comment" (click)="postComment()"
-              [disabled]="isPostingComment || !newComment.trim()">
-              @if (isPostingComment) {
-              <span><i class="fas fa-spinner fa-spin"></i> Enviando...</span>
+              @if (ownerContact) {
+                <p class="instruction">¡Felicidades! Puedes contactar al propietario:</p>
+                <div class="owner-info">
+                  <div class="owner-avatar">
+                    {{ ownerContact.nombre.charAt(0) }}
+                  </div>
+                  <div class="owner-details">
+                    <h4>{{ ownerContact.nombre }} {{ ownerContact.apellidos }}</h4>
+                    <div class="contact-item">
+                      <i class="fas fa-envelope"></i> {{ ownerContact.correo }}
+                    </div>
+                    <div class="contact-item">
+                      <i class="fas fa-phone"></i> {{ ownerContact.telefono }}
+                    </div>
+                    <a [href]="'https://wa.me/51' + ownerContact.telefono" target="_blank" class="btn-whatsapp">
+                      <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+                    </a>
+                  </div>
+                </div>
               } @else {
-              <span><i class="fas fa-paper-plane"></i> Comentar</span>
+                <div class="text-center p-3">
+                  <i class="fas fa-circle-notch fa-spin text-success"></i> Cargando datos de contacto...
+                </div>
               }
-            </button>
+
+            </div>
           </div>
+        }
+
+        @else if (currentRequestStatus === 'PENDIENTE') {
+          <div class="card contact-card pending-card">
+            <i class="fas fa-clock fa-3x pending-icon"></i>
+            <h3>Solicitud Enviada</h3>
+            <p>Tu solicitud está en espera de respuesta por parte del propietario.</p>
+          </div>
+        }
+
+        @else {
+
+          @if (currentRequestStatus === 'RECHAZADO') {
+            <div class="alert-rejected">
+              <i class="fas fa-exclamation-circle"></i>
+              Tu solicitud anterior fue rechazada. Puedes intentar enviar una nueva propuesta.
+            </div>
+          }
+
+          <app-contact-form
+            [accommodationId]="accommodation.id"
+            [studentId]="currentStudentId"
+            (requestSent)="onRequestSent()" />
+        }
+
+        <div class="comments-card">
+           <h3 class="comments-title">💬 Comentarios</h3>
+           <div class="comments-scroll-container">
+             @if (comments.length > 0) {
+               <div class="comments-list">
+                 @for (comment of comments; track comment.id) {
+                   <div class="comment-item">
+                     <div class="comment-header">
+                       <i class="fas fa-user-circle"></i>
+                       <span class="comment-author">{{ comment.estudianteNombre }}</span>
+                     </div>
+                     <p class="comment-content">{{ comment.contenido }}</p>
+                   </div>
+                 }
+               </div>
+             } @else {
+               <p class="no-comments">
+                 <i class="fas fa-comments"></i> No hay comentarios aún. ¡Sé el primero en comentar!
+               </p>
+             }
+           </div>
+
+           <div class="new-comment-form">
+             <textarea class="comment-input" rows="3" placeholder="Escribe tu comentario aquí..." [(ngModel)]="newComment"></textarea>
+             <button class="btn btn-primary btn-comment" (click)="postComment()" [disabled]="isPostingComment || !newComment.trim()">
+               @if (isPostingComment) {
+                 <span><i class="fas fa-spinner fa-spin"></i> Enviando...</span>
+               } @else {
+                 <span><i class="fas fa-paper-plane"></i> Comentar</span>
+               }
+             </button>
+           </div>
         </div>
+
       </div>
 
     </div>

@@ -1,4 +1,4 @@
-export type EstadoSolicitud = 'PENDIENTE' | 'ACEPTADO' | 'RECHAZADO' | 'AGENDADO';
+export type EstadoSolicitud = 'PENDIENTE' | 'ACEPTADO' | 'RECHAZADO' | 'AGENDADO'| 'NONE';
 
 // Request al backend
 export interface SolicitudRequest {
