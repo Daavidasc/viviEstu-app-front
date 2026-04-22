@@ -1,59 +1,26 @@
-# ViviEstuApp
+# ViviEstu - Frontend (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.10.
+ViviEstu es la interfaz de una plataforma web diseñada para centralizar y simplificar la búsqueda de alojamiento para estudiantes universitarios, conectándolos de manera directa y segura con arrendadores de viviendas cercanas a sus centros de estudio. La aplicación está construida sobre un entorno robusto y escalable para facilitar la toma de decisiones informadas de los estudiantes.
+## Propósito del Proyecto
 
-## Development server
+El proyecto resuelve la problemática de la inseguridad y la falta de información verificada que enfrentan los estudiantes al buscar habitaciones o departamentos por primera vez. Esta interfaz permite gestionar el ciclo completo de búsqueda y publicación de inmuebles en un entorno digital confiable.
+## Características Principales
 
-To start a local development server, run:
+### Siguiendo los requisitos definidos en el análisis del sistema:
 
-```bash
-ng serve
-```
+   Búsqueda Dinámica: Filtros avanzados para localizar viviendas por ubicación, precio y servicios incluidos.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+  Gestión de Anuncios: Interfaz específica para que los arrendadores publiquen y editen sus ofertas detallando servicios como luz, agua e internet.
 
-## Code scaffolding
+   Perfiles Diferenciados: Flujos de usuario optimizados tanto para estudiantes (buscadores) como para arrendadores (propietarios).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+   Diseño Responsivo: Interfaz adaptable a diferentes dispositivos para una consulta rápida de opciones de alojamiento.
+## Stack Tecnológico
 
-```bash
-ng generate component component-name
-```
+  Framework: Angular (v14+)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+   Estilos: Tailwind CSS (Framework de utilidad para un diseño moderno y rápido)
 
-```bash
-ng generate --help
-```
+   Lenguaje: TypeScript
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+   Gestión de Estado: RxJS y Services
